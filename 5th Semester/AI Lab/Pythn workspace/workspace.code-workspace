@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../FSD Lab"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "FSD Lab"
+	}
+}

@@ -1,0 +1,113 @@
+﻿@page "/cart"
+@using InventoryManagementSystem.BlazorVP.Models
+@inject InventoryManagementSystem.BlazorVP.Services.AppState State
+@inject NavigationManager Nav
+
+<div class="user-page">
+
+    <h2 class="page-title">My Cart</h2>
+
+    @if (!State.Cart.Any())
+    {
+        <div class="action-box">
+            <p>Your cart is empty</p>
+            <a class="go-cart-btn" href="/user">Browse Products</a>
+        </div>
+    }
+    else
+    {
+        <div class="inventory-wrapper">
+
+            <!-- TOP BAR -->
+            <div class="inventory-top">
+                <h3>Cart Items</h3>
+            </div>
+
+            <!-- CART TABLE -->
+            <table class="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th style="width:160px">Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in State.Cart)
+                    {
+                        var product = State.Products.First(p => p.Id == item.ProductId);
+
+                        <tr>
+                            <td>@product.Name</td>
+
+                            <td>
+                                <div class="qty-box">
+                                    <button class="qty-btn"
+                                            @onclick="() => DecreaseQty(item)">
+                                        −
+                                    </button>
+
+                                    <span class="qty-num">@item.Quantity</span>
+
+                                    <button class="qty-btn"
+                                            disabled="@(item.Quantity >= product.Stock)"
+                                            @onclick="() => IncreaseQty(item)">
+                                        +
+                                    </button>
+                                </div>
+                            </td>
+
+                            <td>$@product.Price</td>
+                            <td>$@(product.Price* item.Quantity)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <!-- TOTAL + CHECKOUT -->
+            <div class="inventory-top" style="margin-top:20px">
+                <h4>Total: $@TotalAmount</h4>
+
+                <button class="cart-btn" @onclick="GoToCheckout">
+                    Proceed to Checkout
+                </button>
+            </div>
+
+        </div>
+    }
+
+</div>
+
+@code {
+
+    double TotalAmount =>
+        State.Cart.Sum(c =>
+            State.Products.First(p => p.Id == c.ProductId).Price * c.Quantity);
+
+    void IncreaseQty(CartItem item)
+    {
+        var product = State.Products.First(p => p.Id == item.ProductId);
+
+        if (item.Quantity < product.Stock)
+        {
+            item.Quantity++;
+        }
+    }
+
+    void DecreaseQty(CartItem item)
+    {
+        item.Quantity--;
+
+        if (item.Quantity <= 0)
+        {
+            State.Cart.Remove(item);
+        }
+    }
+
+    void GoToCheckout()
+    {
+        Nav.NavigateTo("/checkout");
+    }
+}

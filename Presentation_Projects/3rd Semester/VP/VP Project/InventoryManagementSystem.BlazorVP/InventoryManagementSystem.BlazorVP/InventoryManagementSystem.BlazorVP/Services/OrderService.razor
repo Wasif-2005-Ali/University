@@ -1,0 +1,14 @@
+﻿using InventoryManagementSystem.BlazorVP.Models;
+
+namespace InventoryManagementSystem.BlazorVP.Services
+{
+    public class OrderService
+    {
+        public List<Order> Orders { get; set; } = new();
+
+        public void AddOrder(Order order)
+        {
+            Orders.Add(order);
+        }
+    }
+}

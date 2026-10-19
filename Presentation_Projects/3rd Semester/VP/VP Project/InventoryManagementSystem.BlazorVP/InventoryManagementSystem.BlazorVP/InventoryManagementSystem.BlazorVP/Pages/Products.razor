@@ -1,0 +1,102 @@
+﻿@page "/products"
+
+@using InventoryManagementSystem.BlazorVP.Models
+@inject InventoryManagementSystem.BlazorVP.Services.AppState State
+@inject NavigationManager Nav
+
+<div class="user-page">
+
+    <div class="inventory-top">
+        <h2>Product Catalog</h2>
+
+        <div style="display:flex; gap:10px">
+            <button class="cart-btn" @onclick="GoToCart">
+                🛒 View Cart (@State.Cart.Count)
+            </button>
+        </div>
+    </div>
+
+    <div class="inventory-wrapper">
+
+        <table class="inventory-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Stock</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th style="width:200px">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var p in State.Products)
+                {
+                    <tr>
+                        <td>@p.Id</td>
+                        <td>@p.Name</td>
+                        <td>@p.Category</td>
+                        <td>@p.Stock</td>
+                        <td>$@p.Price</td>
+
+                        <td>
+                            @if (p.Stock == 0)
+                            {
+                                <span class="badge red">Out of Stock</span>
+                            }
+                            else if (p.Stock <= 3)
+                            {
+                                <span class="badge orange">Low Stock</span>
+                            }
+                            else
+                            {
+                                <span class="badge green">In Stock</span>
+                            }
+                        </td>
+
+                        <td>
+                            <button class="cart-btn"
+                                    disabled="@(p.Stock == 0)"
+                                    @onclick="() => AddToCart(p)">
+                                Add to Cart
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+@code {
+
+    void AddToCart(Product product)
+    {
+        var item = State.Cart.FirstOrDefault(c => c.ProductId == product.Id);
+
+        if (item == null)
+        {
+            State.Cart.Add(new CartItem
+            {
+                ProductId = product.Id,
+                Quantity = 1
+            });
+        }
+        else
+        {
+            if (item.Quantity < product.Stock)
+            {
+                item.Quantity++;
+            }
+        }
+    }
+
+    void GoToCart()
+    {
+        Nav.NavigateTo("/cart");
+    }
+}

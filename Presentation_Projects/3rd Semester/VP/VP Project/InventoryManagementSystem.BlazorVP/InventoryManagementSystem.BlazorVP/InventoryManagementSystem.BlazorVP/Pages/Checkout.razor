@@ -1,0 +1,83 @@
+﻿@page "/checkout"
+@using InventoryManagementSystem.BlazorVP.Models
+@inject InventoryManagementSystem.BlazorVP.Services.AppState State
+@inject NavigationManager Nav
+
+<div class="user-page">
+
+    <h2 class="page-title">Checkout</h2>
+
+    @if (!State.Cart.Any())
+    {
+        <div class="action-box">
+            <p>Your cart is empty</p>
+            <button class="cart-btn" @onclick="GoBack">
+                Browse Products
+            </button>
+        </div>
+    }
+    else
+    {
+        <div class="inventory-wrapper">
+
+            <table class="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in State.Cart)
+                    {
+                        var product = State.Products.First(p => p.Id == item.ProductId);
+
+                        <tr>
+                            <td>@product.Name</td>
+                            <td>@item.Quantity</td>
+                            <td>$@product.Price</td>
+                            <td>$@(product.Price* item.Quantity)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="inventory-top" style="margin-top:20px">
+                <h3>Total Amount: $@TotalAmount</h3>
+
+                <button class="cart-btn green" @onclick="PlaceOrder">
+                    Place Order
+                </button>
+            </div>
+
+        </div>
+    }
+
+</div>
+
+@code {
+
+    double TotalAmount =>
+        State.Cart.Sum(c =>
+            State.Products.First(p => p.Id == c.ProductId).Price * c.Quantity);
+
+    void PlaceOrder()
+    {
+        State.OrdersList.Add(new Order
+        {
+            TotalAmount = TotalAmount,
+            Items = State.Cart.ToList()
+        });
+
+        State.Cart.Clear();
+        Nav.NavigateTo("/user");
+    }
+
+    void GoBack()
+    {
+        Nav.NavigateTo("/user");
+    }
+}

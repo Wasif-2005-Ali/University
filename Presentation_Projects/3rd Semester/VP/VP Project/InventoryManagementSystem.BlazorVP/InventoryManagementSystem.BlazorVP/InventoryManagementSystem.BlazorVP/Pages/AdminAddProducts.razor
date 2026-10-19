@@ -1,0 +1,42 @@
+﻿@page "/adminaddproducts"
+@page "/adminaddproducts/{Id:int}"
+
+@using InventoryManagementSystem.BlazorVP.Models
+@inject InventoryManagementSystem.BlazorVP.Services.AppState State
+@inject NavigationManager Nav
+
+<h2>@(Id == 0 ? "Add Product" : "Edit Product")</h2>
+
+<div class="form-card">
+    <input placeholder="Name" @bind="product.Name" />
+    <input placeholder="Category" @bind="product.Category" />
+    <input type="number" placeholder="Stock" @bind="product.Stock" />
+    <input type="number" placeholder="Price" @bind="product.Price" />
+
+    <button class="save-btn" @onclick="Save">Save</button>
+</div>
+
+@code {
+    [Parameter] public int Id { get; set; }
+
+    Product product = new();
+
+    protected override void OnParametersSet()
+    {
+        if (Id != 0)
+        {
+            product = State.Products.First(p => p.Id == Id);
+        }
+    }
+
+    void Save()
+    {
+        if (Id == 0)
+        {
+            product.Id = State.Products.Max(p => p.Id) + 1;
+            State.Products.Add(product);
+        }
+
+        Nav.NavigateTo("/admin");
+    }
+}

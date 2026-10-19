@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<title>Result MS</title>
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid #000;
+        border-collapse: collapse;
+        padding: 4px
+    }
+
+    img {
+        width: 40px;
+        height: 40px
+    }
+</style>
+
+<body>
+    <input id="nS" placeholder="New Subject"> <button onclick="addS()">Add Subject</button>
+    <form id="f" onsubmit="sub(event)">
+        <input id="n" required placeholder="Student Name">
+        <input type="url" id="img" required placeholder="Image URL">
+        <div id="subs"></div><button>Submit</button>
+    </form>
+    <table id="tbl"></table>
+    <script>
+        let subs = ['Mathematics', 'English', 'Programming'], stds = [], uSubs = new Set(subs);
+        const $ = i => document.getElementById(i);
+        const rS = () => $('subs').innerHTML = subs.map((s, i) => `<div>${s} <input type="number" min="0" max="100" id="s_${i}" required> <button type="button" onclick="subs.splice(${i},1);rS()">X</button></div>`).join('');
+        const addS = () => { let v = $('nS').value; if (v && !subs.includes(v)) { subs.push(v); uSubs.add(v); rS(); rT(); } $('nS').value = ''; };
+        const rT = () => {
+            let h = [...uSubs];
+            $('tbl').innerHTML = `<tr><th>Img</th><th>Name</th>${h.map(s => `<th>${s}</th>`).join('')}<th>Total</th><th>%</th><th>Grade</th><th>X</th></tr>` +
+                stds.map((s, i) => `<tr><td><img src="${s.img}"></td><td>${s.n}</td>${h.map(k => `<td>${s.m[k] ?? '-'}</td>`).join('')}<td>${s.t}</td><td>${s.p}%</td><td>${s.g}</td><td><button onclick="stds.splice(${i},1);rT()">Remove</button></td></tr>`).join('');
+        };
+        const sub = e => {
+            e.preventDefault();
+            if (!subs.length) return alert("Add a subject");
+            let m = {}, t = 0, p;
+            subs.forEach((s, i) => { let v = +$(`s_${i}`).value; m[s] = v; t += v; });
+            p = t / subs.length;
+            stds.push({ n: $('n').value, img: $('img').value, m, t, p: p.toFixed(1), g: p >= 90 ? 'A+' : p >= 80 ? 'A' : p >= 70 ? 'B' : p >= 60 ? 'C' : p >= 50 ? 'D' : 'F' }); $('f').reset(); rT();
+        };
+        rS(); rT();
+    </script>

@@ -1,0 +1,150 @@
+﻿@page "/user"
+@using InventoryManagementSystem.BlazorVP.Models
+@inject InventoryManagementSystem.BlazorVP.Services.AppState State
+@inject InventoryManagementSystem.BlazorVP.Services.AuthService Auth
+@inject NavigationManager Nav
+
+@if (!Auth.IsUser)
+{
+    Nav.NavigateTo("/");
+}
+
+<div class="user-page">
+
+    <!-- PAGE TITLE -->
+    <h2 class="page-title">Product Catalog</h2>
+
+    <!-- STATS -->
+    <div class="stats-row">
+        <div class="stat-card blue">
+            <h4>@State.Products.Count</h4>
+            <p>Total Products</p>
+        </div>
+
+        <div class="stat-card orange">
+            <h4>@State.Products.Count(p => p.Stock <= 3)</h4>
+            <p>Low Stock Items</p>
+        </div>
+
+        <div class="stat-card green">
+            <h4>@State.OrdersList.Count</h4>
+            <p>Total Orders</p>
+        </div>
+
+        <div class="stat-card blue">
+            <h4>0</h4>
+            <p>Pending Orders</p>
+        </div>
+    </div>
+
+    <!-- CART BUTTON (TABLE KE UPAR RIGHT) -->
+    <div class="top-actions">
+        <button class="cart-btn" @onclick="GoToCart">
+            View Cart ( @State.Cart.Count )
+        </button>
+    </div>
+
+    <!-- PRODUCT TABLE -->
+    <table class="inventory-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Stock</th>
+                <th>Price</th>
+                <th style="width:220px">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var p in State.Products)
+            {
+                var qty = GetQuantity(p.Id);
+
+                <tr>
+                    <td>@p.Id</td>
+                    <td>@p.Name</td>
+                    <td>@p.Category</td>
+                    <td>@p.Stock</td>
+                    <td>@p.Price</td>
+
+                    <td>
+                        <div class="qty-box">
+                            <button class="qty-btn"
+                                    disabled="@((qty <= 0))"
+                                    @onclick="() => DecreaseQty(p.Id)">
+                                −
+                            </button>
+
+                            <span class="qty">@qty</span>
+
+                            <button class="qty-btn"
+                                    disabled="@((qty >= p.Stock))"
+                                    @onclick="() => IncreaseQty(p.Id)">
+                                +
+                            </button>
+
+                            <button class="add-btn"
+                                    disabled="@(qty == 0)"
+                                    @onclick="() => AddToCart(p)">
+                                Add
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+@code {
+
+    Dictionary<int, int> Quantities = new();
+
+    int GetQuantity(int productId)
+        => Quantities.ContainsKey(productId) ? Quantities[productId] : 0;
+
+    void IncreaseQty(int productId)
+    {
+        if (!Quantities.ContainsKey(productId))
+            Quantities[productId] = 0;
+
+        Quantities[productId]++;
+    }
+
+    void DecreaseQty(int productId)
+    {
+        if (Quantities.ContainsKey(productId) && Quantities[productId] > 0)
+            Quantities[productId]--;
+    }
+
+    void AddToCart(Product p)
+    {
+        int qty = GetQuantity(p.Id);
+        if (qty == 0) return;
+
+        var item = State.Cart.FirstOrDefault(c => c.ProductId == p.Id);
+
+        if (item == null)
+        {
+            State.Cart.Add(new CartItem
+            {
+                ProductId = p.Id,
+                Quantity = qty
+            });
+        }
+        else
+        {
+            item.Quantity += qty;
+        }
+
+        Quantities[p.Id] = 0;
+    }
+
+    void GoToCart()
+    {
+        Nav.NavigateTo("/cart");
+    }
+}

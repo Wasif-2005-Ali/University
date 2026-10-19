@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <input id="nS" placeholder="New Subject"> <button id="addS">Add Subject</button>
+    <form id="f">
+        <input id="n" required placeholder="Student Name">
+        <input id="img" type="url" required placeholder="Image URL">
+        <div id="subs"></div>
+        <button type="submit">Submit Student</button>
+    </form>
+    <br>
+    <table border="1">
+        <thead id="tH"></thead>
+        <tbody id="tB"></tbody>
+    </table>
+
+    <script>
+        // Initialize data arrays as shown in manual Section 6 and 21
+        let subjects = ["Mathematics", "English", "Programming"];
+        let students = [];
+
+        // Dynamically create form inputs using innerHTML and loops (Section 8 & 17)
+        function renderSubjects() {
+            let div = document.getElementById("subs");
+            div.innerHTML = "";
+            for (let i = 0; i < subjects.length; i++) {
+                div.innerHTML += `<div>${subjects[i]} <input type="number" id="s_${i}" required> 
+            <button type="button" onclick="removeSub(${i})">Remove</button></div>`;
+            }
+        }
+
+        // Manual does not list splice(), so we use a loop and push() to remove items (Section 7.1)
+        function removeSub(index) {
+            let temp = [];
+            for (let i = 0; i < subjects.length; i++) {
+                if (i !== index) temp.push(subjects[i]);
+            }
+            subjects = temp;
+            renderSubjects();
+            renderTable();
+        }
+
+        // Event listener for button click (Section 12)
+        document.getElementById("addS").addEventListener("click", function () {
+            let val = document.getElementById("nS").value;
+            if (val !== "" && !subjects.includes(val)) {
+                subjects.push(val); // push() and includes() from Section 7
+                renderSubjects();
+                renderTable();
+            }
+        });
+
+        // Form submission with preventDefault (Section 19 & 20)
+        document.getElementById("f").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            let total = 0;
+            let sData = {
+                name: document.getElementById("n").value,
+                img: document.getElementById("img").value
+            };
+
+            for (let i = 0; i < subjects.length; i++) {
+                let mark = Number(document.getElementById("s_" + i).value);
+                sData[subjects[i]] = mark; // Store marks dynamically 
+                total += mark;
+            }
+
+            let p = total / subjects.length;
+            sData.total = total;
+            sData.p = p;
+            sData.g = "F";
+
+            if (p >= 90) sData.g = "A+";
+            else if (p >= 80) sData.g = "A";
+            else if (p >= 70) sData.g = "B";
+            else if (p >= 60) sData.g = "C";
+            else if (p >= 50) sData.g = "D";
+
+            students.push(sData); // Section 21: Taking Multiple User Records Using an Array
+            document.getElementById("f").reset(); // Section 24: reset()
+            renderTable();
+        });
+
+        function removeStd(index) {
+            let temp = [];
+            for (let i = 0; i < students.length; i++) {
+                if (i !== index) temp.push(students[i]);
+            }
+            students = temp;
+            renderTable();
+        }
+
+        // Dynamic table generation using innerHTML += (Section 17)
+        function renderTable() {
+            let tH = document.getElementById("tH");
+            let tB = document.getElementById("tB");
+
+            tH.innerHTML = "<tr><th>Image</th><th>Name</th>";
+            for (let i = 0; i < subjects.length; i++) {
+                tH.innerHTML += `<th>${subjects[i]}</th>`;
+            }
+            tH.innerHTML += "<th>Total</th><th>%</th><th>Grade</th><th>Action</th></tr>";
+
+            tB.innerHTML = "";
+            for (let i = 0; i < students.length; i++) {
+                let s = students[i];
+                let row = `<tr><td><img src="${s.img}" width="40"></td><td>${s.name}</td>`;
+
+                for (let j = 0; j < subjects.length; j++) {
+                    let mark = s[subjects[j]];
+                    if (mark === undefined) mark = "-";
+                    row += `<td>${mark}</td>`;
+                }
+
+                row += `<td>${s.total}</td><td>${s.p.toFixed(1)}</td><td>${s.g}</td>
+            <td><button onclick="removeStd(${i})">Remove</button></td></tr>`;
+
+                tB.innerHTML += row;
+            }
+        }
+
+        renderSubjects();
+        renderTable();
+    </script>
+</body>
+
+</html>

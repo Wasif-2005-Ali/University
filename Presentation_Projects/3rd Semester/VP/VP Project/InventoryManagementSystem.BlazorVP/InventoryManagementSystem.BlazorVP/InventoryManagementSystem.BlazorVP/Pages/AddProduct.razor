@@ -1,0 +1,72 @@
+﻿@page "/admin/add-product"
+@using InventoryManagementSystem.BlazorVP.Models
+@inject InventoryManagementSystem.BlazorVP.Services.AppState State
+@inject InventoryManagementSystem.BlazorVP.Services.AuthService Auth
+@inject NavigationManager Nav
+
+@if (!Auth.IsAdmin)
+{
+    Nav.NavigateTo("/");
+}
+
+<div class="user-page">
+
+    <h2 class="page-title">Add Product</h2>
+
+    <div class="inventory-wrapper">
+
+        <div class="form-group">
+            <label>Product Name</label>
+            <input class="form-control" @bind="product.Name" />
+        </div>
+
+        <div class="form-group">
+            <label>Category</label>
+            <input class="form-control" @bind="product.Category" />
+        </div>
+
+        <div class="form-group">
+            <label>Stock</label>
+            <input type="number" class="form-control" @bind="product.Stock" />
+        </div>
+
+        <div class="form-group">
+            <label>Price</label>
+            <input type="number" step="0.01" class="form-control" @bind="product.Price" />
+        </div>
+
+        <div style="margin-top:20px">
+            <button class="cart-btn" @onclick="SaveProduct">
+                Save Product
+            </button>
+
+            <button class="btn btn-secondary" style="margin-left:10px"
+                    @onclick="GoBack">
+                Cancel
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    Product product = new();
+
+    void SaveProduct()
+    {
+        product.Id = State.Products.Any()
+            ? State.Products.Max(p => p.Id) + 1
+            : 1;
+
+        State.Products.Add(product);
+
+        Nav.NavigateTo("/admin");
+    }
+
+    void GoBack()
+    {
+        Nav.NavigateTo("/admin");
+    }
+}

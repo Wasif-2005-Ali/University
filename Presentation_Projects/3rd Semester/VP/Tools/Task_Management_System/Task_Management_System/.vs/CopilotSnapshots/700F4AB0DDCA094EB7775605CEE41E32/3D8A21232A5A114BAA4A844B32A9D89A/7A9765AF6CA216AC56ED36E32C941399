@@ -1,0 +1,85 @@
+﻿@page "/tasks"
+@using Task_Management_System.Models
+@inject Services.DataService DataService
+
+<PageTitle>Tasks</PageTitle>
+
+<h3>Task Management</h3>
+
+<div class="row">
+    <div class="col-md-4">
+        <EditForm Model="newTask" OnValidSubmit="AddTask">
+            <DataAnnotationsValidator />
+            <div class="mb-3">
+                <label class="form-label">Title</label>
+                <InputText class="form-control" @bind-Value="newTask.Title" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <InputTextArea class="form-control" @bind-Value="newTask.Description" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Priority</label>
+                <InputSelect class="form-select" @bind-Value="newTask.Priority">
+                    @foreach (var p in Enum.GetValues<TaskPriority>())
+                    {
+                        <option value="@p">@p</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Status</label>
+                <InputSelect class="form-select" @bind-Value="newTask.Status">
+                    @foreach (var s in Enum.GetValues<TaskStatus>())
+                    {
+                        <option value="@s">@s</option>
+                    }
+                </InputSelect>
+            </div>
+            <button class="btn btn-primary">Add Task</button>
+        </EditForm>
+    </div>
+    <div class="col-md-8">
+        <h5>Tasks</h5>
+        @foreach (var t in tasks)
+        {
+            <TaskCard Task="t" ChangeStatusCallback="@(e => ChangeStatus(e.Item1, e.Item2))" DeleteCallback="@(id => DeleteTask(id))" />
+        }
+    </div>
+</div>
+
+@code {
+    private TaskItem newTask = new();
+    private List<TaskItem> tasks = new();
+
+    protected override void OnInitialized()
+    {
+        tasks = DataService.GetTasks().ToList();
+    }
+
+    void AddTask()
+    {
+        var added = DataService.AddTask(new TaskItem
+        {
+            Title = newTask.Title,
+            Description = newTask.Description,
+            Priority = newTask.Priority,
+            Status = newTask.Status
+        });
+
+        tasks.Add(added);
+        newTask = new TaskItem();
+    }
+
+    void ChangeStatus(TaskItem item, TaskStatus status)
+    {
+        item.Status = status;
+        DataService.UpdateTask(item);
+    }
+
+    void DeleteTask(int id)
+    {
+        DataService.DeleteTask(id);
+        tasks.RemoveAll(t => t.Id == id);
+    }
+}

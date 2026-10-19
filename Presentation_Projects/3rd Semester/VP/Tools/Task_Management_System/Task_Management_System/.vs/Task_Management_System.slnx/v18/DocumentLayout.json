@@ -1,0 +1,213 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\hec\\Desktop\\Task_Management_System\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|c:\\users\\hec\\desktop\\task_management_system\\components\\appointmentcard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|solutionrelative:components\\appointmentcard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|c:\\users\\hec\\desktop\\task_management_system\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|solutionrelative:wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|c:\\users\\hec\\desktop\\task_management_system\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|solutionrelative:pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|c:\\users\\hec\\desktop\\task_management_system\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|solutionrelative:layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|c:\\users\\hec\\desktop\\task_management_system\\pages\\about.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|solutionrelative:pages\\about.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|c:\\users\\hec\\desktop\\task_management_system\\pages\\appointments.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|solutionrelative:pages\\appointments.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|c:\\users\\hec\\desktop\\task_management_system\\pages\\tasks.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|solutionrelative:pages\\tasks.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|c:\\users\\hec\\desktop\\task_management_system\\components\\taskcard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|solutionrelative:components\\taskcard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|c:\\users\\hec\\desktop\\task_management_system\\services\\dataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|solutionrelative:services\\dataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|c:\\users\\hec\\desktop\\task_management_system\\models\\appointment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|solutionrelative:models\\appointment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|c:\\users\\hec\\desktop\\task_management_system\\models\\taskitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|solutionrelative:models\\taskitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|c:\\users\\hec\\desktop\\task_management_system\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9446FD78-A953-C526-5E58-9C802A2D93A5}|Task_Management_System.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Pages\\Home.razor",
+              "RelativeToolTip": "Pages\\Home.razor",
+              "ViewState": "AgIAABAAAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T16:46:25.839Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "NavMenu.razor",
+              "DocumentMoniker": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Layout\\NavMenu.razor",
+              "RelativeDocumentMoniker": "Layout\\NavMenu.razor",
+              "ToolTip": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Layout\\NavMenu.razor",
+              "RelativeToolTip": "Layout\\NavMenu.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T16:46:10.854Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "About.razor",
+              "DocumentMoniker": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Pages\\About.razor",
+              "RelativeDocumentMoniker": "Pages\\About.razor",
+              "ToolTip": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Pages\\About.razor",
+              "RelativeToolTip": "Pages\\About.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T16:46:04.4Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Appointments.razor",
+              "DocumentMoniker": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Pages\\Appointments.razor",
+              "RelativeDocumentMoniker": "Pages\\Appointments.razor",
+              "ToolTip": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Pages\\Appointments.razor",
+              "RelativeToolTip": "Pages\\Appointments.razor",
+              "ViewState": "AgIAADAAAAAAAAAAAAAYwFMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T16:45:59.375Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AppointmentCard.razor",
+              "DocumentMoniker": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Components\\AppointmentCard.razor",
+              "RelativeDocumentMoniker": "Components\\AppointmentCard.razor",
+              "ToolTip": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Components\\AppointmentCard.razor",
+              "RelativeToolTip": "Components\\AppointmentCard.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T16:44:00.242Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\hec\\Desktop\\Task_Management_System\\wwwroot\\index.html",
+              "RelativeDocumentMoniker": "wwwroot\\index.html",
+              "ToolTip": "C:\\Users\\hec\\Desktop\\Task_Management_System\\wwwroot\\index.html",
+              "RelativeToolTip": "wwwroot\\index.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-01-06T16:57:32.163Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Tasks.razor",
+              "DocumentMoniker": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Pages\\Tasks.razor",
+              "RelativeDocumentMoniker": "Pages\\Tasks.razor",
+              "ToolTip": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Pages\\Tasks.razor",
+              "RelativeToolTip": "Pages\\Tasks.razor",
+              "ViewState": "AgIAADUAAAAAAAAAAAAYwFgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T16:44:30.2Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TaskCard.razor",
+              "DocumentMoniker": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Components\\TaskCard.razor",
+              "RelativeDocumentMoniker": "Components\\TaskCard.razor",
+              "ToolTip": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Components\\TaskCard.razor",
+              "RelativeToolTip": "Components\\TaskCard.razor",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAqwB8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-06T16:43:46.635Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "DataService.cs",
+              "DocumentMoniker": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Services\\DataService.cs",
+              "RelativeDocumentMoniker": "Services\\DataService.cs",
+              "ToolTip": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Services\\DataService.cs",
+              "RelativeToolTip": "Services\\DataService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T16:43:14.749Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Appointment.cs",
+              "DocumentMoniker": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Models\\Appointment.cs",
+              "RelativeDocumentMoniker": "Models\\Appointment.cs",
+              "ToolTip": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Models\\Appointment.cs",
+              "RelativeToolTip": "Models\\Appointment.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T16:42:44.237Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "TaskItem.cs",
+              "DocumentMoniker": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Models\\TaskItem.cs",
+              "RelativeDocumentMoniker": "Models\\TaskItem.cs",
+              "ToolTip": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Models\\TaskItem.cs",
+              "RelativeToolTip": "Models\\TaskItem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T16:42:39.367Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\hec\\Desktop\\Task_Management_System\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T16:41:50.821Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

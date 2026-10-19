@@ -1,0 +1,1178 @@
+package View;
+
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.math.BigDecimal;
+import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
+import Controller.DBConnection;
+import Controller.InventoryController;
+import Controller.MedicineController;
+import Controller.OrderToSellerController;
+import Controller.SellerController;
+import Model.Inventory;
+import Model.Medicine;
+import Model.OrderItemToSeller;
+import Model.Seller;
+import Model.User;
+
+public class SellerDashBoard extends JFrame {
+
+	private JPanel leftPanel, homePanel, inner_home_panel, info_panel1, info_panel2, info_panel3, home_inner_panel2,
+			inventory_panel, orders_panel, med_panel, profile_panel,
+			mainPanel, innerInventoryPanel, inner_med_panel, inner_order_panel;
+
+	private JScrollPane scrollPane, med_scrollPane, order_scrollPane;
+	private JPanel buttonPanel;
+
+	private ImageIcon seller_icon, seller, logout_icon, logout_scaled_icon, home_icon,
+			home_scaled_icon, med_icon, med_scaled_icon, pf_icon, pf_scaled_icon, in_icon,
+			in_scaled_icon, or_icon, or_scaled_icon, bg_home_Icon;
+
+	JSeparator line;
+
+	private JLabel seller_Icon_Label, seller_welcome_Label, seller_name, info1_img, info1_num, info2_img, info3_img,
+			home_image, home_heading;
+
+	JTextArea paragraph;
+
+	private Image scaledImage, logout_icon_scaled, home_icon_scaled, med_icon_scaled,
+			pf_icon_scaled, in_icon_scaled, or_icon_scaled, bg_home_Image;
+
+	private JButton homeBtn, profileBtn, inventoryBtn, medicineBtn, orderBtn, logoutBtn;
+
+	private JTextField fullNameField, contactField, emailField, addressField,
+			usernameField, shopnameField, licenseField;
+	private JButton editProfileButton, saveProfileButton;
+	private Seller newseller;
+
+	private User user;
+
+	public SellerDashBoard(User user) {
+
+		super("Seller-Dashboard");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setLayout(new BorderLayout());
+
+		this.user = user;
+		newseller = new Seller();
+		newseller = new SellerController().getSellerByUserId(user.getUserId());
+
+		// Adjusting Left panel
+
+		leftPanel = new JPanel();
+		leftPanel.setPreferredSize(new Dimension(280, getHeight()));
+		leftPanel.setLayout(null);
+		leftPanel.setBackground(new Color(30, 140, 30));
+		seller_icon = new ImageIcon(getClass().getClassLoader().getResource("Seller.png"));
+
+		scaledImage = seller_icon.getImage().getScaledInstance(180, 180, java.awt.Image.SCALE_SMOOTH);
+		seller = new ImageIcon(scaledImage);
+		seller_Icon_Label = new JLabel(seller);
+		seller_Icon_Label.setBounds(30, 20, 200, 200);
+		leftPanel.add(seller_Icon_Label);
+
+		seller_welcome_Label = new JLabel("Welcome");
+		seller_welcome_Label.setBounds(65, 220, 150, 50);
+		seller_welcome_Label.setForeground(Color.WHITE);
+		seller_welcome_Label.setFont(new Font("Arial", Font.PLAIN, 30));
+		leftPanel.add(seller_welcome_Label);
+
+		line = new JSeparator();
+		line.setBounds(30, 265, 200, 2);
+		line.setForeground(new Color(255, 255, 255, 100));
+		leftPanel.add(line);
+
+		seller_name = new JLabel("Seller");
+		seller_name.setBounds(85, 260, 150, 50);
+		seller_name.setForeground(Color.WHITE);
+		seller_name.setFont(new Font("Arial", Font.BOLD, 30));
+		leftPanel.add(seller_name);
+
+		// Inserting Icon to Home Button
+		home_icon = new ImageIcon(getClass().getClassLoader().getResource("home.png"));
+		home_icon_scaled = home_icon.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+		home_scaled_icon = new ImageIcon(home_icon_scaled);
+
+		// adjusting Buttons
+		homeBtn = new JButton("Home", home_scaled_icon);
+		homeBtn.setBounds(0, 330, 280, 60);
+		homeBtn.setFocusPainted(false);
+		homeBtn.setContentAreaFilled(true);
+		homeBtn.setBorderPainted(false);
+		homeBtn.setForeground(Color.WHITE);
+		homeBtn.setBackground(new Color(50, 150, 50));
+		homeBtn.setFont(new Font("Arial", Font.BOLD, 18));
+		homeBtn.setHorizontalTextPosition(SwingConstants.RIGHT);
+		homeBtn.setVerticalTextPosition(SwingConstants.CENTER);
+		leftPanel.add(homeBtn);
+
+		// Inserting Icon to Profile Button
+		pf_icon = new ImageIcon(getClass().getClassLoader().getResource("user.png"));
+		pf_icon_scaled = pf_icon.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+		pf_scaled_icon = new ImageIcon(pf_icon_scaled);
+
+		profileBtn = new JButton("Profile", pf_scaled_icon);
+		profileBtn.setBounds(0, 400, 280, 60);
+		profileBtn.setFocusPainted(false);
+		profileBtn.setContentAreaFilled(true);
+		profileBtn.setBorderPainted(false);
+		profileBtn.setForeground(Color.WHITE);
+		profileBtn.setBackground(new Color(50, 150, 50));
+		profileBtn.setFont(new Font("Arial", Font.BOLD, 18));
+		profileBtn.setHorizontalTextPosition(SwingConstants.RIGHT);
+		profileBtn.setVerticalTextPosition(SwingConstants.CENTER);
+		leftPanel.add(profileBtn);
+
+		// Inserting Icon to Profile Button
+		in_icon = new ImageIcon(getClass().getClassLoader().getResource("inventory.png"));
+		in_icon_scaled = in_icon.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+		in_scaled_icon = new ImageIcon(in_icon_scaled);
+
+		inventoryBtn = new JButton("Inventory", in_scaled_icon);
+		inventoryBtn.setBounds(0, 470, 280, 60);
+		inventoryBtn.setFocusPainted(false);
+		inventoryBtn.setContentAreaFilled(true);
+		inventoryBtn.setBorderPainted(false);
+		inventoryBtn.setForeground(Color.WHITE);
+		inventoryBtn.setBackground(new Color(50, 150, 50));
+		inventoryBtn.setFont(new Font("Arial", Font.BOLD, 18));
+		inventoryBtn.setHorizontalTextPosition(SwingConstants.RIGHT);
+		inventoryBtn.setVerticalTextPosition(SwingConstants.CENTER);
+		leftPanel.add(inventoryBtn);
+
+		// Inserting Icon to Profile Button
+		or_icon = new ImageIcon(getClass().getClassLoader().getResource("shopping-bag.png"));
+		or_icon_scaled = or_icon.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+		or_scaled_icon = new ImageIcon(or_icon_scaled);
+
+		orderBtn = new JButton("Orders", or_scaled_icon);
+		orderBtn.setBounds(0, 540, 280, 60);
+		orderBtn.setFocusPainted(false);
+		orderBtn.setContentAreaFilled(true);
+		orderBtn.setBorderPainted(false);
+		orderBtn.setForeground(Color.WHITE);
+		orderBtn.setBackground(new Color(50, 150, 50));
+		orderBtn.setFont(new Font("Arial", Font.BOLD, 18));
+		orderBtn.setHorizontalTextPosition(SwingConstants.RIGHT);
+		orderBtn.setVerticalTextPosition(SwingConstants.CENTER);
+		leftPanel.add(orderBtn);
+
+		// Inserting Icon to Medicines Button
+		med_icon = new ImageIcon(getClass().getClassLoader().getResource("drugs.png"));
+		med_icon_scaled = med_icon.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+		med_scaled_icon = new ImageIcon(med_icon_scaled);
+
+		medicineBtn = new JButton("Medicines", med_scaled_icon);
+		medicineBtn.setBounds(0, 610, 280, 60);
+		medicineBtn.setFocusPainted(false);
+		medicineBtn.setContentAreaFilled(true);
+		medicineBtn.setBorderPainted(false);
+		medicineBtn.setForeground(Color.WHITE);
+		medicineBtn.setBackground(new Color(50, 150, 50));
+		medicineBtn.setFont(new Font("Arial", Font.BOLD, 18));
+		medicineBtn.setHorizontalTextPosition(SwingConstants.RIGHT);
+		medicineBtn.setVerticalTextPosition(SwingConstants.CENTER);
+		leftPanel.add(medicineBtn);
+
+		// Inserting Icon to Logout Button
+		logout_icon = new ImageIcon(getClass().getClassLoader().getResource("logout.png"));
+		logout_icon_scaled = logout_icon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+		logout_scaled_icon = new ImageIcon(logout_icon_scaled);
+
+		logoutBtn = new JButton("Logout", logout_scaled_icon);
+		logoutBtn.setBounds(20, 690, 140, 38);
+		logoutBtn.setBorderPainted(false);
+		logoutBtn.setFocusPainted(false);
+		logoutBtn.setBackground(new Color(100, 80, 50));
+		logoutBtn.setForeground(Color.WHITE);
+		logoutBtn.setFont(new Font("Arial", Font.BOLD, 15));
+		logoutBtn.setHorizontalTextPosition(SwingConstants.RIGHT);
+		logoutBtn.setVerticalTextPosition(SwingConstants.CENTER);
+		leftPanel.add(logoutBtn);
+
+		// Setting hover for Left Panel Buttons
+		homeBtn.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				homeBtn.setBackground(new Color(50, 150, 50));
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				homeBtn.setBackground(new Color(50, 200, 50));
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				showPanel(homePanel);
+
+			}
+		});
+
+		profileBtn.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				profileBtn.setBackground(new Color(50, 150, 50));
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				profileBtn.setBackground(new Color(50, 200, 50));
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				showPanel(profile_panel);
+
+			}
+		});
+
+		inventoryBtn.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				inventoryBtn.setBackground(new Color(50, 150, 50));
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				inventoryBtn.setBackground(new Color(50, 200, 50));
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				showPanel(inventory_panel);
+
+			}
+		});
+
+		orderBtn.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				orderBtn.setBackground(new Color(50, 150, 50));
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				orderBtn.setBackground(new Color(50, 200, 50));
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				showPanel(orders_panel);
+
+			}
+		});
+
+		medicineBtn.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				medicineBtn.setBackground(new Color(50, 150, 50));
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				medicineBtn.setBackground(new Color(50, 200, 50));
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				showPanel(med_panel);
+			}
+		});
+
+		logoutBtn.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				logoutBtn.setBackground(new Color(100, 80, 50));
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				logoutBtn.setBackground(new Color(200, 80, 50));
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				int confirm = JOptionPane.showConfirmDialog(
+						null,
+						"Are you sure you want to log out?",
+						"Logout Confirmation",
+						JOptionPane.OK_CANCEL_OPTION,
+						JOptionPane.QUESTION_MESSAGE);
+
+				if (confirm == JOptionPane.OK_OPTION) {
+
+					JOptionPane.showMessageDialog(null, "You have been logged out successfully.");
+
+					dispose();
+					new LoginPage();
+				}
+
+			}
+		});
+
+		// Home Panel
+		homePanel = new JPanel();
+
+		// Background image setting
+		bg_home_Icon = new ImageIcon(getClass().getClassLoader().getResource("background-seller-home.jpg"));
+		bg_home_Image = bg_home_Icon.getImage();
+		homePanel = new BackgroundPanel(bg_home_Image, 0.4f, false);
+
+		homePanel.setBounds(280, 0, getWidth() - 280, getHeight());
+		homePanel.setLayout(null);
+		homePanel.setVisible(true);
+		;
+
+		// inner panel for info
+
+		inner_home_panel = new JPanel();
+		inner_home_panel.setLayout(null);
+		inner_home_panel.setBounds(80, 50, 900, 250);
+		inner_home_panel.setBackground(new Color(200, 250, 230, 200));
+		homePanel.add(inner_home_panel);
+
+		// info panels
+		info_panel1 = new JPanel();
+		info_panel1.setBounds(40, 20, 220, 200);
+		info_panel1.setBackground(new Color(100, 155, 100));
+		info_panel1.setLayout(null);
+
+		info1_img = new JLabel(InsertimageIcon("product-management.png", 100));
+		info1_img.setBounds(20, 20, 100, 100);
+		info_panel1.add(info1_img);
+		info1_num = new JLabel("" + new SellerController().countInventoryItems(newseller.getSellerId()));
+		info1_num.setBounds(130, 30, 100, 40);
+		info1_num.setFont(new Font("Arial", Font.BOLD, 40));
+		info1_num.setForeground(Color.white);
+		info_panel1.add(info1_num);
+		info_panel1.add(creatLabel("Inventory", 20, 120, 200, 50, 35));
+
+		info_panel2 = new JPanel();
+		info_panel2.setLayout(null);
+		info_panel2.setBounds(340, 20, 220, 200);
+		info_panel2.setBackground(new Color(150, 140, 160));
+
+		info2_img = new JLabel(InsertimageIcon("booking.png", 100));
+		info2_img.setBounds(20, 20, 100, 100);
+		info_panel2.add(info2_img);
+
+		info_panel2.add(creatLabel("" + new OrderToSellerController().countOrder(newseller.getSellerId()), 130, 30, 100,
+				40, 40));
+		info_panel2.add(creatLabel("Orders", 20, 120, 200, 50, 35));
+
+		info_panel3 = new JPanel();
+		info_panel3.setLayout(null);
+		info_panel3.setBounds(630, 20, 220, 200);
+		info_panel3.setBackground(new Color(200, 128, 140));
+
+		info3_img = new JLabel(InsertimageIcon("first-aid-kit.png", 90));
+		info3_img.setBounds(20, 20, 100, 100);
+		info_panel3.add(info3_img);
+
+		info_panel3.add(creatLabel("" + new MedicineController().totalMedicines(), 130, 30, 100, 40, 40));
+		info_panel3.add(creatLabel("Medicines", 20, 120, 200, 50, 35));
+
+		inner_home_panel.add(info_panel1);
+		inner_home_panel.add(info_panel2);
+		inner_home_panel.add(info_panel3);
+
+		home_inner_panel2 = new JPanel();
+		home_inner_panel2.setLayout(null);
+		home_inner_panel2.setBounds(80, 350, 900, 350);
+		home_inner_panel2.setBackground(new Color(200, 250, 230, 200));
+		home_image = new JLabel(InsertimageIcon("home_image.jpg", 300));
+		home_image.setBounds(20, 20, 300, 300);
+
+		ImageIcon reload_icon = new ImageIcon(getClass().getClassLoader().getResource("newreload.png"));
+		Image reload_icon_scaled = reload_icon.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		ImageIcon reload_scaled_icon = new ImageIcon(reload_icon_scaled);
+
+		JButton reload = createButton(reload_scaled_icon, 810, 20, 40, 40);
+		reload.setContentAreaFilled(false);
+		reload.setBorderPainted(false);
+		reload.setFocusPainted(false);
+		reload.setToolTipText("Reload Dashboard");
+
+		reload.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Reload info panel counts
+				info1_num.setText("" + new SellerController().countInventoryItems(newseller.getSellerId()));
+				((JLabel) info_panel2.getComponent(1))
+						.setText("" + new OrderToSellerController().countOrder(newseller.getSellerId()));
+				((JLabel) info_panel3.getComponent(1)).setText("" + new MedicineController().totalMedicines());
+
+				// Optionally repaint or revalidate
+				homePanel.revalidate();
+				homePanel.repaint();
+			}
+		});
+
+		home_heading = new JLabel("Welcome to Your Seller Dashboard");
+		home_heading.setBounds(340, 20, 550, 50);
+		home_heading.setFont(new Font("Arial", Font.BOLD, 25));
+
+		paragraph = new JTextArea(
+				"At PharmaEase, we believe in simplifying the complex. Your Seller Dashboard is more than just a " +
+						"control panel — it’s your command center to efficiently manage inventory, track orders, update "
+						+
+						"medicine details, and monitor your pharmacy's performance in real-time. Whether you're restocking "
+						+
+						"fast-moving medicines or checking customer orders, this hub is designed to give you maximum control "
+						+
+						"with minimal effort. Boost your pharmacy’s productivity, ensure accuracy, and deliver better service — "
+						+
+						"all in one place. Let PharmaEase help you serve smarter and grow faster.");
+		paragraph.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		paragraph.setBounds(320, 60, 550, 550);
+		paragraph.setLineWrap(true);
+		paragraph.setWrapStyleWord(true);
+		paragraph.setEditable(false);
+		paragraph.setOpaque(false);
+		paragraph.setBorder(BorderFactory.createEmptyBorder(10, 20, 20, 20));
+		home_inner_panel2.add(home_heading);
+		home_inner_panel2.add(paragraph);
+		home_inner_panel2.add(reload);
+
+		home_inner_panel2.add(home_image);
+		homePanel.add(home_inner_panel2);
+
+		// Profile panel
+
+		profile_panel = createProfilePanel();
+		profile_panel.setVisible(false);
+
+		// inventory_panel
+		inventory_panel = new JPanel();
+		inventory_panel.setBounds(280, 0, getWidth() - 280, getHeight());
+		inventory_panel.setLayout(null);
+		inventory_panel.setBackground(Color.white);
+		innerInventoryPanel = new JPanel(new GridBagLayout());
+		innerInventoryPanel.setBounds(20, 20, 1000, 90);
+		innerInventoryPanel.setBackground(new Color(50, 50, 50, 50));
+		innerInventoryPanel.setBorder(null);
+		JLabel inL = new JLabel("Inventory");
+		inL.setHorizontalAlignment(SwingConstants.CENTER);
+		inL.setVerticalAlignment(SwingConstants.CENTER);
+		inL.setFont(new Font("Arial", Font.BOLD, 30));
+		innerInventoryPanel.add(inL);
+
+		// Positioning
+		int labelX = 30;
+		int fieldX = 200;
+		int startY = 440; // BELOW the table
+		int rowHeight = 40;
+
+		// --- ID ---
+		JLabel idLabel = new JLabel("ID:");
+		idLabel.setBounds(labelX, startY, 150, 30);
+		idLabel.setFont(new Font("Arial", Font.BOLD, 16));
+		inventory_panel.add(idLabel);
+
+		JTextField idField = new JTextField();
+		idField.setBounds(fieldX, startY, 200, 30);
+		idField.setEditable(false);
+		inventory_panel.add(idField);
+
+		// --- Batch Number ---
+		JLabel batchLabel = new JLabel("Batch Number:");
+		batchLabel.setBounds(labelX, startY + rowHeight, 150, 30);
+		batchLabel.setFont(new Font("Arial", Font.BOLD, 16));
+		inventory_panel.add(batchLabel);
+
+		JTextField batchField = new JTextField();
+		batchField.setBounds(fieldX, startY + rowHeight, 200, 30);
+		batchField.setEditable(false);
+		inventory_panel.add(batchField);
+
+		// --- Quantity ---
+		JLabel quantityLabel = new JLabel("Quantity:");
+		quantityLabel.setBounds(labelX + 450, startY, 150, 30);
+		quantityLabel.setFont(new Font("Arial", Font.BOLD, 16));
+		inventory_panel.add(quantityLabel);
+
+		JTextField quantityField = new JTextField();
+		quantityField.setBounds(fieldX + 450, startY, 200, 30);
+		inventory_panel.add(quantityField);
+
+		// --- Manufacture Date ---
+		JLabel mfgLabel = new JLabel("Manufacture Date:");
+		mfgLabel.setBounds(labelX + 450, startY + rowHeight, 150, 30);
+		mfgLabel.setFont(new Font("Arial", Font.BOLD, 16));
+		inventory_panel.add(mfgLabel);
+
+		JTextField mfgField = new JTextField();
+		mfgField.setBounds(fieldX + 450, startY + rowHeight, 200, 30);
+		inventory_panel.add(mfgField);
+
+		// --- Expiry Date ---
+		JLabel expLabel = new JLabel("Expiry Date:");
+		expLabel.setBounds(labelX + 450, startY + 2 * rowHeight, 150, 30);
+		expLabel.setFont(new Font("Arial", Font.BOLD, 16));
+		inventory_panel.add(expLabel);
+
+		JTextField expField = new JTextField();
+		expField.setBounds(fieldX + 450, startY + 2 * rowHeight, 200, 30);
+		inventory_panel.add(expField);
+
+		JButton Refresh = createButton("Refresh", 620, 650, 100, 30);
+		Refresh.setBackground(Color.LIGHT_GRAY);
+		Refresh.setForeground(Color.white);
+
+		JButton deleteBtn = createButton("Delete", 780, 650, 100, 30);
+		deleteBtn.setBackground(Color.red);
+		deleteBtn.setForeground(Color.white);
+
+		JButton UpdateBtn = createButton("Update", 940, 650, 100, 30);
+		UpdateBtn.setBackground(Color.green);
+		UpdateBtn.setForeground(Color.white);
+
+		List<Inventory> list = new InventoryController().getInventoryDetailsBySellerId(newseller.getSellerId());
+
+		String columns[] = { "ID", "Batch_Number", "Quantity", "Manufacture_Date", "Expiry_Date" };
+
+		DefaultTableModel model = new DefaultTableModel(columns, 0);
+		JTable inventoryTable = new JTable(model);
+		JTableHeader header = inventoryTable.getTableHeader();
+		header.setFont(new Font("Arial", Font.BOLD, 16));
+		inventoryTable.setRowHeight(30);
+		scrollPane = new JScrollPane(inventoryTable);
+		scrollPane.setBounds(20, 120, 1000, 300);
+
+		for (Inventory inv : list) {
+			Object[] row = {
+					inv.getInventoryId(),
+					inv.getBatchNumber(),
+					inv.getQuantity(),
+					inv.getManufacturingDate().toString(),
+					inv.getExpiryDate().toString()
+			};
+			model.addRow(row);
+		}
+
+		inventoryTable.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int selectedRow = inventoryTable.getSelectedRow();
+				if (selectedRow != -1) {
+					idField.setText(model.getValueAt(selectedRow, 0).toString());
+					batchField.setText(model.getValueAt(selectedRow, 1).toString());
+					quantityField.setText(model.getValueAt(selectedRow, 2).toString());
+					mfgField.setText(model.getValueAt(selectedRow, 3).toString());
+					expField.setText(model.getValueAt(selectedRow, 4).toString());
+				}
+
+			}
+		});
+
+		UpdateBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (idField.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please select an inventory row to update.");
+					return;
+				}
+
+				try {
+					int inventoryId = Integer.parseInt(idField.getText());
+					int quantity = Integer.parseInt(quantityField.getText());
+					String mfgDate = mfgField.getText();
+					String expDate = expField.getText();
+
+					Inventory updated = new Inventory();
+					updated.setInventoryId(inventoryId);
+					updated.setQuantity(quantity);
+					updated.setManufacturingDate(LocalDate.parse(mfgDate)); // Format: yyyy-MM-dd
+					updated.setExpiryDate(LocalDate.parse(expDate));
+					boolean success = new InventoryController().updateInventory(updated);
+
+					if (success) {
+						JOptionPane.showMessageDialog(null, "Inventory updated successfully.");
+						Refresh.doClick(); // refreshes the table
+					} else {
+						JOptionPane.showMessageDialog(null, "Update failed.", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(null, "Invalid input: " + ex.getMessage(), "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+
+		Refresh.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				model.setRowCount(0);
+
+				List<Inventory> updatedList = new InventoryController()
+						.getInventoryDetailsBySellerId(newseller.getSellerId());
+
+				for (Inventory inv : updatedList) {
+					Object[] row = {
+							inv.getInventoryId(),
+							inv.getBatchNumber(),
+							inv.getQuantity(),
+							inv.getManufacturingDate().toString(),
+							inv.getExpiryDate().toString()
+					};
+
+					model.addRow(row);
+				}
+			}
+		});
+
+		deleteBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selectedRow = inventoryTable.getSelectedRow();
+
+				if (selectedRow == -1) {
+					JOptionPane.showMessageDialog(null, "Please select an inventory item to delete.", "No Selection",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+
+				int inventoryId = Integer.parseInt(model.getValueAt(selectedRow, 0).toString()); // Column index 1 =
+																									// Batch_Number
+
+				int confirm = JOptionPane.showConfirmDialog(null,
+						"Are you sure you want to delete batch: " + inventoryId + "?", "Confirm Delete",
+						JOptionPane.YES_NO_OPTION);
+
+				if (confirm == JOptionPane.YES_OPTION) {
+					boolean deleted = new InventoryController().deleteInventoryById(inventoryId);
+
+					if (deleted) {
+						JOptionPane.showMessageDialog(null, "Inventory deleted successfully.");
+						model.removeRow(selectedRow); // Remove from table directly (or call Refresh)
+
+					} else {
+						JOptionPane.showMessageDialog(null, "Failed to delete inventory.", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
+
+		inventory_panel.add(scrollPane);
+		inventory_panel.add(Refresh);
+		inventory_panel.add(deleteBtn);
+		inventory_panel.add(UpdateBtn);
+		inventory_panel.add(innerInventoryPanel);
+		inventory_panel.setVisible(false);
+
+		// Medicine Panel
+		med_panel = new JPanel();
+		med_panel.setBounds(280, 0, getWidth() - 280, getHeight());
+		med_panel.setLayout(null);
+
+		inner_med_panel = new JPanel(new GridBagLayout());
+		inner_med_panel.setBounds(20, 20, 1000, 90);
+		inner_med_panel.setBackground(new Color(50, 50, 50, 50));
+		inner_med_panel.setBorder(null);
+		med_panel.add(inner_med_panel);
+
+		JLabel medL = new JLabel("Medicines");
+		medL.setHorizontalAlignment(SwingConstants.CENTER);
+		medL.setVerticalAlignment(SwingConstants.CENTER);
+		medL.setFont(new Font("Arial", Font.BOLD, 30));
+		inner_med_panel.add(medL);
+
+		List<Medicine> med_list = new MedicineController().getAllMedicines();
+
+		String med_columns[] = { "ID", "Name", "Description", "Manufacturer", "requires_prescription", "unit_price",
+				"Add to inventory" };
+
+		DefaultTableModel med_model = new DefaultTableModel(med_columns, 0);
+		JTable medicineTable = new JTable(med_model);
+		JTableHeader med_header = medicineTable.getTableHeader();
+		med_header.setFont(new Font("Arial", Font.BOLD, 16));
+		medicineTable.setRowHeight(30);
+		med_scrollPane = new JScrollPane(medicineTable);
+		med_scrollPane.setBounds(20, 120, 1000, 550);
+
+		for (Medicine med : med_list) {
+			Object[] row = {
+					med.getMedicineId(),
+					med.getName(),
+					med.getDescription(),
+					med.getManufacturer(),
+					med.isRequiresPrescription() ? "Yes" : "No",
+					med.getUnitPrice(),
+					"Add to inventory"
+			};
+			med_model.addRow(row);
+		}
+
+		// Assuming you're inside a JFrame context:
+		medicineTable.getColumn("Add to inventory").setCellRenderer(new ButtonRenderer());
+		medicineTable.getColumn("Add to inventory")
+				.setCellEditor(new ButtonEditor(newseller.getSellerId(), new JCheckBox(), medicineTable, this));
+
+		med_panel.add(med_scrollPane);
+
+		med_panel.setBackground(Color.white);
+		med_panel.setVisible(false);
+
+		// Order panel
+		orders_panel = new JPanel();
+		orders_panel.setBounds(280, 0, getWidth() - 280, getHeight());
+		orders_panel.setLayout(null);
+		orders_panel.setBackground(Color.white);
+		orders_panel.setVisible(false);
+
+		inner_order_panel = new JPanel(new GridBagLayout());
+		inner_order_panel.setBounds(20, 20, 1000, 90);
+		inner_order_panel.setBackground(new Color(50, 50, 50, 50));
+		inner_order_panel.setBorder(null);
+		orders_panel.add(inner_order_panel);
+
+		JLabel orderL = new JLabel("Orders");
+		orderL.setHorizontalAlignment(SwingConstants.CENTER);
+		orderL.setVerticalAlignment(SwingConstants.CENTER);
+		orderL.setFont(new Font("Arial", Font.BOLD, 30));
+		inner_order_panel.add(orderL);
+
+		String order_columns[] = { "ID", "Item", "Inventory_Id", "Quantity", "Unit_Price", "TotalAmount", "Status" };
+
+		DefaultTableModel order_model = new DefaultTableModel(order_columns, 0);
+		JTable orderTable = new JTable(order_model);
+		JTableHeader order_header = orderTable.getTableHeader();
+		order_header.setFont(new Font("Arial", Font.BOLD, 16));
+		order_scrollPane = new JScrollPane(orderTable);
+		order_scrollPane.setBounds(20, 120, 1000, 300);
+
+		List<OrderItemToSeller> orders = new OrderToSellerController().getOrdersBySellerId(newseller.getSellerId());
+
+		for (OrderItemToSeller order : orders) {
+			int itemId = order.getItemId();
+
+			String medicineName = new MedicineController().getMedicineNameByItemId(itemId);
+
+			BigDecimal totalAmount = order.getUnitPrice().multiply(BigDecimal.valueOf(order.getQuantity()));
+
+			Object[] rowData = {
+					order.getId(),
+					medicineName,
+					order.getInventoryId(),
+					order.getQuantity(),
+					order.getUnitPrice(),
+					totalAmount,
+					order.getStatus()
+			};
+
+			order_model.addRow(rowData);
+		}
+
+		// Panel to hold buttons
+		buttonPanel = new JPanel();
+		buttonPanel.setBounds(20, 430, 1000, 50);
+		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
+		buttonPanel.setBackground(Color.white);
+
+		// Confirm Button
+		JButton confirmBtn = new JButton("Confirm Order");
+		confirmBtn.setFont(new Font("Arial", Font.BOLD, 16));
+		confirmBtn.setBackground(new Color(0, 153, 76)); // Green
+		confirmBtn.setForeground(Color.white);
+		buttonPanel.add(confirmBtn);
+
+		// Cancel Button
+		JButton cancelBtn = new JButton("Cancel Order");
+		cancelBtn.setFont(new Font("Arial", Font.BOLD, 16));
+		cancelBtn.setBackground(new Color(204, 0, 0)); // Red
+		cancelBtn.setForeground(Color.white);
+		buttonPanel.add(cancelBtn);
+
+		// Refresh Button
+		JButton refreshBtn = new JButton("Refresh Orders");
+		refreshBtn.setFont(new Font("Arial", Font.BOLD, 16));
+		refreshBtn.setBackground(new Color(0, 102, 204)); // Blue
+		refreshBtn.setForeground(Color.white);
+		buttonPanel.add(refreshBtn);
+
+		orders_panel.add(buttonPanel);
+
+		orders_panel.add(order_scrollPane);
+
+		mainPanel = new JPanel(new CardLayout());
+
+		mainPanel.add(homePanel, "Home");
+		mainPanel.add(profile_panel, "Profile");
+		mainPanel.add(inventory_panel, "Inventory");
+		mainPanel.add(orders_panel, "Orders");
+		mainPanel.add(med_panel, "Medicines");
+
+		add(leftPanel, BorderLayout.WEST);
+		add(mainPanel, BorderLayout.CENTER);
+
+		// Fix layout on resize/maximize
+		mainPanel.addComponentListener(new java.awt.event.ComponentAdapter() {
+			@Override
+			public void componentResized(java.awt.event.ComponentEvent e) {
+				int w = mainPanel.getWidth();
+				int h = mainPanel.getHeight();
+
+				// Home panel inner panels
+				inner_home_panel.setBounds(Math.max(20, (w - 900) / 2), 50, Math.min(900, w - 40), 250);
+				home_inner_panel2.setBounds(Math.max(20, (w - 900) / 2), 320, Math.min(900, w - 40),
+						Math.max(300, h - 380));
+
+				// Inventory panel
+				innerInventoryPanel.setBounds(20, 20, w - 40, 90);
+				scrollPane.setBounds(20, 120, w - 40, Math.max(200, h - 420));
+
+				// Medicine panel
+				inner_med_panel.setBounds(20, 20, w - 40, 90);
+				med_scrollPane.setBounds(20, 120, w - 40, Math.max(300, h - 160));
+
+				// Orders panel
+				inner_order_panel.setBounds(20, 20, w - 40, 90);
+				order_scrollPane.setBounds(20, 120, w - 40, Math.max(200, h - 320));
+				buttonPanel.setBounds(20, Math.max(330, h - 160), w - 40, 50);
+
+				mainPanel.revalidate();
+				mainPanel.repaint();
+			}
+		});
+
+		setVisible(true);
+	}
+
+	public JButton createButton(String Text, int x, int y, int width, int height) {
+		JButton button = new JButton(Text);
+		button.setBounds(x, y, width, height);
+
+		return button;
+	}
+
+	public JButton createButton(ImageIcon icon, int x, int y, int width, int height) {
+		JButton button = new JButton(icon);
+		button.setBounds(x, y, width, height);
+
+		return button;
+	}
+
+	public ImageIcon InsertimageIcon(String path, int size) {
+		ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource(path));
+		Image icon_scaled = icon.getImage().getScaledInstance(size, size, Image.SCALE_SMOOTH);
+		ImageIcon scaled_icon = new ImageIcon(icon_scaled);
+
+		return scaled_icon;
+	}
+
+	public JLabel creatLabel(String text, int x, int y, int width, int hieght, int fontSize) {
+		JLabel Label = new JLabel(text);
+		Label.setBounds(x, y, width, hieght);
+		Label.setFont(new Font("Arial", Font.BOLD, fontSize));
+		Label.setForeground(Color.white);
+
+		return Label;
+	}
+
+	private void showPanel(JPanel panelToShow) {
+		homePanel.setVisible(false);
+		inventory_panel.setVisible(false);
+		orders_panel.setVisible(false);
+		med_panel.setVisible(false);
+		profile_panel.setVisible(false);
+
+		panelToShow.setVisible(true);
+	}
+
+	private JPanel createProfilePanel() {
+
+		JPanel panel = new JPanel(new BorderLayout(10, 10));
+		panel.setBorder(new EmptyBorder(20, 30, 20, 30));
+		panel.setBackground(new Color(248, 249, 250));
+
+		JLabel titleLabel = new JLabel("Seller Profile");
+		titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 26));
+		titleLabel.setForeground(Color.DARK_GRAY);
+		panel.add(titleLabel, BorderLayout.NORTH);
+
+		// JPanel formPanel = new JPanel(new GridBagLayout());
+		JPanel formPanel = new JPanel();
+		formPanel.setLayout(null);
+		formPanel.setBackground(Color.WHITE);
+		formPanel.setBorder(new CompoundBorder(
+				new LineBorder(new Color(200, 200, 200), 1),
+				new EmptyBorder(20, 20, 20, 20)));
+
+		JLabel formL = new JLabel("Personal Information");
+		formL.setBounds(10, 10, 300, 30);
+		formL.setFont(new Font("Arial", Font.BOLD, 20));
+		formPanel.add(formL);
+
+		JLabel fullName = new JLabel("FullName: ");
+		fullName.setBounds(30, 60, 200, 30);
+		fullName.setFont(new Font("Arial", Font.BOLD, 17));
+		formPanel.add(fullName);
+		fullNameField = new JTextField(newseller.getFirstName() + " " + newseller.getLastName(), 20);
+		fullNameField.setEditable(false);
+		fullNameField.setBounds(135, 60, 800, 30);
+		formPanel.add(fullNameField);
+
+		JLabel username = new JLabel("UserName: ");
+		username.setBounds(30, 120, 200, 30);
+		username.setFont(new Font("Arial", Font.BOLD, 17));
+		formPanel.add(username);
+		usernameField = new JTextField(user.getUsername(), 20);
+		usernameField.setEditable(false);
+		usernameField.setBounds(135, 120, 800, 30);
+		formPanel.add(usernameField);
+
+		JLabel Pharmacyname = new JLabel("Shop Name: ");
+		Pharmacyname.setBounds(30, 180, 200, 30);
+		Pharmacyname.setFont(new Font("Arial", Font.BOLD, 17));
+		formPanel.add(Pharmacyname);
+		shopnameField = new JTextField(newseller.getPharmacyName(), 20);
+		shopnameField.setEditable(false);
+		shopnameField.setBounds(135, 180, 800, 30);
+		formPanel.add(shopnameField);
+
+		JLabel licenseNo = new JLabel("License No: ");
+		licenseNo.setBounds(30, 240, 200, 30);
+		licenseNo.setFont(new Font("Arial", Font.BOLD, 17));
+		formPanel.add(licenseNo);
+		licenseField = new JTextField(newseller.getLicenseNumber(), 20);
+		licenseField.setEditable(false);
+		licenseField.setBounds(135, 240, 800, 30);
+		formPanel.add(licenseField);
+
+		JLabel email = new JLabel("Email: ");
+		email.setBounds(30, 300, 200, 30);
+		email.setFont(new Font("Arial", Font.BOLD, 17));
+		formPanel.add(email);
+		emailField = new JTextField(user.getEmail(), 20);
+		emailField.setEditable(false);
+		emailField.setBounds(135, 300, 800, 30);
+		formPanel.add(emailField);
+
+		JLabel contact = new JLabel("Contact No: ");
+		contact.setBounds(30, 360, 200, 30);
+		contact.setFont(new Font("Arial", Font.BOLD, 17));
+		formPanel.add(contact);
+		contactField = new JTextField(user.getPhone(), 20);
+		contactField.setEditable(false);
+		contactField.setBounds(135, 360, 800, 30);
+		formPanel.add(contactField);
+
+		JLabel address = new JLabel("Address: ");
+		address.setBounds(30, 420, 200, 30);
+		address.setFont(new Font("Arial", Font.BOLD, 17));
+		formPanel.add(address);
+		addressField = new JTextField(user.getAddress(), 20);
+		addressField.setEditable(false);
+		addressField.setBounds(135, 420, 800, 30);
+		formPanel.add(addressField);
+
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		editProfileButton = new JButton("Edit");
+		saveProfileButton = new JButton("Save");
+		saveProfileButton.setEnabled(false);
+
+		editProfileButton.addActionListener(e -> toggleEditMode(true));
+		saveProfileButton.addActionListener(e -> saveProfileChanges());
+
+		buttonPanel.add(editProfileButton);
+		buttonPanel.add(saveProfileButton);
+
+		panel.add(formPanel, BorderLayout.CENTER);
+		panel.add(buttonPanel, BorderLayout.SOUTH);
+
+		return panel;
+	}
+
+	private void toggleEditMode(boolean editable) {
+		fullNameField.setEditable(editable);
+		contactField.setEditable(editable);
+		emailField.setEditable(editable);
+		addressField.setEditable(editable);
+		saveProfileButton.setEnabled(editable);
+		editProfileButton.setEnabled(!editable);
+	}
+
+	private void saveProfileChanges() {
+		String fullName = fullNameField.getText();
+		String contact = contactField.getText();
+		String email = emailField.getText();
+		String address = addressField.getText();
+
+		newseller.setFirstName(fullName);
+		newseller.setPhone(contact);
+		newseller.setAddress(address);
+		user.setEmail(email);
+
+		boolean sellerUpdated = new SellerController().updateSeller(newseller);
+		boolean userUpdated = new Controller.UserController().updateUser(user);
+
+		if (sellerUpdated && userUpdated) {
+			JOptionPane.showMessageDialog(this, "Profile updated successfully!");
+			toggleEditMode(false);
+		} else {
+			JOptionPane.showMessageDialog(this, "Failed to update profile. Please try again.", "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+}

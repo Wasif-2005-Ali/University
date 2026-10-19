@@ -1,0 +1,196 @@
+package View;
+
+import javax.swing.*;
+
+import Controller.UserController;
+import Model.User;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class LoginPage extends JFrame {
+
+    public LoginPage() {
+        setTitle("PharmaEase - Sign In");
+        setSize(800, 500);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+        setUndecorated(false);
+//        ImageIcon logo = new ImageIcon(getClass().getClassLoader().getResource("PharmaEase.png"));
+//	    setIconImage(logo.getImage());
+
+        // right gradient panel
+        JPanel rightPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                Color color1 = new Color(0, 180, 20); 
+                Color color2 = new Color(10, 30, 10);  
+                GradientPaint gp = new GradientPaint(0, 0, color1, getWidth(), getHeight(), color2);
+                g2d.setPaint(gp);
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        rightPanel.setPreferredSize(new Dimension(300, 500));
+        rightPanel.setLayout(new GridBagLayout());
+
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(10, 0, 10, 0);
+        
+        //Welcome Label
+        JLabel welcomeLabel = new JLabel("Welcome Back!");
+        welcomeLabel.setForeground(Color.WHITE);
+        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 33));
+        gbc.gridy = 0; 
+        rightPanel.add(welcomeLabel,gbc);
+        
+        //text Label
+        JLabel textLabel1 = new JLabel("To Keep Connected With us please");
+        textLabel1.setForeground(Color.WHITE);
+        textLabel1.setFont(new Font("Arial",Font.PLAIN,11));
+        gbc.gridy = 1; 
+        rightPanel.add(textLabel1,gbc);
+        
+        JLabel textLabel2 = new JLabel("Sign in with your personal info");
+        textLabel2.setForeground(Color.WHITE);
+        textLabel2.setFont(new Font("Arial",Font.PLAIN,11));
+        gbc.gridy = 2; 
+        rightPanel.add(textLabel2,gbc);
+        
+        //Sign up button
+        JButton subtn = new JButton("Sign up");
+        gbc.gridy = 3;
+        rightPanel.add(subtn,gbc);
+        
+       
+
+        // Right login panel
+        JPanel leftPanel = new JPanel();
+        leftPanel.setLayout(null); // Absolute layout for clean manual design
+        
+        JLabel titleLabel = new JLabel("Sign In");
+        titleLabel.setForeground(new Color(0, 150, 20) );
+        titleLabel.setFont(new Font("Arial",Font.BOLD,30));
+        titleLabel.setBounds(190, 50, 100, 40);
+        
+
+        JLabel userLabel = new JLabel("Username:");
+        userLabel.setBounds(50, 120, 100, 25);
+        JTextField usernameField = new JTextField();
+        usernameField.setBounds(150, 120, 200, 30);
+
+        JLabel passLabel = new JLabel("Password:");
+        passLabel.setBounds(50, 170, 100, 25);
+        JPasswordField passwordField = new JPasswordField();
+        passwordField.setBounds(150, 170, 200, 30);
+        
+        JButton fpBtn = new JButton("Forgot your Password?");
+        fpBtn.setBounds(150, 220, 200, 30);
+        fpBtn.setBorderPainted(false);
+        fpBtn.setFocusPainted(false);
+        fpBtn.setContentAreaFilled(false);
+        fpBtn.setForeground(new Color(30, 30, 30));
+        
+        JButton loginBtn = new JButton("Sign in");
+        loginBtn.setBounds(150, 270, 200, 35);
+
+        // Add components to right panel
+        leftPanel.add(titleLabel);
+        leftPanel.add(userLabel);
+        leftPanel.add(usernameField);
+        leftPanel.add(passLabel);
+        leftPanel.add(passwordField);
+        leftPanel.add(fpBtn);
+        leftPanel.add(loginBtn);
+
+
+        // Add panels to frame
+        add(leftPanel, BorderLayout.CENTER);
+        add(rightPanel, BorderLayout.EAST);
+        
+        loginBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				String userName = usernameField.getText().trim();
+				char[] passwordChars = passwordField.getPassword();
+				String password = new String(passwordChars).trim();
+				
+				if(userName.isEmpty() || password.isEmpty())
+				{
+					 JOptionPane.showMessageDialog(null, "Please enter credentials", "Missing Info", JOptionPane.WARNING_MESSAGE);
+					 return;
+				}
+				
+				if(new UserController().validateLogin(userName, password))
+				{
+					JOptionPane.showMessageDialog(null,"Login successfully" );
+					java.util.Arrays.fill(passwordChars, '0');
+					
+					
+					
+					UserController controlUserRole = new UserController();
+				    User user = controlUserRole.getUserByUsername(userName);
+				    if(user.getUserTypeId() == 1)
+				    {
+				    	dispose();
+//				    	new CustomerDashboard();
+				    	 SwingUtilities.invokeLater(() -> {
+				             try {
+				                 // Set system look and feel for better integration with the OS
+				                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				             } catch (Exception f) {
+				                 f.printStackTrace();
+				             }
+				             
+				             // Create and display the Customer Dashboard
+				             CustomerDashboard dashboard = new CustomerDashboard();
+				             dashboard.setVisible(true);
+				         });
+				    }
+				    else if(user.getUserTypeId() == 2)
+				    {
+				    	dispose();
+				    	 new SellerDashBoard(user);
+				    	
+				    }
+				    else if(user.getUserTypeId() == 3)
+				    {
+				    	dispose();
+						new AdminDashboard(user);
+				    }
+				    else
+				    {
+				    	JOptionPane.showMessageDialog(null, "User type not found");
+				    }
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Invalid credentials", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				
+			}
+		});
+        
+        //SignUp Button Action
+        subtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				dispose();
+				new SignUpPage();
+			}
+		});
+        
+
+        setVisible(true);
+    }
+}

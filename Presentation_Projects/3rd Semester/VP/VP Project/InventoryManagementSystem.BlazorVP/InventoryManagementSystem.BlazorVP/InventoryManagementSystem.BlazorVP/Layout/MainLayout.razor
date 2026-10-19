@@ -1,0 +1,38 @@
+﻿@inherits LayoutComponentBase
+@inject InventoryManagementSystem.BlazorVP.Services.AuthService Auth
+@inject NavigationManager Nav
+
+<header class="app-header">
+    <div class="header-left">
+        Inventory & Order System
+    </div>
+
+    @if (Auth.IsLoggedIn)
+    {
+        <div class="header-right">
+
+            <!-- USERNAME / ROLE -->
+            <span class="user-role">
+                @(Auth.IsAdmin ? "Administrator" : "User")
+            </span>
+
+            <!-- LOGOUT -->
+            <button class="logout-btn" @onclick="Logout">
+                Logout
+            </button>
+
+        </div>
+    }
+</header>
+
+<div class="main-body">
+    @Body
+</div>
+
+@code {
+    void Logout()
+    {
+        Auth.Logout();
+        Nav.NavigateTo("/");
+    }
+}

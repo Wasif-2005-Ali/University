@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queue Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <h2>Queue Visualizer (FIFO)</h2>
+    <p>Click a number to ENQUEUE (add to back):</p>
+
+    <div class="input-values">
+        <button class="enq-btn">A</button>
+        <button class="enq-btn">B</button>
+        <button class="enq-btn">C</button>
+        <button class="enq-btn">D</button>
+    </div>
+
+    <p>Click the front item in the queue to DEQUEUE it:</p>
+
+
+    <div class="queue-wrapper">
+        <span class="label">Front (Exit) &lt;--</span>
+        <div id="queue-container">
+
+        </div>
+        <span class="label">&lt;-- Back (Entry)</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,330 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/25.0.2 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="25.0.2">
+  <diagram id="9C388TIbMUKp1IslV4AF" name="Page-1">
+    <mxGraphModel dx="529" dy="341" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="System Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#1F3864;" parent="1" vertex="1">
+          <mxGeometry x="300" y="20" width="900" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="Real-Time Digital Clock &amp; Stopwatch | x86 MASM + Irvine32 | Developer: Wasif Ali" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#595959;" parent="1" vertex="1">
+          <mxGeometry x="300" y="58" width="900" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="layer_api" value="Windows API Layer" style="swimlane;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=11;fontColor=#0C447C;rounded=1;arcSize=4;" parent="1" vertex="1">
+          <mxGeometry x="80" y="100" width="1250" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="api_getlocaltime" value="GetLocalTime()&#xa;(Win32 API)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F3864;strokeColor=#1F3864;fontColor=#ffffff;fontSize=11;fontStyle=1;" parent="layer_api" vertex="1">
+          <mxGeometry x="40" y="35" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="api_gettickcount" value="GetTickCount()&#xa;(via GetMSeconds)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F3864;strokeColor=#1F3864;fontColor=#ffffff;fontSize=11;fontStyle=1;" parent="layer_api" vertex="1">
+          <mxGeometry x="320" y="35" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="api_delay" value="Delay()&#xa;(50ms sleep)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F3864;strokeColor=#1F3864;fontColor=#ffffff;fontSize=11;fontStyle=1;" parent="layer_api" vertex="1">
+          <mxGeometry x="600" y="35" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="api_console" value="Console I/O&#xa;(SetTextColor, Gotoxy, WriteChar)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F3864;strokeColor=#1F3864;fontColor=#ffffff;fontSize=11;fontStyle=1;" parent="layer_api" vertex="1">
+          <mxGeometry x="880" y="35" width="230" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="api_readkey" value="ReadKey()&#xa;(non-blocking poll)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F3864;strokeColor=#1F3864;fontColor=#ffffff;fontSize=11;fontStyle=1;" parent="layer_api" vertex="1">
+          <mxGeometry x="1180" y="35" width="60" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="layer_irvine" value="Irvine32 Library Layer" style="swimlane;startSize=30;fillColor=#ffe6cc;strokeColor=#d6b656;fontStyle=1;fontSize=11;fontColor=#7B4F00;rounded=1;arcSize=4;" parent="1" vertex="1">
+          <mxGeometry x="50" y="220" width="1330" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="irv_clrscr" value="Clrscr" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0a30a;strokeColor=#BD7000;fontColor=#4B2E00;fontSize=11;" parent="layer_irvine" vertex="1">
+          <mxGeometry x="60" y="22" width="100" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="irv_gotoxy" value="Gotoxy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0a30a;strokeColor=#BD7000;fontColor=#4B2E00;fontSize=11;" parent="layer_irvine" vertex="1">
+          <mxGeometry x="180" y="22" width="100" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="irv_writechar" value="WriteChar" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0a30a;strokeColor=#BD7000;fontColor=#4B2E00;fontSize=11;" parent="layer_irvine" vertex="1">
+          <mxGeometry x="300" y="22" width="100" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="irv_writestring" value="WriteString" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0a30a;strokeColor=#BD7000;fontColor=#4B2E00;fontSize=11;" parent="layer_irvine" vertex="1">
+          <mxGeometry x="420" y="22" width="100" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="irv_writedec" value="WriteDec" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0a30a;strokeColor=#BD7000;fontColor=#4B2E00;fontSize=11;" parent="layer_irvine" vertex="1">
+          <mxGeometry x="540" y="22" width="100" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="irv_settextcolor" value="SetTextColor" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0a30a;strokeColor=#BD7000;fontColor=#4B2E00;fontSize=11;" parent="layer_irvine" vertex="1">
+          <mxGeometry x="660" y="22" width="110" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="irv_readkey" value="ReadKey" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0a30a;strokeColor=#BD7000;fontColor=#4B2E00;fontSize=11;" parent="layer_irvine" vertex="1">
+          <mxGeometry x="790" y="22" width="100" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="irv_delay" value="Delay" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0a30a;strokeColor=#BD7000;fontColor=#4B2E00;fontSize=11;" parent="layer_irvine" vertex="1">
+          <mxGeometry x="910" y="22" width="100" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="irv_getmseconds" value="GetMSeconds" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0a30a;strokeColor=#BD7000;fontColor=#4B2E00;fontSize=11;" parent="layer_irvine" vertex="1">
+          <mxGeometry x="1030" y="22" width="120" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="irv_writezp" value="WriteZeroPadded" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0a30a;strokeColor=#BD7000;fontColor=#4B2E00;fontSize=11;" parent="layer_irvine" vertex="1">
+          <mxGeometry x="1170" y="22" width="140" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="data_seg" value="Data Segment (.data)" style="swimlane;startSize=30;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=11;fontColor=#6B0000;rounded=1;arcSize=4;" parent="1" vertex="1">
+          <mxGeometry x="50" y="330" width="440" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="data_systime" value="sysTime SYSTEMTIME&#xa;wYear / wMonth / wDay&#xa;wHour / wMin / wSec / wMs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#6B0000;fontSize=10;" parent="data_seg" vertex="1">
+          <mxGeometry x="20" y="40" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="data_state" value="State Vars&#xa;currentMode (0/1/2)&#xa;is12Hour | isPM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#6B0000;fontSize=10;" parent="data_seg" vertex="1">
+          <mxGeometry x="230" y="40" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="data_render" value="Render Vars&#xa;blockChar | baseX | baseY&#xa;colorVal | lastSecond | needsClear" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#6B0000;fontSize=10;" parent="data_seg" vertex="1">
+          <mxGeometry x="20" y="120" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="data_sw" value="Stopwatch Vars&#xa;swState | timeStart&#xa;timeElapsed | swMins | swSecs | swCentis" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#6B0000;fontSize=10;" parent="data_seg" vertex="1">
+          <mxGeometry x="230" y="120" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="data_strings" value="UI Strings&#xa;headerStr | titleStr | authorStr&#xa;msgClock | msgStopW | msgAboutM&#xa;strAM | strPM | clearLine" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#6B0000;fontSize=10;" parent="data_seg" vertex="1">
+          <mxGeometry x="20" y="200" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="data_about" value="About Strings&#xa;msgAbout1–5 (course, instructor, dev, institution)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#6B0000;fontSize=10;" parent="data_seg" vertex="1">
+          <mxGeometry x="20" y="278" width="400" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="main_start" value="Program Start&#xa;(main PROC)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#2E75B6;strokeColor=#1F3864;fontColor=#ffffff;fontStyle=1;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="610" y="330" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="main_clrscr" value="Clrscr&#xa;(initial clear)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="620" y="420" width="140" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="main_loop_label" value="MAIN LOOP" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=3;fontColor=#595959;" parent="1" vertex="1">
+          <mxGeometry x="500" y="488" width="90" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="main_handleinput" value="HandleInput PROC&#xa;(ReadKey poll)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E75B6;strokeColor=#1F3864;fontColor=#ffffff;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="610" y="510" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="main_getlocaltime" value="INVOKE GetLocalTime&#xa;→ sysTime filled" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="610" y="590" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="main_needsclear" value="needsClear = 1?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="608" y="668" width="164" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="main_clrscr2" value="Clrscr&#xa;DrawUIHeader&#xa;needsClear = 0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="820" y="668" width="140" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="main_colorcycle" value="New second?&#xa;Cycle colorVal (9→15)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1f5ee;strokeColor=#0F6E56;fontColor=#04342C;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="610" y="762" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="main_modeswitch" value="currentMode?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="608" y="842" width="164" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="main_delay" value="Delay 50ms&#xa;→ loop" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1efe8;strokeColor=#5F5E5A;fontColor=#2C2C2A;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="618" y="1010" width="144" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="main_quit" value="QuitProg&#xa;SetTextColor + Clrscr&#xa;exit" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#6B0000;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="440" y="510" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="mode_clock" value="MODE 0: ModeClock" style="swimlane;startSize=30;fillColor=#e1f5ee;strokeColor=#0F6E56;fontStyle=1;fontSize=11;fontColor=#04342C;rounded=1;arcSize=4;" parent="1" vertex="1">
+          <mxGeometry x="50" y="916" width="340" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="mc_winefix" value="Wine +12h offset fix&#xa;(wrap mod 24)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1f5ee;strokeColor=#0F6E56;fontColor=#04342C;fontSize=10;" parent="mode_clock" vertex="1">
+          <mxGeometry x="20" y="42" width="140" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="mc_12hr" value="12hr? isPM calc&#xa;midnight / noon edge cases" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1f5ee;strokeColor=#0F6E56;fontColor=#04342C;fontSize=10;" parent="mode_clock" vertex="1">
+          <mxGeometry x="180" y="42" width="140" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="mc_digits" value="DrawHugeDigit × 6&#xa;HH : MM : SS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1f5ee;strokeColor=#0F6E56;fontColor=#04342C;fontSize=10;" parent="mode_clock" vertex="1">
+          <mxGeometry x="20" y="106" width="140" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="mc_ampm" value="AM/PM label&#xa;(if is12Hour)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1f5ee;strokeColor=#0F6E56;fontColor=#04342C;fontSize=10;" parent="mode_clock" vertex="1">
+          <mxGeometry x="180" y="106" width="140" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="mc_date" value="WriteZeroPadded date&#xa;DD / MM / YYYY" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1f5ee;strokeColor=#0F6E56;fontColor=#04342C;fontSize=10;" parent="mode_clock" vertex="1">
+          <mxGeometry x="20" y="170" width="140" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="mc_footer" value="Footer: msgClock" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1f5ee;strokeColor=#0F6E56;fontColor=#04342C;fontSize=10;" parent="mode_clock" vertex="1">
+          <mxGeometry x="180" y="170" width="140" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="mode_sw" value="MODE 1: ModeStopwatch" style="swimlane;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=11;fontColor=#042C53;rounded=1;arcSize=4;" parent="1" vertex="1">
+          <mxGeometry x="430" y="916" width="340" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="sw_calc" value="If running:&#xa;elapsed = (now−start)+accum" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#042C53;fontSize=10;" parent="mode_sw" vertex="1">
+          <mxGeometry x="20" y="42" width="145" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="sw_decomp" value="DIV decompose to&#xa;swMins / swSecs / swCentis" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#042C53;fontSize=10;" parent="mode_sw" vertex="1">
+          <mxGeometry x="175" y="42" width="145" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="sw_digits" value="DrawHugeDigit × 6&#xa;MM : SS : CC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#042C53;fontSize=10;" parent="mode_sw" vertex="1">
+          <mxGeometry x="20" y="106" width="145" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="sw_footer" value="Footer: msgStopW&#xa;+ msgReturn" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#042C53;fontSize=10;" parent="mode_sw" vertex="1">
+          <mxGeometry x="175" y="106" width="145" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="sw_ctrl" value="SPACE: start/pause&#xa;R: reset all to 0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#042C53;fontSize=10;" parent="mode_sw" vertex="1">
+          <mxGeometry x="20" y="170" width="300" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="mode_about" value="MODE 2: ModeAbout" style="swimlane;startSize=30;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=11;fontColor=#6B0000;rounded=1;arcSize=4;" parent="1" vertex="1">
+          <mxGeometry x="810" y="916" width="340" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="ab_title" value="Title in colorVal color" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#6B0000;fontSize=10;" parent="mode_about" vertex="1">
+          <mxGeometry x="20" y="42" width="300" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="ab_lines" value="msgAbout1–5&#xa;Course / Instructor / Dev / Institution" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#6B0000;fontSize=10;" parent="mode_about" vertex="1">
+          <mxGeometry x="20" y="96" width="300" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="ab_footer" value="Footer: msgAboutM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#6B0000;fontSize=10;" parent="mode_about" vertex="1">
+          <mxGeometry x="20" y="158" width="300" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="engine_seg" value="7-Segment Rendering Engine" style="swimlane;startSize=30;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;fontSize=11;fontColor=#333333;rounded=1;arcSize=4;" parent="1" vertex="1">
+          <mxGeometry x="1190" y="330" width="310" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="seg_drawhuге" value="DrawHugeDigit PROC&#xa;(EAX=digit, DL=x)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontColor=#333;fontStyle=1;fontSize=11;" parent="engine_seg" vertex="1">
+          <mxGeometry x="60" y="44" width="190" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="seg_clear" value="ClearDigitArea&#xa;(6×7 space wipe)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontColor=#333;fontSize=10;" parent="engine_seg" vertex="1">
+          <mxGeometry x="20" y="116" width="130" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="seg_segs" value="SegA–SegG&#xa;(7 segment procs)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontColor=#333;fontSize=10;" parent="engine_seg" vertex="1">
+          <mxGeometry x="170" y="116" width="120" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="seg_colon" value="DrawColon PROC&#xa;(2 dots at row+2, row+4)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontColor=#333;fontSize=10;" parent="engine_seg" vertex="1">
+          <mxGeometry x="20" y="180" width="270" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="seg_note1" value="baseX, baseY globals&#xa;shared across all seg procs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=10;fontColor=#595959;" parent="engine_seg" vertex="1">
+          <mxGeometry x="20" y="240" width="270" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="seg_note2" value="blockChar = &#39;#&#39; (configurable)&#xa;colorVal cycles 9→15 per second" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=10;fontColor=#595959;" parent="engine_seg" vertex="1">
+          <mxGeometry x="20" y="284" width="270" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="seg_digit_map" value="Digit encoding: chk0–chk9&#xa;0→ABCDEF  1→BC  2→ABDEG&#xa;3→ABCDG  4→BCFG  5→ACDFG&#xa;6→ACDEFG  7→ABC  8→all  9→ABCDFG" style="text;html=1;strokeColor=none;fillColor=#efefef;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=9;fontColor=#333;rounded=1;" parent="engine_seg" vertex="1">
+          <mxGeometry x="20" y="330" width="270" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="input_handler" value="HandleInput PROC (State Machine Controller)" style="swimlane;startSize=30;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=11;fontColor=#4D3800;rounded=1;arcSize=4;" parent="1" vertex="1">
+          <mxGeometry x="1190" y="760" width="310" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="inp_readkey" value="ReadKey → ZF check" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#4D3800;fontStyle=1;fontSize=11;" parent="input_handler" vertex="1">
+          <mxGeometry x="55" y="42" width="200" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="inp_keys" value="ESC → QuitProg&#xa;C/c → Mode 0 + needsClear=1&#xa;S/s → Mode 1 + needsClear=1&#xa;A/a → Mode 2 + needsClear=1&#xa;T/t → XOR is12Hour (mode0 only)&#xa;SPACE → toggle swState (mode1)&#xa;R/r → reset stopwatch (mode1)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#4D3800;fontSize=10;align=left;" parent="input_handler" vertex="1">
+          <mxGeometry x="20" y="96" width="270" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="inp_note" value="Case insensitive: both upper+lower checked" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=10;fontColor=#595959;" parent="input_handler" vertex="1">
+          <mxGeometry x="10" y="238" width="290" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" value="Legend" style="swimlane;startSize=24;fillColor=#ffffff;strokeColor=#cccccc;fontStyle=1;fontSize=10;rounded=1;" parent="1" vertex="1">
+          <mxGeometry x="1370" width="310" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="leg1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F3864;strokeColor=#1F3864;" parent="legend" vertex="1">
+          <mxGeometry x="16" y="36" width="24" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg1t" value="Windows API" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;" parent="legend" vertex="1">
+          <mxGeometry x="50" y="36" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0a30a;strokeColor=#BD7000;" parent="legend" vertex="1">
+          <mxGeometry x="16" y="64" width="24" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2t" value="Irvine32 Library" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;" parent="legend" vertex="1">
+          <mxGeometry x="50" y="64" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E75B6;strokeColor=#1F3864;" parent="legend" vertex="1">
+          <mxGeometry x="16" y="92" width="24" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg3t" value="Main Loop / Core Control" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;" parent="legend" vertex="1">
+          <mxGeometry x="50" y="92" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1f5ee;strokeColor=#0F6E56;" parent="legend" vertex="1">
+          <mxGeometry x="16" y="120" width="24" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg4t" value="Mode 0: Clock" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;" parent="legend" vertex="1">
+          <mxGeometry x="50" y="120" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg5" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="legend" vertex="1">
+          <mxGeometry x="16" y="148" width="24" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg5t" value="Mode 1: Stopwatch" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;" parent="legend" vertex="1">
+          <mxGeometry x="50" y="148" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg6" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="legend" vertex="1">
+          <mxGeometry x="16" y="176" width="24" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg6t" value="Mode 2: About / Data" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;" parent="legend" vertex="1">
+          <mxGeometry x="50" y="176" width="140" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="main_start" target="main_clrscr" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="main_clrscr" target="main_handleinput" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="main_handleinput" target="main_getlocaltime" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="main_getlocaltime" target="main_needsclear" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="Yes" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="main_needsclear" target="main_clrscr2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="No" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="main_needsclear" target="main_colorcycle" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6b" style="edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" parent="1" source="main_clrscr2" target="main_colorcycle" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="main_colorcycle" target="main_modeswitch" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" value="0" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="main_modeswitch" target="mode_clock" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" value="1" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="main_modeswitch" target="mode_sw" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" value="2" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="main_modeswitch" target="mode_about" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="mode_clock" target="main_delay" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="mode_sw" target="main_delay" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="mode_about" target="main_delay" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e14" value="loop back" style="edgeStyle=orthogonalEdgeStyle;exitX=0;exitY=0.5;entryX=0;entryY=0.5;" parent="1" source="main_delay" target="main_handleinput" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480" y="1032" />
+              <mxPoint x="480" y="535" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e15" value="ESC" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="main_handleinput" target="main_quit" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e16" value="DrawHugeDigit calls" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#666;" parent="1" source="mode_clock" target="engine_seg" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e17" value="DrawHugeDigit calls" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#666;" parent="1" source="mode_sw" target="engine_seg" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e18" value="expands to" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#d6b656;" parent="1" source="main_handleinput" target="input_handler" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e19" value="reads/writes" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#b85450;" parent="1" source="data_seg" target="main_handleinput" edge="1">
+          <mxGeometry x="-0.25" y="32" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="590" y="495" />
+              <mxPoint x="590" y="535" />
+            </Array>
+            <mxPoint x="-12" y="-25" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e20" value="reads" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#b85450;" parent="1" source="data_seg" target="main_getlocaltime" edge="1">
+          <mxGeometry x="0.75" y="25" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="590" y="495" />
+              <mxPoint x="590" y="615" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_api_irv" value="wraps" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;" parent="1" source="layer_api" target="layer_irvine" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

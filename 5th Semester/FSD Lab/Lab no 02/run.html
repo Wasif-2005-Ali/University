@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Student Result Management System</title>
+    <style>
+        :root {
+            --primary: #4a90e2;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --bg-light: #f8f9fa;
+            --border: #ddd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section {
+            flex: 1;
+            min-width: 350px;
+        }
+
+        .table-section {
+            flex: 2;
+            min-width: 600px;
+        }
+
+        h2,
+        h3 {
+            margin-top: 0;
+            color: #34495e;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+        }
+
+        .subject-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+            background: var(--bg-light);
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .subject-row label {
+            flex: 1;
+            margin: 0;
+        }
+
+        .subject-row input {
+            flex: 1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--border);
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: var(--bg-light);
+            font-weight: bold;
+        }
+
+        .student-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--border);
+        }
+
+        .grade-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            background: var(--bg-light);
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Student Result Management System</h1>
+
+    <div class="container">
+        <!-- Form Section -->
+        <div class="card form-section">
+            <h2>Manage Subjects</h2>
+            <div style="display: flex; gap: 10px; margin-bottom: 25px;">
+                <input type="text" id="newSubjectName" placeholder="Enter new subject name">
+                <button type="button" class="btn-primary" onclick="addSubject()">Add</button>
+            </div>
+
+            <h2>Add Student Result</h2>
+            <form id="studentForm">
+                <div class="input-group">
+                    <label>Student Name</label>
+                    <input type="text" id="studentName" required placeholder="e.g. John Doe">
+                </div>
+                <div class="input-group">
+                    <label>Image URL</label>
+                    <input type="url" id="studentImage" required placeholder="https://example.com/image.jpg">
+                </div>
+
+                <h3>Enter Marks</h3>
+                <div id="subjectsContainer">
+                    <!-- Dynamic subject inputs will render here -->
+                </div>
+
+                <button type="submit" class="btn-success" style="width: 100%; margin-top: 15px;">Submit Student
+                    Result</button>
+            </form>
+        </div>
+
+        <!-- Table Section -->
+        <div class="card table-section">
+            <h2>Result Directory</h2>
+            <div style="overflow-x: auto;">
+                <table id="resultsTable">
+                    <thead>
+                        <tr id="tableHeaderRow">
+                            <!-- Dynamic headers will render here -->
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Dynamic student rows will render here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State variables
+        let formSubjects = ['Mathematics', 'English', 'Programming'];
+        let students = [];
+        let allUniqueSubjects = new Set(formSubjects);
+
+        // Initialize UI
+        function init() {
+            renderFormSubjects();
+            renderTable();
+        }
+
+        // Render subjects in the form
+        function renderFormSubjects() {
+            const container = document.getElementById('subjectsContainer');
+            container.innerHTML = '';
+
+            if (formSubjects.length === 0) {
+                container.innerHTML = '<p style="color: #666; font-style: italic;">No subjects added. Add a subject above.</p>';
+            }
+
+            formSubjects.forEach((subject, index) => {
+                const div = document.createElement('div');
+                div.className = 'subject-row';
+                div.innerHTML = `
+                    <label>${subject}</label>
+                    <input type="number" min="0" max="100" required data-subject="${subject}" placeholder="Marks (0-100)">
+                    <button type="button" class="btn-danger" onclick="removeSubject(${index})">Remove</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Add a new subject dynamically
+        function addSubject() {
+            const nameInput = document.getElementById('newSubjectName');
+            const name = nameInput.value.trim();
+
+            if (name && !formSubjects.includes(name)) {
+                formSubjects.push(name);
+                allUniqueSubjects.add(name);
+                nameInput.value = '';
+                renderFormSubjects();
+                renderTable(); // Update headers globally
+            } else if (formSubjects.includes(name)) {
+                alert("This subject already exists in the form.");
+            }
+        }
+
+        // Remove a subject from the form
+        function removeSubject(index) {
+            formSubjects.splice(index, 1);
+            renderFormSubjects();
+        }
+
+        // Handle form submission
+        document.getElementById('studentForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent page refresh
+
+            if (formSubjects.length === 0) {
+                alert("Please add at least one subject before submitting.");
+                return;
+            }
+
+            const name = document.getElementById('studentName').value;
+            const image = document.getElementById('studentImage').value;
+            const marksInputs = document.querySelectorAll('#subjectsContainer input[type="number"]');
+
+            let marks = {};
+            let total = 0;
+            const maxTotal = formSubjects.length * 100;
+
+            // Collect marks
+            marksInputs.forEach(input => {
+                const subject = input.getAttribute('data-subject');
+                const mark = parseFloat(input.value) || 0;
+                marks[subject] = mark;
+                total += mark;
+            });
+
+            // Calculate percentage and grade
+            const percentage = (total / maxTotal) * 100;
+            let grade = 'F';
+
+            if (percentage >= 90) grade = 'A+';
+            else if (percentage >= 80) grade = 'A';
+            else if (percentage >= 70) grade = 'B';
+            else if (percentage >= 60) grade = 'C';
+            else if (percentage >= 50) grade = 'D';
+
+            // Create student record
+            const student = {
+                id: Date.now(),
+                name,
+                image,
+                marks,
+                total,
+                percentage: percentage.toFixed(1),
+                grade
+            };
+
+            students.push(student);
+
+            // Reset form fields
+            document.getElementById('studentName').value = '';
+            document.getElementById('studentImage').value = '';
+            marksInputs.forEach(input => input.value = '');
+
+            renderTable();
+        });
+
+        // Render the results table
+        function renderTable() {
+            const headerRow = document.getElementById('tableHeaderRow');
+            const tbody = document.getElementById('tableBody');
+
+            // Build Headers
+            headerRow.innerHTML = `
+                <th>Image</th>
+                <th>Student Name</th>
+            `;
+
+            const subjectList = Array.from(allUniqueSubjects);
+            subjectList.forEach(subject => {
+                headerRow.innerHTML += `<th>${subject}</th>`;
+            });
+
+            headerRow.innerHTML += `
+                <th>Total</th>
+                <th>Percentage</th>
+                <th>Grade</th>
+                <th>Action</th>
+            `;
+
+            // Build Body
+            tbody.innerHTML = '';
+
+            if (students.length === 0) {
+                const colSpan = subjectList.length + 6;
+                tbody.innerHTML = `<tr><td colspan="${colSpan}" style="color: #666;">No students added yet.</td></tr>`;
+                return;
+            }
+
+            students.forEach(student => {
+                const tr = document.createElement('tr');
+
+                // Fallback for broken images
+                let html = `
+                    <td><img src="${student.image}" alt="${student.name}" class="student-img" onerror="this.src='https://via.placeholder.com/50?text=NA'"></td>
+                    <td><strong>${student.name}</strong></td>
+                `;
+
+                // Align marks with correct subject columns
+                subjectList.forEach(subject => {
+                    const mark = student.marks[subject] !== undefined ? student.marks[subject] : '-';
+                    html += `<td>${mark}</td>`;
+                });
+
+                // Append final calculations and delete button
+                html += `
+                    <td>${student.total}</td>
+                    <td>${student.percentage}%</td>
+                    <td><span class="grade-badge">${student.grade}</span></td>
+                    <td><button class="btn-danger" onclick="deleteStudent(${student.id})">Remove</button></td>
+                `;
+
+                tr.innerHTML = html;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Bonus: Remove student function
+        function deleteStudent(id) {
+            if (confirm("Are you sure you want to remove this student?")) {
+                students = students.filter(s => s.id !== id);
+                renderTable();
+            }
+        }
+
+        // Bootstrap the application
+        init();
+    </script>
+</body>
+
+</html>

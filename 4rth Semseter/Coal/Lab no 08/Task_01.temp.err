@@ -1,0 +1,4 @@
+d:\University\4rth Semseter\Coal\Lab no 08\Task_01.temp.asm(9) : Error A2049: Invalid instruction operands
+d:\University\4rth Semseter\Coal\Lab no 08\Task_01.temp.asm(12) : Error A2142: Unmatched block nesting: main
+d:\University\4rth Semseter\Coal\Lab no 08\Task_01.temp.asm(13) : Error A2102: Symbol not defined : main
+d:\University\4rth Semseter\Coal\Lab no 08\Task_01.temp.asm(13) : Error A2099: END directive required at end of file

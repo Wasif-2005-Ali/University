@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Student Result System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            background-color: #f0f0f0;
+            padding: 10px;
+            font-weight: normal;
+            border-radius: 4px;
+        }
+
+        input,
+        button {
+            padding: 6px;
+            margin-right: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #a9a9a9;
+            border-radius: 2px;
+        }
+
+        .sub-row {
+            margin-bottom: 10px;
+        }
+
+        .sub-row span {
+            display: inline-block;
+            width: 120px;
+        }
+
+        .sub-row input {
+            width: 80px;
+            margin-bottom: 0;
+        }
+
+        .sub-row button {
+            padding: 4px 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            border: 1px solid #a9a9a9;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f9f9f9;
+            font-weight: normal;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Student Result System</h2>
+
+    <form id="myForm">
+        <div>
+            <input id="stdName" required placeholder="Student Name">
+            <input id="stdPic" type="url" required placeholder="Image URL">
+        </div>
+
+        <div>
+            <input id="newSub" placeholder="New Subject Name">
+            <button type="button" id="addBtn">Add Subject</button>
+        </div>
+
+        <p><b>Enter Marks:</b></p>
+        <div id="subInputs"></div>
+
+        <br>
+        <button type="submit">Submit Your Result</button>
+    </form>
+
+    <table>
+        <thead id="headRow"></thead>
+        <tbody id="bodyRows"></tbody>
+    </table>
+
+    <script>
+        let mySubjects = ["Math", "English", "Programming"];
+        let myStudents = [];
+
+        function updateScreen() {
+            let formDiv = document.getElementById("subInputs");
+            let tHead = document.getElementById("headRow");
+            let tBody = document.getElementById("bodyRows");
+
+            formDiv.innerHTML = "";
+            for (let i = 0; i < mySubjects.length; i++) {
+                formDiv.innerHTML += `
+            <div class="sub-row">
+                <span>${mySubjects[i]}:</span> 
+                <input type="number" id="mark_${i}" required> 
+                <button type="button" onclick="deleteSub(${i})">x</button>
+            </div>`;
+            }
+
+            tHead.innerHTML = `<tr><th>Image</th><th>Name</th>`;
+            for (let i = 0; i < mySubjects.length; i++) {
+                tHead.innerHTML += `<th>${mySubjects[i]}</th>`;
+            }
+            tHead.innerHTML += `<th>Total</th><th>%</th><th>Grade</th><th>Action</th></tr>`;
+
+            tBody.innerHTML = "";
+            for (let i = 0; i < myStudents.length; i++) {
+                let std = myStudents[i];
+                let rowHtml = `<tr>
+                <td><img src="${std.pic}" width="30"></td>
+                <td>${std.name}</td>`;
+
+                for (let j = 0; j < mySubjects.length; j++) {
+                    let m = std.marks[mySubjects[j]];
+                    if (m == undefined) m = "-";
+                    rowHtml += `<td>${m}</td>`;
+                }
+
+                rowHtml += `<td>${std.totalMarks}</td>
+                <td>${std.percentage}</td>
+                <td>${std.grade}</td>
+                <td><button type="button" onclick="deleteStd(${i})">x</button></td>
+            </tr>`;
+
+                tBody.innerHTML += rowHtml;
+            }
+        }
+
+        document.getElementById("addBtn").addEventListener("click", function () {
+            let val = document.getElementById("newSub").value;
+            if (val != "" && mySubjects.includes(val) == false) {
+                mySubjects.push(val);
+                document.getElementById("newSub").value = "";
+                updateScreen();
+            }
+        });
+
+        document.getElementById("myForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            let studentMarks = {};
+            let total = 0;
+
+            for (let i = 0; i < mySubjects.length; i++) {
+                let m = Number(document.getElementById("mark_" + i).value);
+                studentMarks[mySubjects[i]] = m;
+                total = total + m;
+            }
+
+            let per = total / mySubjects.length;
+
+            let g = "F";
+            if (per >= 90) { g = "A+"; }
+            else if (per >= 80) { g = "A"; }
+            else if (per >= 70) { g = "B"; }
+            else if (per >= 60) { g = "C"; }
+            else if (per >= 50) { g = "D"; }
+
+            let newStudent = {
+                name: document.getElementById("stdName").value,
+                pic: document.getElementById("stdPic").value,
+                marks: studentMarks,
+                totalMarks: total,
+                percentage: per.toFixed(1),
+                grade: g
+            };
+
+            myStudents.push(newStudent);
+            document.getElementById("myForm").reset();
+            updateScreen();
+        });
+
+        function deleteSub(index) {
+            let tempArray = [];
+            for (let i = 0; i < mySubjects.length; i++) {
+                if (i != index) tempArray.push(mySubjects[i]);
+            }
+            mySubjects = tempArray;
+            updateScreen();
+        }
+
+        function deleteStd(index) {
+            let tempArray = [];
+            for (let i = 0; i < myStudents.length; i++) {
+                if (i != index) tempArray.push(myStudents[i]);
+            }
+            myStudents = tempArray;
+            updateScreen();
+        }
+
+        updateScreen(); 
+    </script>
+</body>
+
+</html>

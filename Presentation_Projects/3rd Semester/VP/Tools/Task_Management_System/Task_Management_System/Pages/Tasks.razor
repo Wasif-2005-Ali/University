@@ -1,0 +1,88 @@
+@page "/tasks"
+@using Models = Task_Management_System.Models
+@inject Services.DataService DataService
+
+<PageTitle>Tasks</PageTitle>
+
+<h3>Task Management</h3>
+
+<div class="row">
+    <div class="col-md-4">
+        <EditForm Model="newTask" OnValidSubmit="AddTask">
+            <DataAnnotationsValidator />
+            <div class="mb-3">
+                <label class="form-label">Title</label>
+                <InputText class="form-control" @bind-Value="newTask.Title" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <InputTextArea class="form-control" @bind-Value="newTask.Description" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Priority</label>
+                <InputSelect class="form-select" @bind-Value="newTask.Priority">
+                    @foreach (var p in Enum.GetValues<Models.TaskPriority>())
+                    {
+                        <option value="@p">@p</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Status</label>
+                <InputSelect class="form-select" @bind-Value="newTask.Status">
+                    @foreach (var s in Enum.GetValues<Models.TaskStatus>())
+                    {
+                        <option value="@s">@s</option>
+                    }
+                </InputSelect>
+            </div>
+            <button class="btn btn-primary" type="submit">Add Task</button>
+        </EditForm>
+    </div>
+    <div class="col-md-8">
+        <h5>Tasks</h5>
+        @foreach (var t in tasks)
+        {
+            <TaskCard Task="t" OnStart="StartTask" OnComplete="CompleteTask" OnDelete="DeleteTask" />
+        }
+    </div>
+</div>
+
+@code {
+    private Models.TaskItem newTask = new();
+    private List<Models.TaskItem> tasks = new();
+
+    protected override void OnInitialized()
+    {
+        tasks = DataService.GetTasks().ToList();
+    }
+
+    void AddTask()
+    {
+        var added = DataService.AddTask(new Models.TaskItem
+        {
+            Title = newTask.Title,
+            Description = newTask.Description,
+            Priority = newTask.Priority,
+            Status = newTask.Status
+        });
+
+        tasks.Add(added);
+        newTask = new Models.TaskItem();
+    }
+
+    void ChangeStatus(Models.TaskItem item, Models.TaskStatus status)
+    {
+        item.Status = status;
+        DataService.UpdateTask(item);
+    }
+
+    void StartTask(Models.TaskItem item) => ChangeStatus(item, Models.TaskStatus.InProgress);
+    void CompleteTask(Models.TaskItem item) => ChangeStatus(item, Models.TaskStatus.Done);
+
+    void DeleteTask(int id)
+    {
+        DataService.DeleteTask(id);
+        tasks.RemoveAll(t => t.Id == id);
+    }
+}

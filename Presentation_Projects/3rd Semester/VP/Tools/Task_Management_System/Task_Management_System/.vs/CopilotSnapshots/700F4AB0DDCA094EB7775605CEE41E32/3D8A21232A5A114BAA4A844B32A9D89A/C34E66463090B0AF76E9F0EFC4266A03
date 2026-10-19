@@ -1,0 +1,19 @@
+﻿@page "/about"
+
+<PageTitle>About / Help</PageTitle>
+
+<h3>About this Blazor App</h3>
+
+<p>
+    This sample demonstrates how Blazor supports visual and event-driven programming through reusable components, data binding using @bind-like syntax, event handlers like @onclick, and routing using the @page directive.
+</p>
+
+<h4>Key Concepts</h4>
+<ul>
+    <li>Components: Reusable UI pieces. This app uses TaskCard and AppointmentCard components.</li>
+    <li>Routing: Pages use the @page directive to map URLs to components.</li>
+    <li>Data Binding: Forms use @bind to synchronize UI with model properties.</li>
+    <li>Events: Buttons and inputs trigger C# methods with @onclick and form submission events.</li>
+    <li>Conditional Rendering: Components show or hide pieces of UI using C# logic inside Razor.</li>
+    <li>Parameters: Parent pages pass data into child components via component parameters.</li>
+</ul>

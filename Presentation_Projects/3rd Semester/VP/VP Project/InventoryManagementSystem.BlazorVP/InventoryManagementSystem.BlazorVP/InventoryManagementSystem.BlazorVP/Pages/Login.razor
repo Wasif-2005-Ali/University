@@ -1,0 +1,69 @@
+﻿@page "/"
+@inject AuthService Auth
+@inject NavigationManager Nav
+
+<div class="login-bg">
+    <div class="login-card">
+
+        <h2>Inventory & Order<br />System</h2>
+        <p class="subtitle">Login as User or Administrator</p>
+
+        <!-- Tabs -->
+        <div class="tab-buttons">
+            <button class="tab @(isAdmin ? "" : "active")" @onclick="() => isAdmin = false">
+                User Login
+            </button>
+            <button class="tab @(isAdmin ? "active" : "")" @onclick="() => isAdmin = true">
+                Admin Login
+            </button>
+        </div>
+
+        <!-- Username -->
+        <label>Username</label>
+        <input @bind="username" />
+
+        <!-- Password -->
+        <label>Password</label>
+        <input type="password" @bind="password" />
+
+        <!-- Login Button -->
+        <button class="login-btn" @onclick="DoLogin">
+            Login
+        </button>
+
+        <!-- Register -->
+        <div class="link">
+            Don’t have an account?
+            <a href="/register">Register</a>
+        </div>
+
+        <!-- Error -->
+        @if (!string.IsNullOrEmpty(error))
+        {
+            <p class="error">@error</p>
+        }
+
+    </div>
+</div>
+
+@code {
+    string username = "";
+    string password = "";
+    string error = "";
+    bool isAdmin = false;
+
+    void DoLogin()
+    {
+        if (Auth.Login(username, password))
+        {
+            if (isAdmin)
+                Nav.NavigateTo("/admin");
+            else
+                Nav.NavigateTo("/user");
+        }
+        else
+        {
+            error = "Invalid credentials";
+        }
+    }
+}

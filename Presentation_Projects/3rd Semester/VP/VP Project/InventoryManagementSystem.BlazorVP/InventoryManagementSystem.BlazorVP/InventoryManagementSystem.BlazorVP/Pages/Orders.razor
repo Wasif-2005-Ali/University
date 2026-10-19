@@ -1,0 +1,32 @@
+﻿@page "/orders"
+@using InventoryManagementSystem.BlazorVP.Models
+@inject InventoryManagementSystem.BlazorVP.Services.AppState State
+
+<h2>My Orders</h2>
+
+@if (!State.OrdersList.Any())
+{
+    <p>No orders yet</p>
+}
+else
+{
+    <table class="inventory-table">
+        <thead>
+            <tr>
+                <th>Order #</th>
+                <th>Date</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var o in State.OrdersList)
+            {
+                <tr>
+                    <td>@o.Id</td>
+                    <td>@o.OrderDate.ToShortDateString()</td>
+                    <td>$@o.TotalAmount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

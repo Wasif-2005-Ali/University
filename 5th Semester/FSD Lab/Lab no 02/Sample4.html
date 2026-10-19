@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <input id="nS" placeholder="Subject"> <button id="addS">Add Subject</button>
+
+    <form id="f">
+        <input id="n" required placeholder="Name">
+        <input id="img" type="url" required placeholder="Image URL"><br><br>
+        <div id="subs"></div>
+        <button type="submit">Submit</button>
+    </form>
+    <br>
+    <table border="1">
+        <thead id="tH"></thead>
+        <tbody id="tB"></tbody>
+    </table>
+
+    <script>
+        // Initial arrays for managing lists of data[cite: 2]
+        let subjects = ["Mathematics", "English", "Programming"];
+        let students = [];
+
+        // Main function to build HTML elements dynamically[cite: 2]
+        function buildUI() {
+            let sDiv = document.getElementById("subs");
+            let tH = document.getElementById("tH");
+            let tB = document.getElementById("tB");
+
+            // Use a loop to generate form inputs dynamically[cite: 2]
+            sDiv.innerHTML = "";
+            for (let i = 0; i < subjects.length; i++) {
+                sDiv.innerHTML += `
+            <div>${subjects[i]}: <input type="number" id="s_${i}" required> 
+            <button type="button" onclick="rmSub(${i})">X</button></div>`;
+            }
+
+            // Generate dynamic table headers using innerHTML +=[cite: 2]
+            tH.innerHTML = "<tr><th>Img</th><th>Name</th>";
+            for (let i = 0; i < subjects.length; i++) {
+                tH.innerHTML += `<th>${subjects[i]}</th>`;
+            }
+            tH.innerHTML += "<th>Total</th><th>%</th><th>Grade</th><th>X</th></tr>";
+
+            // Generate dynamic table rows using arrays and loops[cite: 2]
+            tB.innerHTML = "";
+            for (let i = 0; i < students.length; i++) {
+                let s = students[i];
+                let row = `<tr><td><img src="${s.img}" width="40"></td><td>${s.name}</td>`;
+
+                for (let j = 0; j < subjects.length; j++) {
+                    let mark = s.marks[subjects[j]];
+                    row += `<td>${mark !== undefined ? mark : "-"}</td>`;
+                }
+
+                row += `<td>${s.total}</td><td>${s.p}</td><td>${s.g}</td>
+            <td><button onclick="rmStd(${i})">X</button></td></tr>`;
+                tB.innerHTML += row;
+            }
+        }
+
+        // Add subject event checking if array already includes it[cite: 2]
+        document.getElementById("addS").addEventListener("click", function () {
+            let v = document.getElementById("nS").value;
+            if (v !== "" && !subjects.includes(v)) {
+                subjects.push(v);
+                document.getElementById("nS").value = "";
+                buildUI();
+            }
+        });
+
+        // Handle form submission and prevent page refresh[cite: 2]
+        document.getElementById("f").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            let marks = {};
+            let total = 0;
+
+            for (let i = 0; i < subjects.length; i++) {
+                let val = Number(document.getElementById("s_" + i).value);
+                marks[subjects[i]] = val;
+                total += val;
+            }
+
+            let p = total / subjects.length;
+            let g = "F";
+            if (p >= 90) g = "A+"; else if (p >= 80) g = "A"; else if (p >= 70) g = "B"; else if (p >= 60) g = "C"; else if (p >= 50) g = "D";
+
+            // Store multiple properties in an array object[cite: 2]
+            students.push({
+                name: document.getElementById("n").value,
+                img: document.getElementById("img").value,
+                marks: marks,
+                total: total,
+                p: p.toFixed(1),
+                g: g
+            });
+
+            document.getElementById("f").reset();
+            buildUI();
+        });
+
+        // Arrays in the manual do not use splice, so we remove via loops and push[cite: 2]
+        function rmSub(idx) {
+            let temp = [];
+            for (let i = 0; i < subjects.length; i++) {
+                if (i !== idx) temp.push(subjects[i]);
+            }
+            subjects = temp;
+            buildUI();
+        }
+
+        function rmStd(idx) {
+            let temp = [];
+            for (let i = 0; i < students.length; i++) {
+                if (i !== idx) temp.push(students[i]);
+            }
+            students = temp;
+            buildUI();
+        }
+
+        buildUI(); 
+    </script>
+</body>
+
+</html>

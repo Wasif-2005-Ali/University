@@ -1,0 +1,58 @@
+﻿@page "/home"
+@using InventoryManagementSystem.BlazorVP.Models
+@inject InventoryManagementSystem.BlazorVP.Services.AppState State
+
+<div class="inventory-page">
+
+    <div class="inventory-header">
+        <h2>Inventory Management System</h2>
+        <span class="cart-info">
+            Cart Items: @State.Cart.Sum(c => c.Quantity)
+        </span>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="inventory-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Stock</th>
+                    <th>Price</th>
+                    <th style="width:140px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in State.Products)
+                {
+                    <tr>
+                        <td>@p.Id</td>
+                        <td>@p.Name</td>
+                        <td>@p.Category</td>
+                        <td>@p.Stock</td>
+                        <td>@p.Price</td>
+                        <td>
+                            <button class="add-btn"
+                                    @onclick="() => AddToCart(p.Id)">
+                                Add to Cart
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+@code {
+    void AddToCart(int id)
+    {
+        var item = State.Cart.FirstOrDefault(c => c.ProductId == id);
+        if (item == null)
+            State.Cart.Add(new CartItem { ProductId = id, Quantity = 1 });
+        else
+            item.Quantity++;
+    }
+}

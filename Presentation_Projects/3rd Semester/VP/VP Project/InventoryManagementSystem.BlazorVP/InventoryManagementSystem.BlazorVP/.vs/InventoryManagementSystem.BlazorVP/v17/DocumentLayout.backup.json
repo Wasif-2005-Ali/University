@@ -1,0 +1,455 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\pages\\adminorders.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\pages\\adminorders.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\pages\\editproduct.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\pages\\editproduct.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\pages\\products.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\pages\\products.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\pages\\adminaddproducts.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\pages\\adminaddproducts.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\pages\\adminhome.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\pages\\adminhome.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\models\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\models\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\models\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\models\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\pages\\orders.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\pages\\orders.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\pages\\checkout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\pages\\checkout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\pages\\cart.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\pages\\cart.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\pages\\register.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\pages\\register.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\pages\\addproduct.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\pages\\addproduct.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\wwwroot\\css\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\wwwroot\\css\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\services\\appstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\services\\appstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|d:\\university\\vp\\vp project\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\inventorymanagementsystem.blazorvp\\services\\orderservice.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{414396A1-4C54-4B6D-8776-B41D5036ECC9}|InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj|solutionrelative:inventorymanagementsystem.blazorvp\\services\\orderservice.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "EditProduct.razor",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\EditProduct.razor",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Pages\\EditProduct.razor",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\EditProduct.razor",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Pages\\EditProduct.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-25T09:18:07.188Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AdminOrders.razor",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\AdminOrders.razor",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Pages\\AdminOrders.razor",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\AdminOrders.razor",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Pages\\AdminOrders.razor",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAACsAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-26T03:00:00.32Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Login.razor",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\Login.razor",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Pages\\Login.razor",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\Login.razor",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Pages\\Login.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-23T12:13:25.891Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Program.cs",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Program.cs",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Program.cs",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Program.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABIAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T12:03:49.868Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "App.razor",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\App.razor",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\App.razor",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\App.razor",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\App.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-23T12:05:23.657Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Home.razor",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Pages\\Home.razor",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\Home.razor",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Pages\\Home.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-23T12:01:04.679Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Layout\\MainLayout.razor",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Layout\\MainLayout.razor",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Layout\\MainLayout.razor",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Layout\\MainLayout.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-23T13:21:50.432Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "NavMenu.razor",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Layout\\NavMenu.razor",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Layout\\NavMenu.razor",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Layout\\NavMenu.razor",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Layout\\NavMenu.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-23T13:13:26.126Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Products.razor",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\Products.razor",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Pages\\Products.razor",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\Products.razor",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Pages\\Products.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-24T03:56:27.018Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AdminAddProducts.razor",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\AdminAddProducts.razor",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Pages\\AdminAddProducts.razor",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\AdminAddProducts.razor",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Pages\\AdminAddProducts.razor",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAAB8AAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-25T07:06:43.196Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AdminHome.razor",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\AdminHome.razor",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Pages\\AdminHome.razor",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\AdminHome.razor",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Pages\\AdminHome.razor",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAAACkAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-23T15:26:35.225Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Order.cs",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Models\\Order.cs",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Models\\Order.cs",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Models\\Order.cs",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Models\\Order.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T13:10:43.275Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Users.cs",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Models\\Users.cs",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Models\\Users.cs",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Models\\Users.cs",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Models\\Users.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T12:09:43.921Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Product.cs",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Models\\Product.cs",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Models\\Product.cs",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Models\\Product.cs",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Models\\Product.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T12:01:56.707Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "CartItem.cs",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Models\\CartItem.cs",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Models\\CartItem.cs",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Models\\CartItem.cs",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Models\\CartItem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T12:02:36.204Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Orders.razor",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\Orders.razor",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Pages\\Orders.razor",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\Orders.razor",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Pages\\Orders.razor",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAgAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-23T13:13:01.484Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Checkout.razor",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\Checkout.razor",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Pages\\Checkout.razor",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\Checkout.razor",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Pages\\Checkout.razor",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAAAEoAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-23T14:55:29.492Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Cart.razor",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\Cart.razor",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Pages\\Cart.razor",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\Cart.razor",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Pages\\Cart.razor",
+              "ViewState": "AgIAAF0AAAAAAAAAAAAAABUAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-23T13:12:28.191Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Register.razor",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\Register.razor",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Pages\\Register.razor",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\Register.razor",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Pages\\Register.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-23T12:19:44.558Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "AddProduct.razor",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\AddProduct.razor",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Pages\\AddProduct.razor",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Pages\\AddProduct.razor",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Pages\\AddProduct.razor",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAAAEgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-24T18:47:58.535Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "_Imports.razor",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\_Imports.razor",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\_Imports.razor",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\_Imports.razor",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\_Imports.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-23T15:47:52.857Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "app.css",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\wwwroot\\css\\app.css",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\wwwroot\\css\\app.css",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\wwwroot\\css\\app.css",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\wwwroot\\css\\app.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-12-23T12:31:56.711Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "InventoryManagementSystem.BlazorVP.csproj",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-12-23T12:01:26.254Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "AppState.cs",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Services\\AppState.cs",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Services\\AppState.cs",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Services\\AppState.cs",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Services\\AppState.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T12:03:34.929Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "OrderService.razor",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Services\\OrderService.razor",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Services\\OrderService.razor",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Services\\OrderService.razor",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Services\\OrderService.razor",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAQwA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-26T03:30:01.599Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "InventoryManagementSystem.BlazorVP\\Services\\AuthService.cs",
+              "ToolTip": "D:\\UNIVERSITY\\VP\\VP Project\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\InventoryManagementSystem.BlazorVP\\Services\\AuthService.cs",
+              "RelativeToolTip": "InventoryManagementSystem.BlazorVP\\Services\\AuthService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T12:11:20.488Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

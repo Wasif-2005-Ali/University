@@ -1,0 +1,51 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+@inject Task_Management_System.Services.DataService DataService
+
+<h1>Dashboard</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Tasks</h5>
+                <p class="card-text">Total: @tasks.Count()</p>
+                <p class="card-text">To Do: @tasks.Count(t => t.Status == Models.TaskStatus.Todo)</p>
+                <p class="card-text">In Progress: @tasks.Count(t => t.Status == Models.TaskStatus.InProgress)</p>
+                <p class="card-text">Done: @tasks.Count(t => t.Status == Models.TaskStatus.Done)</p>
+                <NavLink class="btn btn-sm btn-primary" href="tasks">Manage Tasks</NavLink>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Appointments</h5>
+                <p class="card-text">Upcoming: @appts.Count()</p>
+                <NavLink class="btn btn-sm btn-primary" href="appointments">Manage Appointments</NavLink>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Help</h5>
+                <p class="card-text">Learn about Blazor concepts and how this app demonstrates them.</p>
+                <NavLink class="btn btn-sm btn-secondary" href="about">About / Help</NavLink>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private IEnumerable<Models.TaskItem> tasks = Array.Empty<Models.TaskItem>();
+    private IEnumerable<Models.Appointment> appts = Array.Empty<Models.Appointment>();
+
+    protected override void OnInitialized()
+    {
+        tasks = DataService.GetTasks();
+        appts = DataService.GetAppointments();
+    }
+}

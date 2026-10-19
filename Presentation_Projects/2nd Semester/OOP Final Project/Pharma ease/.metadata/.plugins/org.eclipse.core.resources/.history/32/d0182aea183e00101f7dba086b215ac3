@@ -1,0 +1,247 @@
+package View;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
+import javax.swing.*;
+
+import com.toedter.calendar.JDateChooser;
+
+import Controller.UserController;
+import Model.Admin;
+import Model.Customer;
+import Model.Seller;
+import Model.User;
+
+public class SignUpPage extends JFrame {
+
+    public SignUpPage() {
+        setTitle("PharmaEase - Sign Up");
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setUndecorated(false);
+
+        JPanel mainPanel = new JPanel(null);
+        mainPanel.setBackground(Color.WHITE);
+
+        // Title
+        JLabel titleLabel = new JLabel("Sign Up");
+        titleLabel.setForeground(new Color(0, 150, 20));
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 45));
+        titleLabel.setBounds(350, 50, 200, 60);
+
+        // Form Fields
+        JLabel fnameLabel = new JLabel("First Name:");
+        fnameLabel.setBounds(50, 170, 100, 25);
+        JTextField firstNameField = new JTextField();
+        firstNameField.setBounds(150, 170, 200, 30);
+
+        JLabel lnameLabel = new JLabel("Last Name:");
+        lnameLabel.setBounds(50, 240, 100, 25);
+        JTextField lastNameField = new JTextField();
+        lastNameField.setBounds(150, 240, 200, 30);
+
+        JLabel userLabel = new JLabel("Username:");
+        userLabel.setBounds(50, 300, 100, 25);
+        JTextField usernameField = new JTextField();
+        usernameField.setBounds(150, 300, 200, 30);
+
+        JLabel passLabel = new JLabel("Password:");
+        passLabel.setBounds(50, 360, 100, 25);
+        JPasswordField passwordField = new JPasswordField();
+        passwordField.setBounds(150, 360, 200, 30);
+
+        JLabel emailLabel = new JLabel("E-mail:");
+        emailLabel.setBounds(450, 170, 100, 25);
+        JTextField emailField = new JTextField();
+        emailField.setBounds(530, 170, 200, 30);
+
+        JLabel birthLabel = new JLabel("Birth Date:");
+        birthLabel.setBounds(50, 420, 100, 25);
+        JDateChooser birthDateChooser = new JDateChooser();
+        birthDateChooser.setBounds(150, 420, 200, 30);
+
+        JLabel phoneLabel = new JLabel("Phone no:");
+        phoneLabel.setBounds(450, 240, 100, 25);
+        JTextField phoneField = new JTextField();
+        phoneField.setBounds(530, 240, 200, 30);
+
+        JLabel addressLabel = new JLabel("Address:");
+        addressLabel.setBounds(450, 300, 100, 25);
+        JTextField addressField = new JTextField();
+        addressField.setBounds(530, 300, 200, 30);
+
+        JLabel pharmacyLabel = new JLabel("Pharmacy Name:");
+        pharmacyLabel.setBounds(450, 420, 120, 25);
+        JTextField pharmacyNameField = new JTextField();
+        pharmacyNameField.setBounds(560, 420, 180, 30);
+
+        JLabel licenseLabel = new JLabel("License No:");
+        licenseLabel.setBounds(450, 480, 100, 25);
+        JTextField licenseField = new JTextField();
+        licenseField.setBounds(560, 480, 180, 30);
+
+        JLabel roleLabel = new JLabel("Role:");
+        roleLabel.setBounds(50, 480, 100, 25);
+        String[] roles = {"Customer", "Seller"};
+        JComboBox<String> roleBox = new JComboBox<>(roles);
+        roleBox.setBounds(150, 480, 200, 30);
+
+        JButton registerBtn = new JButton("Register");
+        registerBtn.setBounds(200, 600, 500, 35);
+
+        // Sign in message
+        JLabel loginMsg = new JLabel("Already have an account?");
+        loginMsg.setBounds(330, 650, 200, 25);
+        loginMsg.setFont(new Font("Arial", Font.PLAIN, 12));
+
+        JButton signInBtn = new JButton("Sign In");
+        signInBtn.setBounds(500, 650, 80, 25);
+        signInBtn.setFont(new Font("Arial", Font.BOLD, 12));
+        signInBtn.setContentAreaFilled(false);
+        signInBtn.setBorderPainted(false);
+        signInBtn.setFocusPainted(false);
+        signInBtn.setOpaque(false);
+        signInBtn.setForeground(new Color(0, 102, 204));
+        signInBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        // Add to panel
+        mainPanel.add(titleLabel);
+        mainPanel.add(fnameLabel); mainPanel.add(firstNameField);
+        mainPanel.add(lnameLabel); mainPanel.add(lastNameField);
+        mainPanel.add(userLabel); mainPanel.add(usernameField);
+        mainPanel.add(passLabel); mainPanel.add(passwordField);
+        mainPanel.add(emailLabel); mainPanel.add(emailField);
+        mainPanel.add(birthLabel); mainPanel.add(birthDateChooser);
+        mainPanel.add(phoneLabel); mainPanel.add(phoneField);
+        mainPanel.add(addressLabel); mainPanel.add(addressField);
+        mainPanel.add(pharmacyLabel); mainPanel.add(pharmacyNameField);
+        mainPanel.add(licenseLabel); mainPanel.add(licenseField);
+        mainPanel.add(roleLabel); mainPanel.add(roleBox);
+        mainPanel.add(registerBtn);
+        mainPanel.add(loginMsg);
+        mainPanel.add(signInBtn);
+
+        // Initially hide fields
+        pharmacyLabel.setVisible(false); pharmacyNameField.setVisible(false);
+        licenseLabel.setVisible(false); licenseField.setVisible(false);
+
+        add(mainPanel);
+
+        // Actions
+        roleBox.addActionListener(e -> {
+            boolean isSeller = roleBox.getSelectedItem().equals("Seller");
+
+            pharmacyLabel.setVisible(isSeller);
+            pharmacyNameField.setVisible(isSeller);
+            licenseLabel.setVisible(isSeller);
+            licenseField.setVisible(isSeller);
+
+        });
+
+        registerBtn.addActionListener(e -> {
+            char[] passwordChars = passwordField.getPassword();
+            String password = new String(passwordChars).trim();
+            String passwordRegex = "^(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$";
+
+            if (firstNameField.getText().trim().isEmpty() ||
+                    lastNameField.getText().trim().isEmpty() ||
+                    usernameField.getText().trim().isEmpty() ||
+                    password.isEmpty() ||
+                    emailField.getText().trim().isEmpty() ||
+                    phoneField.getText().trim().isEmpty() ||
+                    addressField.getText().trim().isEmpty() ||
+                    birthDateChooser.getDate() == null ||
+                    (roleBox.getSelectedItem().equals("Seller") &&
+                            (pharmacyNameField.getText().trim().isEmpty() || licenseField.getText().trim().isEmpty()))) {
+                JOptionPane.showMessageDialog(null, "Please fill all required fields.");
+                return;
+            }
+
+            if (!password.matches(passwordRegex)) {
+                JOptionPane.showMessageDialog(null,
+                        "Password must be at least 8 characters long,\ninclude one uppercase letter and one special character.",
+                        "Weak Password", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            UserController userController = new UserController();
+            User user = new User();
+            user.setUsername(usernameField.getText());
+            user.setPassword(password);
+            user.setEmail(emailField.getText());
+            user.setPhone(phoneField.getText());
+            user.setAddress(addressField.getText());
+
+            if (userController.usernameExists(usernameField.getText())) {
+                JOptionPane.showMessageDialog(null, "Username already taken. Please choose another.");
+                return;
+            }
+
+            String selectedRole = roleBox.getSelectedItem().toString();
+            boolean userCreated = userController.createUser(user, selectedRole);
+
+            if (!userCreated) {
+                JOptionPane.showMessageDialog(null, "Failed to create base user.");
+                return;
+            }
+
+            User createdUser = userController.getUserByUsername(usernameField.getText());
+            if (createdUser == null) {
+                JOptionPane.showMessageDialog(null, "Failed to retrieve user after creation.");
+                return;
+            }
+
+            boolean roleSaved = false;
+            switch (selectedRole) {
+                case "Customer":
+                    Customer customer = new Customer();
+                    customer.setUserId(createdUser.getUserId());
+                    customer.setFirstName(firstNameField.getText());
+                    customer.setLastName(lastNameField.getText());
+                    Date utilDate = birthDateChooser.getDate();
+                    String formattedDate = utilDate.toInstant()
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDate()
+                            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    customer.setDateOfBirth(formattedDate);
+                    roleSaved = new Controller.CustomerController().createCustomer(customer);
+                    break;
+
+                case "Seller":
+                    Seller seller = new Seller();
+                    seller.setUserId(createdUser.getUserId());
+                    seller.setFirstName(firstNameField.getText());
+                    seller.setLastName(lastNameField.getText());
+                    seller.setPharmacyName(pharmacyNameField.getText());
+                    seller.setLicenseNumber(licenseField.getText());
+                    roleSaved = new Controller.SellerController().addSeller(seller);
+                    break;
+            }
+
+            if (roleSaved) {
+                JOptionPane.showMessageDialog(null, "Registered successfully!");
+                dispose();
+                new LoginPage();
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to save role-specific data.");
+            }
+        });
+
+        signInBtn.addActionListener(e -> {
+            dispose();
+            new LoginPage();
+        });
+
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new SignUpPage();
+    }
+}

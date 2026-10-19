@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Karakoram Flask Configurator</title>
+    <style>
+        :root {
+            --ink: #14213d;
+            --muted: #5b6577;
+            --bg: #eef2f7;
+            --card: #ffffff;
+            --line: #d5dce8;
+            --accent: #1d6fd8;
+            --ok: #1f8a54;
+            --bad: #c73b3b;
+            --c1: #2b7bd8;
+            /* flask colour, changed by JS */
+            --c2: #0d3b7a;
+            --radius: 14px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+            line-height: 1.5;
+        }
+
+        #scrollBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            width: 0;
+            background: var(--accent);
+            z-index: 50;
+            transition: width .1s;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: var(--ink);
+            color: #fff;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            transition: box-shadow .3s, padding .3s;
+        }
+
+        header.scrolled {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .25);
+            padding: 8px 20px;
+        }
+
+        header h1 {
+            font-size: 1.15rem;
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            letter-spacing: .3px;
+        }
+
+        .cart-badge {
+            background: #fff;
+            color: var(--ink);
+            border-radius: 999px;
+            padding: 4px 14px;
+            font-weight: 600;
+            font-size: .9rem;
+            transition: transform .25s;
+        }
+
+        .cart-badge.bump {
+            transform: scale(1.25);
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 24px auto;
+            padding: 0 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .panel {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 22px;
+        }
+
+        h2 {
+            margin: 0 0 12px;
+            font-family: Georgia, serif;
+            font-size: 1.3rem;
+        }
+
+        /* ---------- Product card (draggable) ---------- */
+        .product-card {
+            cursor: grab;
+            transition: transform .25s, box-shadow .25s, opacity .2s;
+        }
+
+        .product-card.hovered {
+            box-shadow: 0 14px 34px rgba(20, 33, 61, .18);
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        .product-card.dragging {
+            opacity: .45;
+            transform: scale(.97);
+            cursor: grabbing;
+        }
+
+        .stage {
+            position: relative;
+            height: 320px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 30%, #fff, #dfe7f2);
+            display: grid;
+            place-items: center;
+            perspective: 700px;
+        }
+
+        .flask {
+            position: relative;
+            width: 120px;
+            height: 250px;
+            border-radius: 26px 26px 18px 18px;
+            background: linear-gradient(135deg, var(--c1), var(--c2));
+            box-shadow: 0 18px 30px rgba(0, 0, 0, .28), inset -10px 0 18px rgba(0, 0, 0, .18);
+            transition: transform .12s ease-out, background .4s;
+            transform-style: preserve-3d;
+            overflow: hidden;
+        }
+
+        .flask::before {
+            /* cap */
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 34px;
+            background: rgba(0, 0, 0, .28);
+        }
+
+        .flask::after {
+            /* glare that follows the pointer */
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mx, 50%) var(--my, 30%), rgba(255, 255, 255, .65), transparent 55%);
+            opacity: 0;
+            transition: opacity .3s;
+            pointer-events: none;
+        }
+
+        .stage.active .flask::after {
+            opacity: 1;
+        }
+
+        .engraving {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-90deg);
+            white-space: nowrap;
+            color: rgba(255, 255, 255, .92);
+            font-family: Georgia, serif;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+            pointer-events: none;
+        }
+
+        .stage-hint {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: .8rem;
+            color: var(--muted);
+            transition: color .3s;
+        }
+
+        .stage.active .stage-hint {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .info h3 {
+            margin: 16px 0 2px;
+            font-size: 1.2rem;
+        }
+
+        .price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .description {
+            margin: 8px 0 0;
+            padding: 12px;
+            background: #f5f8fc;
+            border-left: 4px solid var(--accent);
+            border-radius: 6px;
+            color: var(--muted);
+            user-select: none;
+            -webkit-user-select: none;
+            transition: background .3s, border-color .3s;
+        }
+
+        .description.blocked {
+            background: #fdeaea;
+            border-color: var(--bad);
+            animation: shake .35s;
+        }
+
+        @keyframes shake {
+            25% {
+                transform: translateX(-6px);
+            }
+
+            75% {
+                transform: translateX(6px);
+            }
+        }
+
+        /* ---------- Cart / drop zone ---------- */
+        .dropzone {
+            margin-top: 24px;
+            min-height: 150px;
+            border: 3px dashed var(--line);
+            border-radius: var(--radius);
+            padding: 16px;
+            background: var(--card);
+            transition: background .25s, border-color .25s, transform .25s;
+        }
+
+        .dropzone.over {
+            border-color: var(--ok);
+            background: #e9f8f0;
+            transform: scale(1.02);
+        }
+
+        .cart-empty {
+            color: var(--muted);
+            text-align: center;
+            padding: 18px 0;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .swatch {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            flex: none;
+        }
+
+        .cart-item p {
+            margin: 0;
+            flex: 1 1 160px;
+        }
+
+        .cart-total {
+            margin-top: 10px;
+            font-weight: 700;
+            text-align: right;
+        }
+
+        /* ---------- Form ---------- */
+        .field {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 11px 12px;
+            font: inherit;
+            color: var(--ink);
+            border: 2px solid var(--line);
+            border-radius: 8px;
+            background: #fff;
+            transition: border-color .2s, box-shadow .2s, background .2s;
+        }
+
+        input:hover,
+        select:hover {
+            border-color: #a9b6cc;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(29, 111, 216, .18);
+        }
+
+        .field.is-focused label {
+            color: var(--accent);
+        }
+
+        .field.invalid input {
+            border-color: var(--bad);
+            background: #fff6f6;
+        }
+
+        .hint {
+            display: flex;
+            justify-content: space-between;
+            font-size: .85rem;
+            color: var(--muted);
+            margin-top: 4px;
+            min-height: 1.3em;
+        }
+
+        .hint.warn {
+            color: var(--bad);
+            font-weight: 600;
+        }
+
+        .error {
+            color: var(--bad);
+            font-size: .85rem;
+            min-height: 1.2em;
+            margin-top: 3px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            font: inherit;
+            font-weight: 600;
+            padding: 11px 18px;
+            border-radius: 8px;
+            border: 2px solid var(--accent);
+            cursor: pointer;
+            transition: transform .15s, background .2s, color .2s, box-shadow .2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(20, 33, 61, .18);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:focus-visible {
+            outline: 3px solid #ffb703;
+            outline-offset: 2px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #1558ad;
+        }
+
+        .btn-secondary {
+            background: #fff;
+            color: var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: #eaf2ff;
+        }
+
+        .btn-danger {
+            background: #fff;
+            color: var(--bad);
+            border-color: var(--bad);
+        }
+
+        .btn-danger:hover {
+            background: #fdeaea;
+        }
+
+        .btn-small {
+            padding: 5px 10px;
+            font-size: .85rem;
+        }
+
+        .result {
+            margin-top: 18px;
+            padding: 16px;
+            border-radius: 10px;
+            background: #e9f8f0;
+            border: 2px solid var(--ok);
+            display: none;
+            animation: pop .4s;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result h3 {
+            margin: 0 0 6px;
+            color: var(--ok);
+        }
+
+        .result ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        @keyframes pop {
+            from {
+                transform: scale(.94);
+                opacity: 0;
+            }
+
+            to {
+                transform: none;
+                opacity: 1;
+            }
+        }
+
+        /* ---------- Toast + back to top ---------- */
+        #toast {
+            position: fixed;
+            left: 50%;
+            bottom: 24px;
+            transform: translate(-50%, 100px);
+            background: var(--ink);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            max-width: 90vw;
+            text-align: center;
+            opacity: 0;
+            transition: transform .35s, opacity .35s;
+            z-index: 60;
+        }
+
+        #toast.show {
+            transform: translate(-50%, 0);
+            opacity: 1;
+        }
+
+        #toast.ok {
+            background: var(--ok);
+        }
+
+        #toast.bad {
+            background: var(--bad);
+        }
+
+        #toTop {
+            position: fixed;
+            right: 16px;
+            bottom: 16px;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 45;
+            background: var(--ink);
+            color: #fff;
+            border-color: var(--ink);
+        }
+
+        #toTop.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 860px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .panel {
+                padding: 16px;
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+            }
+
+            .stage {
+                height: 260px;
+            }
+
+            .flask {
+                transform-origin: center;
+            }
+
+            .buttons button {
+                flex: 1 1 100%;
+            }
+
+            #toTop {
+                bottom: 70px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="scrollBar"></div>
+
+    <header id="siteHeader">
+        <h1>Karakoram Steel Flask</h1>
+        <span class="cart-badge" id="cartBadge">Cart: 0</span>
+    </header>
+
+    <main>
+        <!-- LEFT: product + cart -->
+        <section>
+            <article class="panel product-card" id="productCard" draggable="true"
+                aria-label="Product card. Drag it into the cart.">
+                <div class="stage" id="stage">
+                    <div class="flask" id="flask">
+                        <span class="engraving" id="engravingPreview">YOUR NAME</span>
+                    </div>
+                    <div class="stage-hint" id="stageHint">Hover and move your mouse over the flask</div>
+                </div>
+                <div class="info">
+                    <h3>Karakoram Steel Flask (750 ml)</h3>
+                    <div class="price" id="priceLabel">Rs. 2,499</div>
+                    <p class="description" id="description">
+                        Double-wall vacuum insulated stainless steel. Keeps drinks hot for 12 hours and cold for 24
+                        hours.
+                        Leak-proof cap, powder-coated finish, and laser engraving of your own name or message.
+                    </p>
+                </div>
+            </article>
+
+            <div class="dropzone" id="dropzone" aria-live="polite">
+                <h2>Your Cart</h2>
+                <div id="cartContent">
+                    <p class="cart-empty">Cart is empty. Drag the product card here, or use "Add to Cart".</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- RIGHT: configurator form -->
+        <section class="panel">
+            <h2>Customise your flask</h2>
+            <form id="configForm" novalidate>
+                <div class="field">
+                    <label for="variant">Colour theme</label>
+                    <select id="variant" name="variant">
+                        <option value="hunza">Hunza Blue</option>
+                        <option value="fairy">Fairy Meadows Green</option>
+                        <option value="skardu">Skardu Sand</option>
+                        <option value="sunset">Naran Sunset</option>
+                        <option value="night">Deosai Midnight</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="engraving">Engraving text</label>
+                    <input type="text" id="engraving" name="engraving" maxlength="20" placeholder="e.g. WASIF"
+                        autocomplete="off">
+                    <div class="hint" id="engravingHint"><span id="engravingMsg">Up to 20 characters</span><span
+                            id="charCount">0 / 20</span></div>
+                    <div class="error" id="engravingError"></div>
+                </div>
+
+                <div class="row">
+                    <div class="field">
+                        <label for="fullName">Full name</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Your name" autocomplete="name">
+                        <div class="error" id="fullNameError"></div>
+                    </div>
+                    <div class="field">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" id="quantity" name="quantity" min="1" max="10" value="1">
+                        <div class="error" id="quantityError"></div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email">
+                    <div class="error" id="emailError"></div>
+                </div>
+
+                <div class="buttons">
+                    <button type="submit" class="btn-primary">Submit order</button>
+                    <button type="button" class="btn-secondary" id="addBtn">Add to Cart</button>
+                    <button type="reset" class="btn-danger">Reset</button>
+                </div>
+            </form>
+
+            <div class="result" id="result" role="status"></div>
+        </section>
+    </main>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+    <button id="toTop" type="button">Top</button>
+
+    <script>
+        /* ============ DATA ============ */
+        const UNIT_PRICE = 2499;
+        const VARIANTS = {
+            hunza: { name: "Hunza Blue", c1: "#2b7bd8", c2: "#0d3b7a" },
+            fairy: { name: "Fairy Meadows Green", c1: "#3fae6a", c2: "#14532d" },
+            skardu: { name: "Skardu Sand", c1: "#d9b779", c2: "#8a6a35" },
+            sunset: { name: "Naran Sunset", c1: "#ff8a4c", c2: "#b3261e" },
+            night: { name: "Deosai Midnight", c1: "#3a4664", c2: "#0b1020" }
+        };
+        let cart = null;            // holds the current cart item (or null)
+        let toastTimer = null;
+
+        /* ============ DOM ELEMENTS ============ */
+        const $ = (id) => document.getElementById(id);
+        const form = $("configForm"), variantSelect = $("variant"), engravingInput = $("engraving");
+        const fullNameInput = $("fullName"), quantityInput = $("quantity"), emailInput = $("email");
+        const stage = $("stage"), flask = $("flask"), engravingPreview = $("engravingPreview"), stageHint = $("stageHint");
+        const productCard = $("productCard"), description = $("description"), dropzone = $("dropzone");
+        const cartContent = $("cartContent"), cartBadge = $("cartBadge"), result = $("result");
+        const charCount = $("charCount"), engravingMsg = $("engravingMsg"), engravingHint = $("engravingHint");
+        const toast = $("toast"), toTop = $("toTop"), siteHeader = $("siteHeader"), scrollBar = $("scrollBar");
+
+        /* ============ HELPERS ============ */
+        function showToast(message, type = "") {
+            toast.textContent = message;
+            toast.className = "show " + type;
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => { toast.className = ""; }, 2600);
+        }
+        const money = (n) => "Rs. " + n.toLocaleString("en-PK");
+
+        function applyVariant() {
+            const v = VARIANTS[variantSelect.value];
+            document.documentElement.style.setProperty("--c1", v.c1);
+            document.documentElement.style.setProperty("--c2", v.c2);
+        }
+        function updateEngravingPreview() {
+            const text = engravingInput.value.trim();
+            engravingPreview.textContent = text ? text.toUpperCase() : "YOUR NAME";
+            const len = engravingInput.value.length, max = engravingInput.maxLength;
+            charCount.textContent = len + " / " + max;
+            const full = len >= max;
+            engravingHint.classList.toggle("warn", full);
+            engravingMsg.textContent = full ? "Character limit reached" : (max - len) + " characters left";
+        }
+        function currentConfig() {
+            return {
+                variantKey: variantSelect.value,
+                variant: VARIANTS[variantSelect.value],
+                engraving: engravingInput.value.trim(),
+                quantity: Math.max(1, parseInt(quantityInput.value, 10) || 1)
+            };
+        }
+        function renderCart() {
+            if (!cart) {
+                cartContent.innerHTML = '<p class="cart-empty">Cart is empty. Drag the product card here, or use "Add to Cart".</p>';
+                cartBadge.textContent = "Cart: 0";
+                return;
+            }
+            cartContent.innerHTML = `
+    <div class="cart-item">
+      <span class="swatch" style="background:linear-gradient(135deg,${cart.variant.c1},${cart.variant.c2})"></span>
+      <p><strong>Karakoram Steel Flask</strong><br>${cart.variant.name} &middot; Engraving: ${cart.engraving ? cart.engraving.toUpperCase() : "none"} &middot; Qty ${cart.quantity}</p>
+      <button type="button" class="btn-danger btn-small" id="removeBtn">Remove</button>
+    </div>
+    <div class="cart-total">Total: ${money(cart.quantity * UNIT_PRICE)}</div>`;
+            cartBadge.textContent = "Cart: " + cart.quantity;
+            cartBadge.classList.add("bump");
+            setTimeout(() => cartBadge.classList.remove("bump"), 250);
+        }
+        function addToCart(source) {
+            cart = currentConfig();
+            renderCart();
+            showToast(source === "drop" ? "Dropped! Flask added to your cart." : "Flask added to your cart.", "ok");
+        }
+
+        /* ============ EVENT 1: change (colour select) ============ */
+        variantSelect.addEventListener("change", () => {
+            applyVariant();
+            showToast("Theme changed to " + VARIANTS[variantSelect.value].name);
+        });
+
+        /* ============ EVENT 2: input (real-time engraving preview) ============ */
+        engravingInput.addEventListener("input", () => {
+            updateEngravingPreview();
+            $("engravingError").textContent = "";
+            engravingInput.closest(".field").classList.remove("invalid");
+        });
+
+        /* ============ EVENTS 3 + 4: focus / blur on inputs ============ */
+        form.querySelectorAll("input, select").forEach((el) => {
+            el.addEventListener("focus", () => el.closest(".field").classList.add("is-focused"));
+            el.addEventListener("blur", () => {
+                const field = el.closest(".field");
+                field.classList.remove("is-focused");
+                if (el === engravingInput && engravingInput.value.trim() === "") {
+                    engravingMsg.textContent = "Tip: add a name to personalise your flask";
+                }
+            });
+        });
+
+        /* ============ EVENTS 5, 6, 7: mousemove / mouseenter / mouseleave ============ */
+        stage.addEventListener("mouseenter", () => {
+            stage.classList.add("active");
+            productCard.classList.add("hovered");
+            stageHint.textContent = "Nice! Move around to tilt the flask";
+        });
+        stage.addEventListener("mousemove", (event) => {
+            const rect = stage.getBoundingClientRect();           // pointer position relative to the preview
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            const px = x / rect.width, py = y / rect.height;      // 0 to 1
+            const flaskRect = flask.getBoundingClientRect();
+            flask.style.setProperty("--mx", ((event.clientX - flaskRect.left) / flaskRect.width * 100) + "%");
+            flask.style.setProperty("--my", ((event.clientY - flaskRect.top) / flaskRect.height * 100) + "%");
+            flask.style.transform = `rotateY(${(px - 0.5) * 40}deg) rotateX(${(0.5 - py) * 25}deg)`;
+        });
+        stage.addEventListener("mouseleave", () => {
+            stage.classList.remove("active");
+            productCard.classList.remove("hovered");
+            flask.style.transform = "";
+            stageHint.textContent = "Hover and move your mouse over the flask";
+        });
+
+        /* ============ EVENTS 8, 9: copy / cut are blocked on description ============ */
+        ["copy", "cut"].forEach((type) => {
+            description.addEventListener(type, (event) => {
+                event.preventDefault();
+                description.classList.remove("blocked");
+                void description.offsetWidth;                       // restart animation
+                description.classList.add("blocked");
+                showToast("Sorry, product description can't be " + (type === "copy" ? "copied." : "cut."), "bad");
+                setTimeout(() => description.classList.remove("blocked"), 500);
+            });
+        });
+        /* select-all + Ctrl+C also fires "copy" on document, so handle it when the description is involved */
+        document.addEventListener("copy", (event) => {
+            const sel = window.getSelection();
+            if (sel && description.contains(sel.anchorNode)) { event.preventDefault(); showToast("Sorry, product description can't be copied.", "bad"); }
+        });
+
+        /* ============ EVENTS 10-14: drag and drop ============ */
+        productCard.addEventListener("dragstart", (event) => {
+            event.dataTransfer.setData("text/plain", "flask-product");
+            event.dataTransfer.effectAllowed = "copy";
+            productCard.classList.add("dragging");
+        });
+        productCard.addEventListener("dragend", () => productCard.classList.remove("dragging"));
+        dropzone.addEventListener("dragenter", (event) => { event.preventDefault(); dropzone.classList.add("over"); });
+        dropzone.addEventListener("dragover", (event) => { event.preventDefault(); event.dataTransfer.dropEffect = "copy"; });
+        dropzone.addEventListener("dragleave", (event) => {
+            if (!dropzone.contains(event.relatedTarget)) dropzone.classList.remove("over");
+        });
+        dropzone.addEventListener("drop", (event) => {
+            event.preventDefault();
+            dropzone.classList.remove("over");
+            if (event.dataTransfer.getData("text/plain") === "flask-product") addToCart("drop");
+        });
+
+        /* click: Add to Cart button (works on touch screens, where drag is unreliable) and Remove button */
+        $("addBtn").addEventListener("click", () => addToCart("button"));
+        cartContent.addEventListener("click", (event) => {
+            if (event.target.id === "removeBtn") { cart = null; renderCart(); showToast("Item removed from cart."); }
+        });
+        quantityInput.addEventListener("change", () => {
+            if (cart) { cart.quantity = currentConfig().quantity; renderCart(); }
+        });
+
+        /* ============ EVENT 15: submit (validated, no page reload) ============ */
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const errors = {};
+            const name = fullNameInput.value.trim(), email = emailInput.value.trim();
+            const qty = parseInt(quantityInput.value, 10);
+
+            if (name.length < 3) errors.fullName = "Please enter your full name (at least 3 letters).";
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = "Please enter a valid email address.";
+            if (engravingInput.value.trim() === "") errors.engraving = "Engraving text is required.";
+            if (!(qty >= 1 && qty <= 10)) errors.quantity = "Quantity must be between 1 and 10.";
+
+            ["fullName", "email", "engraving", "quantity"].forEach((key) => {
+                $(key + "Error").textContent = errors[key] || "";
+                $(key).closest(".field").classList.toggle("invalid", Boolean(errors[key]));
+            });
+            if (Object.keys(errors).length) {
+                result.className = "result";
+                showToast("Please fix the highlighted fields.", "bad");
+                form.querySelector(".invalid input").focus();
+                return;
+            }
+            if (!cart) { showToast("Add the flask to your cart first (drag it or use Add to Cart).", "bad"); return; }
+
+            cart = currentConfig();
+            renderCart();
+            result.innerHTML = `<h3>Order submitted!</h3>
+    <ul>
+      <li>Name: ${name}</li>
+      <li>Email: ${email}</li>
+      <li>Theme: ${cart.variant.name}</li>
+      <li>Engraving: ${cart.engraving.toUpperCase()}</li>
+      <li>Quantity: ${cart.quantity}</li>
+      <li>Total: ${money(cart.quantity * UNIT_PRICE)}</li>
+    </ul>`;
+            result.className = "result show";
+            result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            showToast("Configuration submitted successfully!", "ok");
+        });
+
+        /* ============ EVENT 16: reset ============ */
+        form.addEventListener("reset", () => {
+            setTimeout(() => {                                    // wait until the browser clears the inputs
+                applyVariant();
+                updateEngravingPreview();
+                engravingMsg.textContent = "Up to 20 characters";
+                flask.style.transform = "";
+                cart = null;
+                renderCart();
+                result.className = "result";
+                form.querySelectorAll(".error").forEach((e) => (e.textContent = ""));
+                form.querySelectorAll(".field").forEach((f) => f.classList.remove("invalid", "is-focused"));
+                showToast("Configurator has been reset.");
+            }, 0);
+        });
+
+        /* ============ EVENT 17: scroll (progress bar, header shadow, back-to-top) ============ */
+        window.addEventListener("scroll", () => {
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            scrollBar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + "%";
+            siteHeader.classList.toggle("scrolled", window.scrollY > 20);
+            toTop.classList.toggle("visible", window.scrollY > 300);
+        });
+        toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+        /* ============ INIT ============ */
+        applyVariant();
+        updateEngravingPreview();
+        renderCart();
+    </script>
+</body>
+
+</html>

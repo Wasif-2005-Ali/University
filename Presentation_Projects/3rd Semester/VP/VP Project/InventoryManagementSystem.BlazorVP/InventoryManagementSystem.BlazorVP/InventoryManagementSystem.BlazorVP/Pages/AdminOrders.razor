@@ -1,0 +1,47 @@
+﻿@page "/admin/orders"
+@layout MainLayout
+
+@inject InventoryManagementSystem.BlazorVP.Services.AppState State
+@inject InventoryManagementSystem.BlazorVP.Services.AuthService Auth
+@inject NavigationManager Nav
+
+<h2 class="page-title">All Orders</h2>
+
+@if (!State.OrdersList.Any())
+{
+    <p>No orders yet.</p>
+}
+else
+{
+    @foreach (var order in State.OrdersList)
+    {
+        <div class="order-card">
+            <h4>
+                Order #@order.Id |
+                Date: @order.OrderDate.ToShortDateString() |
+                Total: $@order.TotalAmount
+            </h4>
+
+            <table class="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in order.Items)
+                    {
+                        var product = State.Products.First(p => p.Id == item.ProductId);
+                        <tr>
+                            <td>@product.Name</td>
+                            <td>@item.Quantity</td>
+                            <td>$@product.Price</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+}

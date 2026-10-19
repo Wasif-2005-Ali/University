@@ -1,0 +1,18 @@
+body {
+    text-align: center;
+    margin-top: 90x;
+}
+
+.card {
+    width: 300px;
+    padding: 20px;
+    border: 1px sold black;
+    border-radius: 20px;
+    margin: 20px;
+}
+
+button {
+    padding: 10px;
+    cursor: pointer;
+    color: blue;
+}

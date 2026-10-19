@@ -1,0 +1,22 @@
+﻿@using Task_Management_System.Models
+
+<div class="card mb-2">
+    <div class="card-body">
+        <h5 class="card-title">@Appointment.Person</h5>
+        <h6 class="card-subtitle mb-2 text-muted">@Appointment.Date.ToShortDateString() @Appointment.Time</h6>
+        <p class="card-text">@Appointment.Purpose</p>
+        <div>
+            <button class="btn btn-sm btn-outline-secondary me-1" @onclick="() => OnReschedule?.Invoke(Appointment)">Reschedule</button>
+            <button class="btn btn-sm btn-outline-danger" @onclick="() => OnDelete?.Invoke(Appointment.Id)">Delete</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Appointment Appointment { get; set; } = default!;
+    [Parameter] public EventCallback<Appointment> RescheduleCallback { get; set; }
+    [Parameter] public EventCallback<int> DeleteCallback { get; set; }
+
+    Action<Appointment>? OnReschedule => a => RescheduleCallback.InvokeAsync(a);
+    Action<int>? OnDelete => id => DeleteCallback.InvokeAsync(id);
+}

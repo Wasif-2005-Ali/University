@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Result System</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+            background: #f4f7f6;
+        }
+
+        input,
+        button {
+            padding: 8px;
+            margin: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        form {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 15px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background: #e3f2fd;
+        }
+
+        img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .btn-add {
+            background: #2ecc71;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-rm {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Student Result System</h2>
+
+    <input id="nS" placeholder="New Subject Name">
+    <button class="btn-add" id="addS">Add Subject</button>
+
+    <form id="f">
+        <input id="n" required placeholder="Student Name">
+        <input id="img" type="url" required placeholder="Image URL"><br><br>
+        <div id="subs"></div><br>
+        <button class="btn-add" type="submit">Submit Result</button>
+    </form>
+
+    <table>
+        <thead id="tH"></thead>
+        <tbody id="tB"></tbody>
+    </table>
+
+    <script>
+        let subjects = ["Mathematics", "English", "Programming"];
+        let students = [];
+
+        // Central function to update all dynamic HTML using innerHTML (Manual Section 2, 8, 17)
+        function render() {
+            let sDiv = document.getElementById("subs");
+            let tH = document.getElementById("tH");
+            let tB = document.getElementById("tB");
+
+            // 1. Render Form Inputs
+            sDiv.innerHTML = "";
+            for (let i = 0; i < subjects.length; i++) {
+                sDiv.innerHTML += `${subjects[i]}: <input type="number" id="s_${i}" required> 
+            <button type="button" class="btn-rm" onclick="delSub(${i})">X</button><br>`;
+            }
+
+            // 2. Render Table Headers
+            tH.innerHTML = "<tr><th>Img</th><th>Name</th>";
+            for (let i = 0; i < subjects.length; i++) tH.innerHTML += `<th>${subjects[i]}</th>`;
+            tH.innerHTML += "<th>Total</th><th>%</th><th>Grade</th><th>Action</th></tr>";
+
+            // 3. Render Table Rows
+            tB.innerHTML = "";
+            for (let i = 0; i < students.length; i++) {
+                let s = students[i];
+                let row = `<tr><td><img src="${s.img}"></td><td>${s.name}</td>`;
+
+                for (let j = 0; j < subjects.length; j++) {
+                    let mark = s.marks[subjects[j]];
+                    row += `<td>${mark !== undefined ? mark : "-"}</td>`;
+                }
+
+                row += `<td>${s.total}</td><td>${s.p}%</td><td>${s.g}</td>
+            <td><button class="btn-rm" onclick="delStd(${i})">Remove</button></td></tr>`;
+                tB.innerHTML += row;
+            }
+        }
+
+        // Add Subject Button (Manual Section 7 & 12)
+        document.getElementById("addS").addEventListener("click", function () {
+            let v = document.getElementById("nS").value;
+            if (v && !subjects.includes(v)) {
+                subjects.push(v);
+                document.getElementById("nS").value = "";
+                render();
+            }
+        });
+
+        // Form Submission (Manual Section 19 & 20)
+        document.getElementById("f").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            let marks = {};
+            let total = 0;
+
+            for (let i = 0; i < subjects.length; i++) {
+                let val = Number(document.getElementById("s_" + i).value);
+                marks[subjects[i]] = val;
+                total += val;
+            }
+
+            let p = total / subjects.length;
+            let g = "F";
+            if (p >= 90) g = "A+"; else if (p >= 80) g = "A"; else if (p >= 70) g = "B"; else if (p >= 60) g = "C"; else if (p >= 50) g = "D";
+
+            students.push({
+                name: document.getElementById("n").value,
+                img: document.getElementById("img").value,
+                marks: marks,
+                total: total,
+                p: p.toFixed(1),
+                g: g
+            });
+
+            document.getElementById("f").reset();
+            render();
+        });
+
+        // Removal using standard manual loops (Manual Section 8)
+        function delSub(index) {
+            let temp = [];
+            for (let i = 0; i < subjects.length; i++) if (i !== index) temp.push(subjects[i]);
+            subjects = temp;
+            render();
+        }
+
+        function delStd(index) {
+            let temp = [];
+            for (let i = 0; i < students.length; i++) if (i !== index) temp.push(students[i]);
+            students = temp;
+            render();
+        }
+
+        render(); // Initial load
+    </script>
+</body>
+
+</html>

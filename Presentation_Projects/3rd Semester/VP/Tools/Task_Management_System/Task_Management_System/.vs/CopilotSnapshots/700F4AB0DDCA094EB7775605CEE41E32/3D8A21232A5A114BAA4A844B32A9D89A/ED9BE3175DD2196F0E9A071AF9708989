@@ -1,0 +1,35 @@
+﻿@using Task_Management_System.Models
+
+<div class="card mb-2">
+    <div class="card-body">
+        <h5 class="card-title">@Task.Title</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Priority: @Task.Priority | Status: @Task.Status</h6>
+        @if (!string.IsNullOrWhiteSpace(Task.Description))
+        {
+            <p class="card-text">@Task.Description</p>
+        }
+        <div>
+            <button class="btn btn-sm btn-outline-primary me-1" @onclick="() => OnChangeStatus?.Invoke(Task, TaskStatus.InProgress)">Start</button>
+            <button class="btn btn-sm btn-outline-success me-1" @onclick="() => OnChangeStatus?.Invoke(Task, TaskStatus.Done)">Complete</button>
+            <button class="btn btn-sm btn-outline-danger" @onclick="() => OnDelete?.Invoke(Task.Id)">Delete</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public TaskItem Task { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback<(TaskItem, TaskStatus)>? ChangeStatusCallback { get; set; }
+
+    [Parameter]
+    public EventCallback<int>? DeleteCallback { get; set; }
+
+    // Adapter methods so parent can use simple delegates in markup
+    void OnChangeStatusAction((TaskItem, TaskStatus) args) { }
+
+    // Local forwarders
+    Action<TaskItem, TaskStatus>? OnChangeStatus => (t, s) => ChangeStatusCallback?.InvokeAsync((t, s));
+    Action<int>? OnDelete => id => DeleteCallback?.InvokeAsync(id);
+}

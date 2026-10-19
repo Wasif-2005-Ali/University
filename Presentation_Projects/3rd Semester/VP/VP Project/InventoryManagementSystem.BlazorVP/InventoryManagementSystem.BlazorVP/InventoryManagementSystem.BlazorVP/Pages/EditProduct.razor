@@ -1,0 +1,61 @@
+﻿@page "/admin/edit-product/{Id:int}"
+@using InventoryManagementSystem.BlazorVP.Models
+@inject InventoryManagementSystem.BlazorVP.Services.AppState State
+@inject InventoryManagementSystem.BlazorVP.Services.AuthService Auth
+@inject NavigationManager Nav
+
+@if (!Auth.IsAdmin)
+{
+    Nav.NavigateTo("/");
+}
+
+<h2 class="page-title">Edit Product</h2>
+
+@if (Product == null)
+{
+    <p>Product not found</p>
+}
+else
+{
+    <div class="action-box">
+
+        <label>Name</label>
+        <input class="form-control" @bind="Product.Name" />
+
+        <label>Category</label>
+        <input class="form-control" @bind="Product.Category" />
+
+        <label>Price</label>
+        <input type="number" class="form-control" @bind="Product.Price" />
+
+        <label>Stock</label>
+        <input type="number" class="form-control" @bind="Product.Stock" />
+
+        <br />
+
+        <button class="cart-btn" @onclick="Save">Save</button>
+        <button class="add-btn" @onclick="Cancel">Cancel</button>
+
+    </div>
+}
+
+@code {
+    [Parameter] public int Id { get; set; }
+
+    Product? Product;
+
+    protected override void OnInitialized()
+    {
+        Product = State.Products.FirstOrDefault(p => p.Id == Id);
+    }
+
+    void Save()
+    {
+        Nav.NavigateTo("/admin");
+    }
+
+    void Cancel()
+    {
+        Nav.NavigateTo("/admin");
+    }
+}

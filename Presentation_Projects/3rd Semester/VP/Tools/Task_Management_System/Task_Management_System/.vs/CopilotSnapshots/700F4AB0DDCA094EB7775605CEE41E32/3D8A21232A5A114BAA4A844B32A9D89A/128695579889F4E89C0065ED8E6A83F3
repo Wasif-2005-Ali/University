@@ -1,0 +1,83 @@
+﻿@page "/appointments"
+@using Models = Task_Management_System.Models
+@inject Services.DataService DataService
+
+<PageTitle>Appointments</PageTitle>
+
+<h3>Appointment Management</h3>
+
+<div class="row">
+    <div class="col-md-4">
+        <EditForm Model="newAppt" OnValidSubmit="AddAppointment">
+            <DataAnnotationsValidator />
+            <div class="mb-3">
+                <label class="form-label">Person</label>
+                <InputText class="form-control" @bind-Value="newAppt.Person" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Date</label>
+                <InputDate class="form-control" @bind-Value="newAppt.Date" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Time (hh:mm)</label>
+                <InputText class="form-control" @bind-Value="timeString" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Purpose</label>
+                <InputTextArea class="form-control" @bind-Value="newAppt.Purpose" />
+            </div>
+            <button class="btn btn-primary" type="submit">Add Appointment</button>
+        </EditForm>
+    </div>
+    <div class="col-md-8">
+        <h5>Upcoming</h5>
+        @foreach (var a in appts)
+        {
+            <AppointmentCard Appointment="a" RescheduleCallback="Reschedule" DeleteCallback="DeleteAppointment" />
+        }
+    </div>
+</div>
+
+@code {
+    private Models.Appointment newAppt = new();
+    private string timeString = "00:00";
+    private List<Models.Appointment> appts = new();
+
+    protected override void OnInitialized()
+    {
+        appts = DataService.GetAppointments().ToList();
+    }
+
+    void AddAppointment()
+    {
+        if (TimeSpan.TryParse(timeString, out var ts))
+        {
+            newAppt.Time = ts;
+            var added = DataService.AddAppointment(new Models.Appointment
+            {
+                Person = newAppt.Person,
+                Date = newAppt.Date,
+                Time = newAppt.Time,
+                Purpose = newAppt.Purpose
+            });
+            appts.Add(added);
+            newAppt = new Models.Appointment();
+            timeString = "00:00";
+        }
+    }
+
+    void Reschedule(Models.Appointment appt)
+    {
+        // simple prompt for reschedule
+        var newDate = appt.Date.AddDays(1);
+        appt.Date = newDate;
+        DataService.UpdateAppointment(appt);
+        StateHasChanged();
+    }
+
+    void DeleteAppointment(int id)
+    {
+        DataService.DeleteAppointment(id);
+        appts.RemoveAll(a => a.Id == id);
+    }
+}

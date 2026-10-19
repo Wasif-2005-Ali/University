@@ -1,0 +1,127 @@
+package View;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import javax.swing.Timer;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+
+public class PharmaEase extends JFrame {
+	
+	JPanel panel;
+	JLabel jl1;
+	JProgressBar progressBar;
+    Timer timer;
+    int progressValue = 0;
+
+	public PharmaEase()
+	{
+		super("PharmaEase");
+		setSize(900,700);
+		setLocation(280,10);
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	      
+	    ImageIcon logo = new ImageIcon(getClass().getClassLoader().getResource("PharmaEase.png"));
+	    setIconImage(logo.getImage());
+	    panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                Color color1 = new Color(0, 180, 20); 
+                Color color2 = new Color(10, 30, 10);
+                GradientPaint gp = new GradientPaint(0, 0, color1, getWidth(), getHeight(), color2);
+                g2d.setPaint(gp);
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        
+        panel.setLayout(new GridBagLayout()); // For perfect centering
+        panel.setOpaque(false); // Allow custom painting
+        
+        ImageIcon icon = new ImageIcon("/View/img/PharmaEase.png");
+//        ImageIcon icon = new ImageIcon(getClass().getResource("img/PharmaEase.png"));
+        jl1 = new JLabel("Welcome To PharmaEase", icon, JLabel.CENTER);
+        jl1.setHorizontalTextPosition(JLabel.CENTER);
+        jl1.setVerticalTextPosition(JLabel.BOTTOM);
+        
+        
+        jl1.setForeground(Color.WHITE);
+        jl1.setFont(new Font("Arial", Font.BOLD, 28));
+        
+        
+        progressBar = new JProgressBar() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                int width = getWidth();
+                int height = getHeight();
+                int arc = 35;
+
+                // Draw background
+                g2.setColor(new Color(30, 30, 30));
+                g2.fillRoundRect(0, 0, width, height, arc, arc);
+
+                // Draw progress fill
+                int fillWidth = (int) (width * getPercentComplete());
+                g2.setColor(new Color(50, 180, 20));
+                g2.fillRoundRect(0, 0, fillWidth, height, arc, arc);
+
+
+                g2.dispose();
+            }
+        };
+
+        progressBar.setPreferredSize(new Dimension(300, 20));
+        progressBar.setOpaque(false);
+        progressBar.setBorderPainted(false);
+        progressBar.setForeground(Color.WHITE);
+        
+        
+        // GridBag constraints
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(jl1, gbc);
+
+        gbc.gridy = 1;
+        gbc.insets = new Insets(20, 0, 0, 0);
+        panel.add(progressBar, gbc);
+
+        add(panel);
+        setVisible(true);
+	    
+      timer =new Timer(50 ,e-> {
+    	  progressValue += 2;
+          progressBar.setValue(progressValue);
+
+          if (progressValue >= 100) {
+              timer.stop();
+              proceedToNextScreen(); // Perform next task
+          }
+      });
+      timer.start();
+	
+	   
+	  	
+	}
+	
+	private void proceedToNextScreen() {
+        this.dispose();
+        new LoginPage();
+       
+    }
+	
+}

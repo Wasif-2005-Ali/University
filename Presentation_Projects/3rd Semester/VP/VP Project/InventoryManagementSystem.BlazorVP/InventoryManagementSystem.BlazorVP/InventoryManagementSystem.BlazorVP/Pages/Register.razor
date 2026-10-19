@@ -1,0 +1,58 @@
+﻿@page "/register"
+@inject InventoryManagementSystem.BlazorVP.Services.AuthService Auth
+@inject NavigationManager Nav
+
+<div class="login-bg">
+    <div class="login-card">
+
+        <h2>Create Account</h2>
+        <p class="subtitle">Register as User or Administrator</p>
+
+        <input placeholder="Username" @bind="username" />
+
+        <input type="password" placeholder="Password" @bind="password" />
+
+        <select @bind="role">
+            <option>User</option>
+            <option>Admin</option>
+        </select>
+
+        <button class="login-btn" @onclick="DoRegister">
+            Register
+        </button>
+
+        <p class="link">
+            Already have an account?
+            <a @onclick="GoLogin">Login</a>
+        </p>
+
+        @if (!string.IsNullOrEmpty(message))
+        {
+            <p class="error">@message</p>
+        }
+    </div>
+</div>
+
+@code {
+    string username = "";
+    string password = "";
+    string role = "User";
+    string message = "";
+
+    void DoRegister()
+    {
+        if (Auth.Register(username, password, role))
+        {
+            Nav.NavigateTo("/");
+        }
+        else
+        {
+            message = "Username already exists";
+        }
+    }
+
+    void GoLogin()
+    {
+        Nav.NavigateTo("/");
+    }
+}

@@ -1,0 +1,133 @@
+﻿@page "/admin"
+@using InventoryManagementSystem.BlazorVP.Models
+@inject InventoryManagementSystem.BlazorVP.Services.AppState State
+@inject InventoryManagementSystem.BlazorVP.Services.AuthService Auth
+@inject NavigationManager Nav
+
+<div class="user-page">
+
+    <h2 class="page-title">Admin Dashboard</h2>
+
+    <!-- STATS -->
+    <div class="stats-row">
+
+        <div class="stat-card blue">
+            <h4>@State.Products.Count</h4>
+            <p>Total Products</p>
+        </div>
+
+        <div class="stat-card orange">
+            <h4>@State.Products.Count(p => p.Stock <= 3)</h4>
+            <p>Low Stock Items</p>
+        </div>
+
+        <div class="stat-card green">
+            <h4>@State.OrdersList.Count</h4>
+            <p>Total Orders</p>
+        </div>
+
+    </div>
+
+    <!-- PRODUCT TABLE -->
+    <div class="inventory-wrapper">
+
+        <div class="inventory-top">
+            <h3>Product Catalog</h3>
+
+            <div style="display:flex; gap:12px;">
+                <button class="cart-btn green" @onclick="GoToAddProduct">
+                    + Add Product
+                </button>
+
+                <button class="cart-btn blue" @onclick="GoToOrders">
+                    📦 View Orders
+                </button>
+            </div>
+        </div>
+
+        <table class="inventory-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Stock</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var p in State.Products)
+                {
+                    <tr>
+                        <td>@p.Id</td>
+                        <td>@p.Name</td>
+                        <td>@p.Category</td>
+                        <td>@p.Stock</td>
+                        <td>$@p.Price</td>
+
+                        <td>
+                            @if (p.Stock == 0)
+                            {
+                                <span class="badge red">Out of Stock</span>
+                            }
+                            else if (p.Stock <= 3)
+                            {
+                                <span class="badge orange">Low Stock</span>
+                            }
+                            else
+                            {
+                                <span class="badge green">In Stock</span>
+                            }
+                        </td>
+
+                        <td>
+                            <button class="edit-btn" @onclick="() => EditProduct(p.Id)">Edit</button>
+                            <button class="delete-btn" @onclick="() => DeleteProduct(p)">Delete</button>
+                            <button class="restock-btn" @onclick="() => RestockProduct(p)">Restock</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@code {
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender && !Auth.IsAdmin)
+        {
+            Nav.NavigateTo("/");
+        }
+    }
+
+    void GoToAddProduct()
+    {
+        Nav.NavigateTo("/adminaddproducts");
+    }
+
+    void GoToOrders()
+    {
+        Nav.NavigateTo("/admin/orders");
+    }
+
+    void EditProduct(int id)
+    {
+        Nav.NavigateTo($"/adminaddproducts/{id}");
+    }
+
+    void DeleteProduct(Product product)
+    {
+        State.Products.Remove(product);
+    }
+
+    void RestockProduct(Product product)
+    {
+        product.Stock += 10;
+    }
+}

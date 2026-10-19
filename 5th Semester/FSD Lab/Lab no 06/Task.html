@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Karakoram Flask Configurator</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        :root {
+            --ink: #14213d;
+            --muted: #5b6577;
+            --bg: #eef2f7;
+            --card: #fff;
+            --line: #d5dce8;
+            --accent: #1d6fd8;
+            --ok: #1f8a54;
+            --bad: #c73b3b;
+            --c1: #2b7bd8;
+            --c2: #0d3b7a;
+            --radius: 14px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+            line-height: 1.5;
+        }
+
+        #scrollBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            width: 0;
+            background: var(--accent);
+            z-index: 50;
+            transition: width .1s;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: var(--ink);
+            color: #fff;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            transition: box-shadow .3s, padding .3s;
+        }
+
+        header.scrolled {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .25);
+            padding: 8px 20px;
+        }
+
+        header h1 {
+            font-size: 1.15rem;
+            margin: 0;
+            font-family: Georgia, serif;
+            letter-spacing: .3px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 16px;
+        }
+
+        .nav a {
+            color: #cfd8ea;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 4px 2px;
+            border-bottom: 2px solid transparent;
+            transition: .2s;
+        }
+
+        .nav a:hover,
+        .nav a:focus-visible {
+            color: #fff;
+            border-color: #ffb703;
+            outline: none;
+        }
+
+        .head-right {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .cart-badge {
+            background: #fff;
+            color: var(--ink);
+            border-radius: 999px;
+            padding: 4px 14px;
+            font-weight: 600;
+            font-size: .9rem;
+            transition: transform .25s;
+        }
+
+        .cart-badge.bump {
+            transform: scale(1.25);
+        }
+
+        .status {
+            border-radius: 999px;
+            padding: 4px 14px;
+            font-weight: 700;
+            font-size: .85rem;
+            transition: background .4s, color .4s;
+        }
+
+        .status.free {
+            background: #e4e9f2;
+            color: var(--muted);
+        }
+
+        .status.premium {
+            background: #f5b301;
+            color: #3a2a00;
+            animation: pop .5s;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 24px auto;
+            padding: 0 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .panel {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 22px;
+        }
+
+        h2 {
+            margin: 0 0 12px;
+            font-family: Georgia, serif;
+            font-size: 1.3rem;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .product-card {
+            cursor: grab;
+            transition: transform .25s, box-shadow .25s, opacity .2s;
+        }
+
+        .product-card.hovered {
+            box-shadow: 0 14px 34px rgba(20, 33, 61, .18);
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        .product-card.dragging {
+            opacity: .45;
+            transform: scale(.97);
+            cursor: grabbing;
+        }
+
+        .stage {
+            position: relative;
+            height: 320px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 30%, #fff, #dfe7f2);
+            display: grid;
+            place-items: center;
+            perspective: 700px;
+        }
+
+        .flask {
+            position: relative;
+            width: 120px;
+            height: 250px;
+            border-radius: 26px 26px 18px 18px;
+            background: linear-gradient(135deg, var(--c1), var(--c2));
+            box-shadow: 0 18px 30px rgba(0, 0, 0, .28), inset -10px 0 18px rgba(0, 0, 0, .18);
+            transition: transform .12s ease-out, background .4s;
+            transform-style: preserve-3d;
+            overflow: hidden;
+        }
+
+        .flask::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 34px;
+            background: rgba(0, 0, 0, .28);
+        }
+
+        .flask::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mx, 50%) var(--my, 30%), rgba(255, 255, 255, .65), transparent 55%);
+            opacity: 0;
+            transition: opacity .3s;
+            pointer-events: none;
+        }
+
+        .stage.active .flask::after {
+            opacity: 1;
+        }
+
+        .flask.glow {
+            overflow: visible;
+            animation: glowPulse 1.8s infinite alternate;
+        }
+
+        @keyframes glowPulse {
+            from {
+                box-shadow: 0 0 10px 2px var(--c1);
+            }
+
+            to {
+                box-shadow: 0 0 34px 10px var(--c1);
+            }
+        }
+
+        .engraving {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-90deg);
+            white-space: nowrap;
+            color: rgba(255, 255, 255, .92);
+            font-family: Georgia, serif;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+            pointer-events: none;
+        }
+
+        .stage-hint {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: .8rem;
+            color: var(--muted);
+            transition: color .3s;
+        }
+
+        .stage.active .stage-hint {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .info h3 {
+            margin: 16px 0 2px;
+            font-size: 1.2rem;
+        }
+
+        .price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .description {
+            margin: 8px 0 0;
+            padding: 12px;
+            background: #f5f8fc;
+            border-left: 4px solid var(--accent);
+            border-radius: 6px;
+            color: var(--muted);
+            user-select: none;
+            transition: background .3s, border-color .3s;
+        }
+
+        .description.blocked {
+            background: #fdeaea;
+            border-color: var(--bad);
+            animation: shake .35s;
+        }
+
+        @keyframes shake {
+            25% {
+                transform: translateX(-6px);
+            }
+
+            75% {
+                transform: translateX(6px);
+            }
+        }
+
+        .dropzone {
+            margin-top: 24px;
+            min-height: 150px;
+            border: 3px dashed var(--line);
+            border-radius: var(--radius);
+            padding: 16px;
+            background: var(--card);
+            transition: background .25s, border-color .25s, transform .25s;
+        }
+
+        .dropzone.over {
+            border-color: var(--ok);
+            background: #e9f8f0;
+            transform: scale(1.02);
+        }
+
+        .cart-empty {
+            color: var(--muted);
+            text-align: center;
+            padding: 18px 0;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .swatch {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            flex: none;
+        }
+
+        .cart-item p {
+            margin: 0;
+            flex: 1 1 160px;
+        }
+
+        .cart-total {
+            margin-top: 10px;
+            font-weight: 700;
+            text-align: right;
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 11px 12px;
+            font: inherit;
+            color: var(--ink);
+            border: 2px solid var(--line);
+            border-radius: 8px;
+            background: #fff;
+            transition: border-color .2s, box-shadow .2s, background .2s;
+        }
+
+        input:hover,
+        select:hover {
+            border-color: #a9b6cc;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(29, 111, 216, .18);
+        }
+
+        .field.is-focused label {
+            color: var(--accent);
+        }
+
+        .field.invalid input {
+            border-color: var(--bad);
+            background: #fff6f6;
+        }
+
+        .hint {
+            display: flex;
+            justify-content: space-between;
+            font-size: .85rem;
+            color: var(--muted);
+            margin-top: 4px;
+            min-height: 1.3em;
+        }
+
+        .hint.warn {
+            color: var(--bad);
+            font-weight: 600;
+        }
+
+        .error {
+            color: var(--bad);
+            font-size: .85rem;
+            min-height: 1.2em;
+            margin-top: 3px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            font: inherit;
+            font-weight: 600;
+            padding: 11px 18px;
+            border-radius: 8px;
+            border: 2px solid var(--accent);
+            cursor: pointer;
+            transition: transform .15s, background .2s, color .2s, box-shadow .2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(20, 33, 61, .18);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:focus-visible {
+            outline: 3px solid #ffb703;
+            outline-offset: 2px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #1558ad;
+        }
+
+        .btn-secondary {
+            background: #fff;
+            color: var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: #eaf2ff;
+        }
+
+        .btn-danger {
+            background: #fff;
+            color: var(--bad);
+            border-color: var(--bad);
+        }
+
+        .btn-danger:hover {
+            background: #fdeaea;
+        }
+
+        .btn-small {
+            padding: 5px 10px;
+            font-size: .85rem;
+        }
+
+        .result {
+            margin-top: 18px;
+            padding: 16px;
+            border-radius: 10px;
+            background: #e9f8f0;
+            border: 2px solid var(--ok);
+            display: none;
+            animation: pop .4s;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result h3 {
+            margin: 0 0 6px;
+            color: var(--ok);
+        }
+
+        .result ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        @keyframes pop {
+            from {
+                transform: scale(.94);
+                opacity: 0;
+            }
+
+            to {
+                transform: none;
+                opacity: 1;
+            }
+        }
+
+        .sections {
+            max-width: 1100px;
+            margin: 0 auto 80px;
+            padding: 0 16px;
+            display: grid;
+            gap: 24px;
+        }
+
+        .video-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .video-wrap video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .prem-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .prem-head h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge-svg {
+            cursor: pointer;
+            transition: transform .3s;
+        }
+
+        .badge-svg path {
+            fill: #9aa5b8;
+            transition: fill .4s;
+        }
+
+        .badge-svg:hover {
+            transform: rotate(-8deg) scale(1.2);
+        }
+
+        .badge-svg:hover path {
+            fill: #1d6fd8;
+        }
+
+        body.is-premium .badge-svg path {
+            fill: #f5b301;
+        }
+
+        .badge-svg.spin {
+            animation: spin .8s;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg) scale(1.2);
+            }
+        }
+
+        .prem-wrap {
+            position: relative;
+            margin: 14px 0;
+        }
+
+        .prem-wrap.shake {
+            animation: shake .4s;
+        }
+
+        .prem-grid {
+            padding: 16px;
+            border: 2px dashed var(--line);
+            border-radius: 12px;
+            filter: grayscale(1);
+            opacity: .55;
+            transition: .4s;
+        }
+
+        body.is-premium .prem-grid {
+            filter: none;
+            opacity: 1;
+            border-color: #f5b301;
+            border-style: solid;
+        }
+
+        .theme-btns {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #f5b301;
+            color: #3a2a00;
+            font-size: .65rem;
+            padding: 2px 7px;
+            border-radius: 999px;
+            vertical-align: middle;
+        }
+
+        .lock-overlay {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            padding: 0;
+            background: rgba(20, 33, 61, .45);
+            color: #fff;
+            border: 0;
+            border-radius: 12px;
+            font-size: 1.1rem;
+        }
+
+        .lock-overlay:hover {
+            background: rgba(20, 33, 61, .6);
+            transform: none;
+            box-shadow: none;
+        }
+
+        body.is-premium .lock-overlay,
+        body.is-premium #upgradeBtn {
+            display: none;
+        }
+
+        dialog {
+            border: 0;
+            border-radius: var(--radius);
+            padding: 24px;
+            width: min(480px, 92vw);
+            max-height: 92vh;
+            overflow: auto;
+            color: var(--ink);
+        }
+
+        dialog::backdrop {
+            background: rgba(10, 16, 32, .65);
+        }
+
+        dialog[open] {
+            animation: pop .3s;
+        }
+
+        .pay-state {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .pay-state[hidden],
+        #payForm[hidden] {
+            display: none;
+        }
+
+        #lottieBox {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto;
+        }
+
+        #toast {
+            position: fixed;
+            left: 50%;
+            bottom: 24px;
+            transform: translate(-50%, 100px);
+            background: var(--ink);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            max-width: 90vw;
+            text-align: center;
+            opacity: 0;
+            transition: transform .35s, opacity .35s;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        #toast.show {
+            transform: translate(-50%, 0);
+            opacity: 1;
+        }
+
+        #toast.ok {
+            background: var(--ok);
+        }
+
+        #toast.bad {
+            background: var(--bad);
+        }
+
+        #toTop {
+            position: fixed;
+            right: 16px;
+            bottom: 16px;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 45;
+            background: var(--ink);
+            color: #fff;
+            border-color: var(--ink);
+        }
+
+        #toTop.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        @media (max-width:860px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width:600px) {
+            .nav {
+                display: none;
+            }
+
+            header h1 {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width:480px) {
+            .panel {
+                padding: 16px;
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+            }
+
+            .stage {
+                height: 260px;
+            }
+
+            .buttons button {
+                flex: 1 1 100%;
+            }
+
+            #toTop {
+                bottom: 70px;
+            }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="scrollBar"></div>
+
+    <header id="siteHeader">
+        <h1>Karakoram Steel Flask</h1>
+        <nav class="nav">
+            <a href="#productCard">Product</a>
+            <a href="#videoSection">Video</a>
+            <a href="#premiumSection">Premium</a>
+        </nav>
+        <div class="head-right">
+            <span class="status free" id="headStatus">Free User</span>
+            <span class="cart-badge" id="cartBadge">Cart: 0</span>
+        </div>
+    </header>
+
+    <main>
+        <section>
+            <article class="panel product-card" id="productCard" draggable="true"
+                aria-label="Product card. Drag it into the cart.">
+                <div class="stage" id="stage">
+                    <div class="flask" id="flask">
+                        <span class="engraving" id="engravingPreview">YOUR NAME</span>
+                    </div>
+                    <div class="stage-hint" id="stageHint">Hover and move your mouse over the flask</div>
+                </div>
+                <div class="info">
+                    <h3>Karakoram Steel Flask (750 ml)</h3>
+                    <div class="price" id="priceLabel">Rs. 2,499</div>
+                    <p class="description" id="description">
+                        Double-wall vacuum insulated stainless steel. Keeps drinks hot for 12 hours and cold for 24
+                        hours.
+                        Leak-proof cap, powder-coated finish, and laser engraving of your own name or message.
+                    </p>
+                    <button type="button" class="btn-secondary btn-small" id="loadApiBtn" style="margin-top: 10px;">Load
+                        External Product API</button>
+                </div>
+            </article>
+
+            <div class="dropzone" id="dropzone" aria-live="polite">
+                <h2>Your Cart</h2>
+                <div id="cartContent">
+                    <p class="cart-empty">Cart is empty. Drag the product card here, or use "Add to Cart".</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Customise your flask</h2>
+            <form id="configForm" novalidate>
+                <div class="field">
+                    <label for="variant">Colour theme (free)</label>
+                    <select id="variant" name="variant">
+                        <option value="hunza">Hunza Blue</option>
+                        <option value="fairy">Fairy Meadows Green</option>
+                        <option value="skardu">Skardu Sand</option>
+                        <option value="sunset">Naran Sunset</option>
+                        <option value="night">Deosai Midnight</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="engraving">Engraving text</label>
+                    <input type="text" id="engraving" name="engraving" maxlength="20" placeholder="e.g. WASIF"
+                        autocomplete="off">
+                    <div class="hint" id="engravingHint"><span id="engravingMsg">Up to 20 characters</span><span
+                            id="charCount">0 / 20</span></div>
+                    <div class="error" id="engravingError"></div>
+                </div>
+
+                <div class="row">
+                    <div class="field">
+                        <label for="fullName">Full name</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Your name" autocomplete="name">
+                        <div class="error" id="fullNameError"></div>
+                    </div>
+                    <div class="field">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" id="quantity" name="quantity" min="1" max="10" value="1">
+                        <div class="error" id="quantityError"></div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email">
+                    <div class="error" id="emailError"></div>
+                </div>
+
+                <div class="buttons">
+                    <button type="submit" class="btn-primary">Submit order</button>
+                    <button type="button" class="btn-secondary" id="addBtn">Add to Cart</button>
+                    <button type="reset" class="btn-danger">Reset</button>
+                </div>
+            </form>
+
+            <div class="result" id="result" role="status"></div>
+
+            <!-- NEW SECTION: View Database Orders -->
+            <div style="margin-top: 24px; padding-top: 24px; border-top: 2px dashed var(--line);">
+                <h2>Recent Database Orders</h2>
+                <button type="button" class="btn-secondary" id="fetchOrdersBtn">View Orders</button>
+                <div id="ordersList" style="margin-top: 16px; padding: 12px; background: #f5f8fc; border-radius: 8px;">
+                    <p class="muted">Click the button to load orders from the MySQL database.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="sections">
+        <section class="panel" id="videoSection">
+            <h2>Watch the Karakoram Flask Ad</h2>
+            <div class="video-wrap">
+                <video controls preload="metadata" playsinline>
+                    <source src="ad.mp4" type="video/mp4">
+                    <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+                        type="video/mp4">
+                    Your browser does not support video.
+                </video>
+            </div>
+            <p class="muted">Hot for 12 hours, cold for 24. Built for the mountains of northern Pakistan.</p>
+        </section>
+
+        <section class="panel" id="premiumSection">
+            <div class="prem-head">
+                <h2>
+                    Premium Customisation
+                    <svg class="badge-svg" id="premBadge" viewBox="0 0 64 64" width="38" height="38" role="img"
+                        aria-label="Premium badge">
+                        <path d="M32 4 L56 14 V32 C56 46 46 56 32 60 C18 56 8 46 8 32 V14 Z" />
+                        <polygon points="32,18 36,28 47,28 38,35 41,46 32,39 23,46 26,35 17,28 28,28" fill="#fff" />
+                    </svg>
+                </h2>
+                <span class="status free" id="statusBadge">Free User</span>
+            </div>
+            <p class="muted"><strong>Free:</strong> 5 colour themes, basic engraving, quantity. &nbsp;
+                <strong>Premium:</strong> 3 exclusive themes, engraving fonts, glow effect.
+            </p>
+
+            <div class="prem-wrap" id="premWrap">
+                <div class="prem-grid" id="premGrid" inert>
+                    <div class="field">
+                        <label>Premium themes <span class="tag">PREMIUM</span></label>
+                        <div class="theme-btns">
+                            <button type="button" class="btn-secondary" data-theme="gold">Royal Gold</button>
+                            <button type="button" class="btn-secondary" data-theme="rose">Rose Copper</button>
+                            <button type="button" class="btn-secondary" data-theme="carbon">Carbon Black</button>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="engFont">Engraving font <span class="tag">PREMIUM</span></label>
+                        <select id="engFont">
+                            <option value="Georgia, serif">Classic Serif</option>
+                            <option value="'Brush Script MT', cursive">Calligraphy</option>
+                            <option value="'Courier New', monospace">Typewriter</option>
+                            <option value="Impact, sans-serif">Bold Impact</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label><input type="checkbox" id="glowFx" style="width:auto"> Glow effect <span
+                                class="tag">PREMIUM</span></label>
+                    </div>
+                </div>
+                <button type="button" class="lock-overlay" id="lockOverlay">🔒 Locked. Click to upgrade</button>
+            </div>
+            <button type="button" class="btn-primary" id="upgradeBtn">Upgrade to Premium</button>
+        </section>
+    </div>
+
+    <dialog id="payModal">
+        <h2>Premium Upgrade</h2>
+        <p><strong>Plan:</strong> Karakoram Premium &nbsp;|&nbsp; <strong class="price">Rs. 999</strong> (one-time)</p>
+        <ul class="muted">
+            <li>3 exclusive colour themes</li>
+            <li>4 engraving fonts</li>
+            <li>Glow effect</li>
+        </ul>
+        <form id="payForm" novalidate>
+            <div class="field">
+                <label for="cardName">Cardholder Name</label>
+                <input type="text" id="cardName" autocomplete="off" placeholder="Name on card">
+                <div class="error" id="cardNameError"></div>
+            </div>
+            <div class="field">
+                <label for="cardNumber">Card Number</label>
+                <input type="text" id="cardNumber" inputmode="numeric" maxlength="19" autocomplete="off"
+                    placeholder="1234 5678 9012 3456">
+                <div class="error" id="cardNumberError"></div>
+            </div>
+            <div class="row">
+                <div class="field">
+                    <label for="cardExpiry">Expiry (MM/YY)</label>
+                    <input type="text" id="cardExpiry" inputmode="numeric" maxlength="5" autocomplete="off"
+                        placeholder="12/30">
+                    <div class="error" id="cardExpiryError"></div>
+                </div>
+                <div class="field">
+                    <label for="cardCvv">CVV</label>
+                    <input type="password" id="cardCvv" inputmode="numeric" maxlength="4" autocomplete="off"
+                        placeholder="123">
+                    <div class="error" id="cardCvvError"></div>
+                </div>
+            </div>
+            <p class="muted" style="font-size:.8rem">Demo only. Do not enter real card details. Nothing is stored.</p>
+            <div class="buttons">
+                <button type="submit" class="btn-primary" id="payBtn">Pay Rs. 999</button>
+                <button type="reset" class="btn-secondary">Reset</button>
+                <button type="button" class="btn-danger" id="payCancel">Cancel</button>
+            </div>
+        </form>
+        <div class="pay-state" id="payState" hidden>
+            <div id="lottieBox"></div>
+            <p id="payStateMsg">Processing payment…</p>
+        </div>
+    </dialog>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+    <button id="toTop" type="button">Top</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+    <script>
+        /* ============ DATA ============ */
+        let UNIT_PRICE = 2499;
+        const VARIANTS = {
+            hunza: { name: "Hunza Blue", c1: "#2b7bd8", c2: "#0d3b7a" },
+            fairy: { name: "Fairy Meadows Green", c1: "#3fae6a", c2: "#14532d" },
+            skardu: { name: "Skardu Sand", c1: "#d9b779", c2: "#8a6a35" },
+            sunset: { name: "Naran Sunset", c1: "#ff8a4c", c2: "#b3261e" },
+            night: { name: "Deosai Midnight", c1: "#3a4664", c2: "#0b1020" }
+        };
+        const PREMIUM_THEMES = {
+            gold: { name: "Royal Gold", c1: "#f5d76e", c2: "#a67c00" },
+            rose: { name: "Rose Copper", c1: "#f2a28c", c2: "#8c3b2a" },
+            carbon: { name: "Carbon Black", c1: "#4a4a4a", c2: "#050505" }
+        };
+
+        let cart = null;
+        let toastTimer = null;
+        let isPremium = false;
+        let activeTheme = null;
+
+        $(document).ready(function () {
+            /* ============ HELPERS ============ */
+            function showToast(message, type = "") {
+                $("#toast").text(message).removeClass().addClass("show " + type);
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => $("#toast").removeClass("show " + type), 2600);
+            }
+
+            const money = (n) => "Rs. " + n.toLocaleString("en-PK");
+            const getVariant = () => activeTheme || VARIANTS[$("#variant").val()];
+
+            function applyVariant() {
+                const v = getVariant();
+                $(":root").css({ "--c1": v.c1, "--c2": v.c2 });
+            }
+
+            function updateEngravingPreview() {
+                const text = $("#engraving").val().trim();
+                const max = $("#engraving").attr("maxlength");
+                const len = text.length;
+
+                $("#engravingPreview").text(text ? text.toUpperCase() : "YOUR NAME");
+                $("#charCount").text(`${len} / ${max}`);
+
+                const isFull = len >= max;
+                $("#engravingHint").toggleClass("warn", isFull);
+                $("#engravingMsg").text(isFull ? "Character limit reached" : (max - len) + " characters left");
+            }
+
+            function currentConfig() {
+                return {
+                    variantKey: $("#variant").val(),
+                    variant: getVariant(),
+                    engraving: $("#engraving").val().trim(),
+                    quantity: Math.max(1, parseInt($("#quantity").val(), 10) || 1)
+                };
+            }
+
+            function renderCart() {
+                if (!cart) {
+                    $("#cartContent").html('<p class="cart-empty">Cart is empty. Drag the product card here, or use "Add to Cart".</p>');
+                    $("#cartBadge").text("Cart: 0").removeClass("bump");
+                    return;
+                }
+
+                $("#cartContent").html(`
+                    <div class="cart-item">
+                        <span class="swatch" style="background:linear-gradient(135deg,${cart.variant.c1},${cart.variant.c2})"></span>
+                        <p><strong>${$(".info h3").text()}</strong><br>${cart.variant.name} &middot; Engraving: ${cart.engraving ? cart.engraving.toUpperCase() : "none"} &middot; Qty ${cart.quantity}</p>
+                        <button type="button" class="btn-danger btn-small" id="removeBtn">Remove</button>
+                    </div>
+                    <div class="cart-total">Total: ${money(cart.quantity * UNIT_PRICE)}</div>
+                `);
+
+                $("#cartBadge").text("Cart: " + cart.quantity).addClass("bump");
+                setTimeout(() => $("#cartBadge").removeClass("bump"), 250);
+            }
+
+            function addToCart(source) {
+                cart = currentConfig();
+                renderCart();
+                showToast(source === "drop" ? "Dropped! Added to your cart." : "Added to your cart.", "ok");
+            }
+
+            /* ============ EXTERNAL API GET REQUEST ============ */
+            $("#loadApiBtn").on("click", function () {
+                const $btn = $(this); $btn.text("Fetching Data...").prop("disabled", true);
+
+                $.ajax({
+                    url: "https://dummyjson.com/products/1",
+                    method: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        $(".info h3").text(data.title);
+                        $("#description").text(data.description);
+
+                        UNIT_PRICE = Math.round(data.price * 280);
+                        $("#priceLabel").text(money(UNIT_PRICE));
+
+                        showToast("Product updated from DummyJSON!", "ok");
+
+                        if (cart) renderCart();
+                    },
+                    error: function (xhr, status, error) {
+                        showToast("Error: Failed to fetch API product.", "bad");
+                        console.error("AJAX Error details:", status, error, xhr.responseText);
+                    },
+                    complete: function () {
+                        $btn.text("Load External Product API").prop("disabled", false);
+                    }
+                });
+            });
+
+            /* ============ NEW: FETCH ORDERS FROM DB ============ */
+            $("#fetchOrdersBtn").on("click", function () {
+                const $btn = $(this); $btn.text("Loading...").prop("disabled", true);
+
+                $.ajax({
+                    url: "http://localhost:3000/api/orders",
+                    method: "GET",
+                    success: function (data) {
+                        let html = '<ul style="margin:0; padding-left:18px;">';
+                        if (data.length === 0) {
+                            html = '<p class="muted">No orders found in the database.</p>';
+                        } else {
+                            data.forEach(order => {
+                                html += `<li style="margin-bottom: 8px;">
+                                    <strong>${order.customerName}</strong> ordered ${order.quantity}x ${order.theme} 
+                                    (Engraving: ${order.engravingText}) - Total: Rs. ${order.totalPrice}
+                                </li>`;
+                            });
+                            html += '</ul>';
+                        }
+                        $("#ordersList").html(html);
+                        showToast("Orders loaded successfully!", "ok");
+                    },
+                    error: function (xhr, status, error) {
+                        showToast("Failed to load orders from database.", "bad");
+                        console.error("GET Error:", error);
+                    },
+                    complete: function () {
+                        $btn.text("View Orders").prop("disabled", false);
+                    }
+                });
+            });
+
+            /* ============ EVENTS: Input & Config ============ */
+            $("#variant").on("change", function () {
+                activeTheme = null;
+                applyVariant();
+                showToast("Theme changed to " + VARIANTS[$(this).val()].name);
+            });
+
+            $("#engraving").on("input", function () {
+                updateEngravingPreview();
+                $("#engravingError").text("");
+                $(this).closest(".field").removeClass("invalid");
+            });
+
+            $("input, select").on("focus", function () {
+                $(this).closest(".field").addClass("is-focused");
+            }).on("blur", function () {
+                $(this).closest(".field").removeClass("is-focused");
+                if (this.id === "engraving" && $(this).val().trim() === "") {
+                    $("#engravingMsg").text("Tip: add a name to personalise your flask");
+                }
+            });
+
+            /* ============ EVENTS: 3D Stage ============ */
+            $("#stage").on("mouseenter", function () {
+                $(this).addClass("active");
+                $("#productCard").addClass("hovered");
+                $("#stageHint").text("Nice! Move around to tilt the flask");
+            }).on("mousemove", function (e) {
+                const rect = this.getBoundingClientRect();
+                const px = (e.clientX - rect.left) / rect.width;
+                const py = (e.clientY - rect.top) / rect.height;
+
+                const $flask = $("#flask");
+                const flaskRect = $flask[0].getBoundingClientRect();
+
+                $flask.css({
+                    "--mx": ((e.clientX - flaskRect.left) / flaskRect.width * 100) + "%",
+                    "--my": ((e.clientY - flaskRect.top) / flaskRect.height * 100) + "%",
+                    "transform": `rotateY(${(px - 0.5) * 40}deg) rotateX(${(0.5 - py) * 25}deg)`
+                });
+            }).on("mouseleave", function () {
+                $(this).removeClass("active");
+                $("#productCard").removeClass("hovered");
+                $("#flask").css("transform", "");
+                $("#stageHint").text("Hover and move your mouse over the flask");
+            });
+
+            /* ============ EVENTS: Drag & Drop ============ */
+            $("#productCard").on("dragstart", function (e) {
+                e.originalEvent.dataTransfer.setData("text/plain", "flask-product");
+                e.originalEvent.dataTransfer.effectAllowed = "copy";
+                $(this).addClass("dragging");
+            }).on("dragend", function () {
+                $(this).removeClass("dragging");
+            });
+
+            $("#dropzone").on("dragenter dragover", function (e) {
+                e.preventDefault();
+                $(this).addClass("over");
+                if (e.type === "dragover") e.originalEvent.dataTransfer.dropEffect = "copy";
+            }).on("dragleave", function (e) {
+                if (!this.contains(e.originalEvent.relatedTarget)) $(this).removeClass("over");
+            }).on("drop", function (e) {
+                e.preventDefault();
+                $(this).removeClass("over");
+                if (e.originalEvent.dataTransfer.getData("text/plain") === "flask-product") {
+                    addToCart("drop");
+                }
+            });
+
+            /* ============ EVENTS: Buttons ============ */
+            $("#addBtn").on("click", () => addToCart("button"));
+
+            $("#cartContent").on("click", "#removeBtn", function () {
+                cart = null;
+                renderCart();
+                showToast("Item removed from cart.");
+            });
+
+            $("#quantity").on("change", function () {
+                if (cart) {
+                    cart.quantity = currentConfig().quantity;
+                    renderCart();
+                }
+            });
+
+            /* ============ EVENT: Submit Order (POST to Backend) ============ */
+            $("#configForm").on("submit", function (e) {
+                e.preventDefault();
+                const errors = {};
+                const name = $("#fullName").val().trim();
+                const email = $("#email").val().trim();
+                const qty = parseInt($("#quantity").val(), 10);
+
+                if (name.length < 3) errors.fullName = "Please enter your full name (at least 3 letters).";
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = "Please enter a valid email address.";
+                if ($("#engraving").val().trim() === "") errors.engraving = "Engraving text is required.";
+                if (!(qty >= 1 && qty <= 10)) errors.quantity = "Quantity must be between 1 and 10.";
+
+                ["fullName", "email", "engraving", "quantity"].forEach(key => {
+                    $(`#${key}Error`).text(errors[key] || "");
+                    $(`#${key}`).closest(".field").toggleClass("invalid", !!errors[key]);
+                });
+
+                if (Object.keys(errors).length > 0) {
+                    showToast("Please fix the highlighted fields.", "bad");
+                    $(".invalid input").first().trigger("focus");
+                    return;
+                }
+                if (!cart) {
+                    showToast("Add the flask to your cart first.", "bad");
+                    return;
+                }
+
+                // Prepare the JSON payload
+                const payload = {
+                    customerName: name,
+                    customerEmail: email,
+                    theme: cart.variant.name,
+                    engravingText: cart.engraving.toUpperCase(),
+                    quantity: cart.quantity,
+                    totalPrice: cart.quantity * UNIT_PRICE
+                };
+
+                const $btn = $(this).find('button[type="submit"]');
+                $btn.text("Submitting...").prop("disabled", true);
+
+                // AJAX POST Request to Express Backend
+                $.ajax({
+                    url: "http://localhost:3000/api/order",
+                    method: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(payload),
+                    success: function (response) {
+                        // Display response from backend
+                        $("#result").html(`
+                            <h3>${response.message}</h3>
+                            <ul>
+                                <li>Name: ${response.received_data.customerName}</li>
+                                <li>Theme: ${response.received_data.theme}</li>
+                                <li>Total: ${money(response.received_data.totalPrice)}</li>
+                                <li>Backend Status: ${response.status.toUpperCase()}</li>
+                            </ul>
+                        `).removeClass().addClass("result show")[0].scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+                        showToast("Sent to local server successfully!", "ok");
+                        cart = null; // Clear cart after order
+                        renderCart();
+                    },
+                    error: function (xhr, status, error) {
+                        showToast("Backend connection failed. Is the server running?", "bad");
+                        console.error("POST Error:", error);
+                    },
+                    complete: function () {
+                        $btn.text("Submit order").prop("disabled", false);
+                    }
+                });
+            });
+
+            /* ============ EVENT: Scroll & UI ============ */
+            $(window).on("scroll", function () {
+                const max = $(document).height() - $(window).height();
+                $("#scrollBar").css("width", (max > 0 ? ($(window).scrollTop() / max) * 100 : 0) + "%");
+                $("#siteHeader").toggleClass("scrolled", $(window).scrollTop() > 20);
+                $("#toTop").toggleClass("visible", $(window).scrollTop() > 300);
+            });
+
+            $("#toTop").on("click", function () {
+                $("html, body").animate({ scrollTop: 0 }, "smooth");
+            });
+
+            /* ============ PREMIUM FEATURES ============ */
+            function setStatus() {
+                const txt = isPremium ? "★ Premium User" : "Free User";
+                $("#statusBadge, #headStatus").text(txt).removeClass("free premium").addClass(isPremium ? "premium" : "free");
+                $("body").toggleClass("is-premium", isPremium);
+                $("#premGrid").prop("inert", !isPremium);
+            }
+
+            function lockPremium() {
+                isPremium = false;
+                activeTheme = null;
+                $("#glowFx").prop("checked", false);
+                $("#engFont").prop("selectedIndex", 0);
+                $("#flask").removeClass("glow");
+                $("#engravingPreview").css("font-family", "");
+                setStatus();
+            }
+
+            function activatePremium() {
+                isPremium = true;
+                setStatus();
+                showToast("Premium unlocked! Enjoy exclusive features.", "ok");
+            }
+
+            function openPayModal() {
+                $("#payForm").show();
+                $("#payState").hide();
+                const dialog = $("#payModal")[0];
+                if (!dialog.open) dialog.showModal();
+            }
+
+            $("#lockOverlay").on("click", function () {
+                showToast("🔒 This is a premium feature. Upgrade to unlock it.", "bad");
+                const $wrap = $("#premWrap");
+                $wrap.removeClass("shake");
+                void $wrap[0].offsetWidth;
+                $wrap.addClass("shake");
+                setTimeout(openPayModal, 700);
+            });
+
+            $("#upgradeBtn").on("click", openPayModal);
+            $("#payCancel").on("click", () => $("#payModal")[0].close());
+
+            $("[data-theme]").on("click", function () {
+                activeTheme = PREMIUM_THEMES[$(this).data("theme")];
+                applyVariant();
+                showToast("Premium theme applied: " + activeTheme.name, "ok");
+            });
+
+            $("#engFont").on("change", function () {
+                $("#engravingPreview").css("font-family", $(this).val());
+            });
+
+            $("#glowFx").on("change", function () {
+                $("#flask").toggleClass("glow", $(this).is(":checked"));
+            });
+
+            /* ============ PAYMENT FORM ============ */
+            let lottieAnim = null;
+            function playSuccessLottie() {
+                if (lottieAnim) lottieAnim.destroy();
+                const box = $("#lottieBox")[0];
+                const fallback = () => {
+                    box.innerHTML = '<svg viewBox="0 0 52 52" width="120"><circle cx="26" cy="26" r="24" fill="none" stroke="#1f8a54" stroke-width="3"/><path d="M14 27l8 8 16-17" fill="none" stroke="#1f8a54" stroke-width="4"/></svg>';
+                };
+                if (typeof lottie === "undefined") { fallback(); return; }
+                lottieAnim = lottie.loadAnimation({
+                    container: box, renderer: "svg", loop: false, autoplay: true,
+                    path: "https://assets2.lottiefiles.com/packages/lf20_jbrw3hcz.json"
+                });
+                lottieAnim.addEventListener("data_failed", fallback);
+            }
+
+            $("#cardNumber").on("input", function () {
+                const digits = $(this).val().replace(/\D/g, "").slice(0, 16);
+                $(this).val(digits.replace(/(.{4})/g, "$1 ").trim());
+            });
+            $("#cardExpiry").on("input", function () {
+                const d = $(this).val().replace(/\D/g, "").slice(0, 4);
+                $(this).val(d.length > 2 ? d.slice(0, 2) + "/" + d.slice(2) : d);
+            });
+            $("#cardCvv").on("input", function () {
+                $(this).val($(this).val().replace(/\D/g, ""));
+            });
+
+            function validatePayment() {
+                const errors = {};
+                const name = $("#cardName").val().trim();
+                const num = $("#cardNumber").val().replace(/\s/g, "");
+                const exp = $("#cardExpiry").val();
+                const cvv = $("#cardCvv").val();
+
+                if (!/^[A-Za-z ]{3,}$/.test(name)) errors.cardName = "Enter the cardholder name (letters only, min 3).";
+                if (!/^\d{16}$/.test(num)) errors.cardNumber = "Card number must be 16 digits.";
+
+                const m = exp.match(/^(\d{2})\/(\d{2})$/);
+                if (!m || +m[1] < 1 || +m[1] > 12) {
+                    errors.cardExpiry = "Use MM/YY format.";
+                } else if (new Date(2000 + +m[2], +m[1], 1) <= new Date()) {
+                    errors.cardExpiry = "Card has expired.";
+                }
+                if (!/^\d{3,4}$/.test(cvv)) errors.cardCvv = "CVV must be 3 or 4 digits.";
+
+                ["cardName", "cardNumber", "cardExpiry", "cardCvv"].forEach((k) => {
+                    $(`#${k}Error`).text(errors[k] || "");
+                    $(`#${k}`).closest(".field").toggleClass("invalid", Boolean(errors[k]));
+                });
+                return Object.keys(errors).length === 0;
+            }
+
+            $("#payForm").on("submit", function (e) {
+                e.preventDefault();
+                if (!validatePayment()) { showToast("Please fix the payment details.", "bad"); return; }
+
+                $(this).hide(); $("#payState").show();
+                $("#lottieBox").empty();
+                $("#payStateMsg").text("Processing payment…");
+
+                setTimeout(() => {
+                    $("#payStateMsg").text("Payment successful! Premium activated 🎉");
+                    playSuccessLottie();
+                    activatePremium();
+                    $("#payForm")[0].reset();
+                    setTimeout(() => $("#payModal")[0].close(), 2600);
+                }, 2000);
+            });
+
+            $("#payForm").on("reset", function () {
+                setTimeout(() => {
+                    $("#payForm .error").text("");
+                    $("#payForm .field").removeClass("invalid");
+                }, 0);
+            });
+
+            /* ============ INIT ============ */
+            applyVariant();
+            updateEngravingPreview();
+            renderCart();
+            setStatus();
+        });
+    </script>
+</body>
+
+</html>
