@@ -1,0 +1,60 @@
+:root{--navy:#14274e;--teal:#0f9d8a;--bg:#f3f6fb;--card:#fff;--text:#1d2433;--muted:#6b7488;--line:#e2e8f2;--red:#d64545;--amber:#e0a100;--green:#1f9d57}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);font-size:15px}
+a{color:var(--teal);text-decoration:none}
+header.top{background:var(--navy);color:#fff;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+header.top h1{margin:0;font-size:18px;font-weight:600}
+header.top nav a{color:#cfe0ff;margin-left:18px;font-size:14px}
+header.top nav a:hover{color:#fff}
+main{max-width:1150px;margin:24px auto;padding:0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 1px 3px rgba(20,39,78,.05)}
+.card h2{margin:0 0 14px;font-size:17px;color:var(--navy)}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+label{display:block;font-size:13px;color:var(--muted);margin-bottom:5px}
+input,select{width:100%;padding:9px 11px;border:1px solid #cbd5e4;border-radius:8px;font-size:14px;background:#fff}
+input:focus,select:focus{outline:2px solid rgba(15,157,138,.35);border-color:var(--teal)}
+.btn{display:inline-block;border:0;border-radius:8px;padding:9px 16px;font-size:14px;cursor:pointer;background:var(--teal);color:#fff;font-weight:600}
+.btn:hover{filter:brightness(.93)}
+.btn.sec{background:#e8edf6;color:var(--navy)}
+.btn.red{background:var(--red)}
+.btn.sm{padding:5px 10px;font-size:12px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}
+.row>div{flex:1;min-width:160px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{background:#eef2f9;color:var(--navy);text-align:left;padding:10px;font-weight:600;white-space:nowrap}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:hover td{background:#fafcff}
+.table-wrap{overflow-x:auto}
+code{background:#eef2f9;padding:2px 6px;border-radius:5px;font-size:12.5px}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.badge.active{background:#dcf5e7;color:var(--green)}
+.badge.revoked{background:#fde3e3;color:var(--red)}
+.badge.student{background:#e1ecff;color:#2b5bd7}
+.badge.teacher{background:#f3e3ff;color:#8a2fc4}
+.bar{height:8px;background:#e5eaf3;border-radius:6px;overflow:hidden;min-width:90px;margin-bottom:3px}
+.bar span{display:block;height:100%;background:var(--teal)}
+.bar span.warn{background:var(--amber)}.bar span.full{background:var(--red)}
+.tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
+.tabs button{border:0;padding:9px 18px;border-radius:8px;background:#e8edf6;color:var(--navy);font-weight:600;cursor:pointer}
+.tabs button.on{background:var(--navy);color:#fff}
+.tab{display:none}.tab.on{display:block}
+.alert{padding:11px 14px;border-radius:8px;margin-bottom:14px;font-size:14px;display:none}
+.alert.show{display:block}
+.alert.err{background:#fde3e3;color:#9b2323}
+.alert.ok{background:#dcf5e7;color:#17683b}
+.alert.info{background:#e1ecff;color:#1f3f99}
+.keybox{background:#0f1b36;color:#9ff0df;padding:12px 14px;border-radius:8px;font-family:Consolas,monospace;word-break:break-all;margin-top:8px}
+.muted{color:var(--muted)}
+.stat{display:flex;gap:16px;flex-wrap:wrap}
+.stat div{background:#eef2f9;padding:10px 16px;border-radius:10px;min-width:130px}
+.stat b{display:block;font-size:20px;color:var(--navy)}
+.stat small{color:var(--muted)}
+.hero{text-align:center;padding:50px 10px}
+.hero h2{font-size:28px;color:var(--navy);margin-bottom:6px}
+.links{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-top:24px}
+.links a{display:block;background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px;color:var(--navy);font-weight:600}
+.links a:hover{border-color:var(--teal);box-shadow:0 4px 14px rgba(15,157,138,.12)}
+.links small{display:block;color:var(--muted);font-weight:400;margin-top:6px}
+.pass{color:var(--green);font-weight:600}.fail{color:var(--red);font-weight:600}
+.status-ok{color:var(--green)}.status-bad{color:var(--red)}

@@ -1,0 +1,36 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="/css/style.css"><script src="/vendor/jquery.min.js"></script><script src="/js/common.js"></script><title>Admin Panel</title></head><body>
+<header class="top"><h1>Admin Panel</h1><nav><a href="/">Home</a><a href="#" id="logout" style="display:none">Logout</a></nav></header>
+<main>
+<div id="loginBox" class="card" style="max-width:480px;margin:40px auto">
+<h2>Administrator Login</h2><div id="loginMsg" class="alert"></div>
+<label for="adminKey">Admin API key</label>
+<input id="adminKey" type="password" placeholder="Enter admin API key" autocomplete="off">
+<p style="margin-top:14px"><button id="loginBtn" class="btn">Login</button></p></div>
+
+<div id="panel" style="display:none">
+<div id="msg" class="alert"></div>
+<div class="tabs"><button data-tab="keys" class="on">API Keys</button><button data-tab="students">Students</button><button data-tab="teachers">Teachers</button></div>
+
+<div id="tab-keys" class="tab on">
+<div class="card"><h2>Generate New API Key</h2>
+<div class="row">
+<div><label>Owner type</label><select id="ownerType"><option value="student">Student</option><option value="teacher">Teacher</option></select></div>
+<div><label>Owner</label><select id="ownerId"></select></div>
+<div><label>Request limit</label><input id="reqLimit" type="number" min="1" value="20"></div>
+<div style="flex:none"><button id="genBtn" class="btn">Generate Key</button></div></div>
+<div id="newKey"></div></div>
+
+<div class="card"><h2>All API Keys</h2>
+<div class="table-wrap"><table><thead><tr><th>ID</th><th>Owner</th><th>API Key</th><th>Usage</th><th>Status</th><th>Last used</th><th>Manage</th></tr></thead>
+<tbody id="keysBody"></tbody></table></div></div>
+
+<div class="card" id="logsCard" style="display:none"><h2 id="logsTitle">Usage log</h2>
+<div class="table-wrap"><table><thead><tr><th>Time</th><th>Method</th><th>Endpoint</th><th>Status</th></tr></thead><tbody id="logsBody"></tbody></table></div></div>
+</div>
+
+<div id="tab-students" class="tab"><div class="card"><h2>Students</h2><div class="table-wrap"><table>
+<thead><tr><th>ID</th><th>Roll No</th><th>Name</th><th>Email</th><th>Department</th><th>Semester</th></tr></thead><tbody id="studentsBody"></tbody></table></div></div></div>
+
+<div id="tab-teachers" class="tab"><div class="card"><h2>Teachers</h2><div class="table-wrap"><table>
+<thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Department</th></tr></thead><tbody id="teachersBody"></tbody></table></div></div></div>
+</div></main><script src="/js/admin.js"></script></body></html>

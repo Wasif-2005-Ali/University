@@ -1,0 +1,15 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="/css/style.css"><script src="/vendor/jquery.min.js"></script><script src="/js/common.js"></script><title>Teacher Dashboard</title></head><body>
+<header class="top"><h1>Teacher Dashboard</h1><nav><a href="/">Home</a><a href="/settings">Settings</a></nav></header>
+<main>
+<div id="msg" class="alert"></div>
+<div class="card"><h2>My Information</h2><div id="profile" class="muted">Loading...</div></div>
+<div class="card"><h2>Student Marks</h2>
+<div class="row" style="margin-bottom:14px">
+<div><label>Search (name / roll no / course)</label><input id="search" placeholder="Type to filter..."></div>
+<div><label>View one student (uses /api/students/:id/marks)</label><select id="studentSel"><option value="">Select student</option></select></div>
+<div style="flex:none"><button id="oneBtn" class="btn">Load student</button></div>
+<div style="flex:none"><button id="allBtn" class="btn sec">Load all marks</button></div></div>
+<div class="table-wrap"><table><thead><tr><th>Roll No</th><th>Student</th><th>Course</th><th>Title</th><th>Assign /20</th><th>Mid /30</th><th>Final /50</th><th>Total</th><th>Result</th></tr></thead>
+<tbody id="marks"><tr><td colspan="9" class="muted">Loading...</td></tr></tbody></table></div></div>
+<div class="card"><h2>API Usage</h2><div id="usage" class="muted">-</div></div>
+</main><script src="/js/teacher.js"></script></body></html>

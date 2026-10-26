@@ -1,0 +1,11 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="/css/style.css"><script src="/vendor/jquery.min.js"></script><script src="/js/common.js"></script><title>Student Dashboard</title></head><body>
+<header class="top"><h1>Student Dashboard</h1><nav><a href="/">Home</a><a href="/settings">Settings</a></nav></header>
+<main>
+<div id="msg" class="alert"></div>
+<div class="card"><h2>My Information</h2><div id="profile" class="muted">Loading...</div></div>
+<div class="card"><h2>My Academic Marks</h2>
+<div class="table-wrap"><table><thead><tr><th>Course</th><th>Title</th><th>Assignment /20</th><th>Midterm /30</th><th>Final /50</th><th>Total /100</th><th>Result</th></tr></thead>
+<tbody id="marks"><tr><td colspan="7" class="muted">Loading...</td></tr></tbody></table></div></div>
+<div class="card"><h2>API Usage</h2><div id="usage" class="muted">-</div>
+<p style="margin-top:12px"><button id="reload" class="btn sec">Reload data</button></p></div>
+</main><script src="/js/student.js"></script></body></html>

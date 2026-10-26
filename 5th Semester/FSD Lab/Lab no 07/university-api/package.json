@@ -1,0 +1,13 @@
+{
+  "name": "university-api-access-management",
+  "version": "1.0.0",
+  "description": "University API Access Management System (Node.js, Express, MySQL, jQuery AJAX)",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "jquery": "^3.7.1",
+    "mysql": "^2.18.1"
+  }
+}

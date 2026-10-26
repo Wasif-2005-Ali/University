@@ -1,0 +1,65 @@
+46-SLIDE INSTRUCTOR LECTURE -> LIVE PROJECT MAP
+===============================================
+
+Slides 1-7   | Browser -> AJAX -> Node.js -> Access -> MySQL -> JSON
+  PHP: hero graphic and 'Follow the request' panel
+  Node: Express + CORS + database pool
+
+Slide 8       | Student / Teacher permissions
+  Node: USERS object; PHP: API key dropdown
+
+Slides 9,17-19| Student requests 10 -> allowed 3; Teacher requests 10 -> allowed 10
+  Node: getAllowedRows() and GET /api/customers
+  PHP: Allowed rows and Rows received boxes
+
+Slides 10-16 | Identity, DB/table allowlist and credits
+  Node: checkAccess(req,res,next)
+  PHP: stage 3 (Access), HTTP status notice
+  401 wrong key; 403 forbidden DB/table; 429 no credits
+
+Slides 20    | Return only name and address (no SELECT *)
+  Node: SQL_ROWS (SELECT name,address); PHP: results table
+
+Slides 21-23 | Request credits and HTTP statuses
+  Node: user.credits = user.credits - 1; HTTP 200/401/403/429/500
+  PHP: Credits left + request status
+
+Slide 24     | CORS between XAMPP and Node.js
+  Node: app.use(cors(...))
+
+Slides 25-29 | SEARCH: Ali -> %Ali% -> LIKE ? -> LIMIT ?
+  Node: SQL_SEARCH; pattern; parameter values; user.maxRows
+  PHP: Search Name input + Why these rows panel
+
+Slide 30-31  | Single PHP file with HTML + CSS + jQuery CDN + AJAX
+  PHP: access_ajaxRequest.php, $.ajax() in same file
+
+Slides 32-34 | JSON 'meta' + 'data' -> table and request journey
+  Node: res.json({ meta, data }); PHP: showRows(), showStats(), journey
+
+Slides 35-39 | Expected outputs: student, teacher, wrong key, search
+  PHP: choose key, enter rows/name, click Load/Search; inspect results
+  IMPORTANT: Requested Rows changes LOAD ONLY. SEARCH uses maxRows.
+
+Slides 40-43 | Run / observe Network tab / troubleshoot
+  Use README_START_HERE.txt, F12 -> Network
+
+Slides 44-45 | Classroom keys + change one rule and test
+  Node: USERS; modify allowedTables, maxRows, credits; restart Node
+
+Slide 46     | Explain the entire request path
+  PHP: the six-stage journey panel
+
+DEMO SEQUENCE (fresh Node server):
+  1. Student, requested 10 => HTTP 200; allowedRows=3; credits=7.
+  2. Teacher, requested 10 => HTTP 200; allowedRows=10; credits=29.
+  3. Wrong key => HTTP 401, no SQL query, no credit deduction.
+  4. Search Ali as Student => matches limited to 3; next student credit=6.
+  5. Send six more student requests => credits=0; next gets 429.
+  6. Optional 403: student.allowedTables = []; restart Node; select Student.
+
+NOTES:
+  - Real row count depends on available customers4 records.
+  - Credits are in Node memory, not saved to MySQL.
+  - The page's steps summarize the HTTP result; they are not live backend timings.
+  - Files contain no CREATE/UPDATE/DELETE SQL statements.

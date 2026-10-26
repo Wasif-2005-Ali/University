@@ -1,0 +1,15 @@
+{
+  "name": "access-privileges-46-slide-lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Companion project for 46-slide Access Privileges lecture, using existing mydb8.customers4",
+  "main": "access-forRequest.js",
+  "scripts": {
+    "start": "node access-forRequest.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "mysql": "^2.18.1"
+  }
+}

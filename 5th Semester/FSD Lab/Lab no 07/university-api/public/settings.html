@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="/css/style.css"><script src="/vendor/jquery.min.js"></script><script src="/js/common.js"></script><title>Settings - API Key</title></head><body>
+<header class="top"><h1>Settings</h1><nav><a href="/">Home</a><a href="/student">Student</a><a href="/teacher">Teacher</a></nav></header>
+<main style="max-width:640px">
+<div class="card"><h2>Your API Key</h2>
+<p class="muted">Enter the API key issued to you by the administrator. It is stored in this browser and sent with every request in the <code>x-api-key</code> header.</p>
+<div id="msg" class="alert"></div>
+<label for="key">API key</label>
+<input id="key" type="text" placeholder="stu_xxxxxxxx... or tch_xxxxxxxx..." autocomplete="off">
+<div class="row" style="margin-top:14px"><div style="flex:none"><button id="save" class="btn">Verify &amp; Save</button></div>
+<div style="flex:none"><button id="clear" class="btn sec">Remove saved key</button></div></div>
+<div id="info" style="margin-top:18px"></div></div></main>
+<script src="/js/settings.js"></script></body></html>
